@@ -17,15 +17,18 @@
 # include "libft/libft.h"
 
 # define EXIT "exit"
+# define CYAN "\033[0;36m"
+# define DEF "\033[0m"
 
 typedef struct s_shell
 {
 	char	**environ;
+	char	**environ_v;
 	int		env_count;
+	int		var1;
 	int		var2;
-	int		var3;
-} t_shell;
+}	t_shell;
 
-void	data_initializer(t_shell *init);
+//void	data_initializer(t_shell *init);
 
 #endif

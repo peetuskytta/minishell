@@ -3,7 +3,7 @@ DEBUG_F := -g -fsanitize=address
 FLAGS := -Wall -Wextra -Werror
 
 NAME := minishell
-SOURCES := main.c \
+SOURCES := start.c \
 	parser.c \
 
 
