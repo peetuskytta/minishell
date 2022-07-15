@@ -12,46 +12,30 @@
 
 #include "minishell.h"
 
-//void	initialiser()
+void	data_initializer(t_shell *init)
+{
+	init->env_count = 0;
+	init->var2 = 0;
+	init->var3 = 0;
+	while (environ[init->env_count] != NULL)
+		init->env_count++;
+}
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	i = 0;
-	int	count = 0;
-	char new[5] = "VAR1";
+
 	t_shell	*data;
 
-	data = malloc(sizeof(t_shell));
-	data->env = envp;
-	while (data->env[i] != NULL)
+	if (argc && argv)
 	{
-		ft_putendl(data->env[i]);
-		i++;
-	}
-	count = i;
-	
-
-	envp[count] = ft_strdup(new);
-
-	data->env = envp;
-	i = 0;
-	while (data->env[i] != NULL)
-	{
-		ft_putendl(data->env[i]);
-		i++;
-	}
-
-	if (argc == 2 && ft_strcmp(argv[1], "minishell") == 0)
-	{
+		data = (t_shell *)malloc(sizeof(t_shell));
+		data->environ = envp;
+		data_initializer(data);
 		write(1, "$>", 3);
-		while (1)
-		{
-			sleep(10);
-			break;
-		}
 	}
-	else
-		ft_putendl("mistake");
+//	data->env = (char **)malloc(sizeof(char *) * count + 1);
+//	data->env[count] = (char *)malloc(sizeof(char) * (len + 1));
 
+	ft_putendl("The end. Thanks for using minishell.");
 	return (0);
 }

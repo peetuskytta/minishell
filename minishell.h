@@ -20,8 +20,12 @@
 
 typedef struct s_shell
 {
-	char	**env;
-	//int			exit;
+	char	**environ;
+	int		env_count;
+	int		var2;
+	int		var3;
 } t_shell;
+
+void	data_initializer(t_shell *init);
 
 #endif
