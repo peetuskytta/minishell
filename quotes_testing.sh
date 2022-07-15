@@ -16,5 +16,10 @@ echo 'Execute double quotes $VAR1 $TEST_USER'
 
 # Reverse quotes
 echo "This Hostname is: `hostname`"
+echo ""
+echo "\`cal\`"
+echo "c\al"
+echo "cal"
+echo `cal`
 
 #END#
