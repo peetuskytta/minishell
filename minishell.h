@@ -13,7 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <dirent.h>
-#include <dirent.h>
+# include <dirent.h>
+# include "libft/libft.h"
 
 #endif
