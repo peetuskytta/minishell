@@ -3,8 +3,9 @@ DEBUG_F := -g -fsanitize=address
 FLAGS := -Wall -Wextra -Werror
 
 NAME := minishell
-SOURCES := start.c \
+SOURCES := main.c \
 	parser.c \
+	store_environ.c \
 
 
 OBJ := $(SOURCES:.c=.o)

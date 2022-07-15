@@ -24,11 +24,10 @@ typedef struct s_shell
 {
 	char	**environ;
 	char	**environ_v;
+	char	**environ_n;
 	int		env_count;
-	int		var1;
-	int		var2;
 }	t_shell;
 
-//void	data_initializer(t_shell *init);
+void	store_environ(t_shell *info);
 
 #endif
