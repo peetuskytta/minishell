@@ -6,6 +6,7 @@ NAME := minishell
 SOURCES := main.c \
 	read_input.c \
 	store_environ.c \
+	input_parser.c \
 
 OBJ := $(SOURCES:.c=.o)
 

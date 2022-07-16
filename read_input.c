@@ -55,11 +55,11 @@ void	command_prompt_loop(t_shell *data)
 		ft_putstr(PROMPT);
 		buf = (char *)malloc(sizeof(char) * BUFFER);
 		read_input_stdin(buf);
-		if (exit_or_clear(&data, buf) == false);
+		if (exit_or_clear(data, buf) == false)
 			break;
-		else
-			parse_input(&data, buf);
-		act_on_command
+		//else
+			//parse_input(&data, buf);
+		//act_on_command();
 		if (buf[0] != '\0' && ft_strcmp(buf, CLEAR) != 0)
 			ft_putendl(buf);
 		clear_and_free(buf);
