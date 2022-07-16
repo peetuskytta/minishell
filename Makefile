@@ -1,12 +1,11 @@
 CC := gcc
 DEBUG_F := -g -fsanitize=address
-FLAGS := -Wall -Wextra -Werror
+FLAGS := -Wall -Wextra -Werror -g -fsanitize=address
 
 NAME := minishell
 SOURCES := main.c \
-	parser.c \
+	read_input.c \
 	store_environ.c \
-
 
 OBJ := $(SOURCES:.c=.o)
 
@@ -21,7 +20,7 @@ $(NAME): $(OBJ) $(LIBFT)
 	@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
 
 $(OBJ): $(SOURCES) $(HEADER)
-	@echo "Creating $(NAME) object files"
+#	@echo "Creating $(NAME) object files"
 	$(CC) $(FLAGS) -c $(SOURCES)
 
 $(LIBFT):
@@ -30,12 +29,12 @@ $(LIBFT):
 clean:
 	@make -s -C libft clean
 	@rm -f $(OBJ)
-	@echo "$(NAME) object files deleted"
+#	@echo "$(NAME) object files deleted"
 
 fclean: clean
 	@make -s -C libft fclean
 	@rm -f $(NAME)
-	@echo "$(NAME) deleted"
+#	@echo "$(NAME) deleted"
 
 re: fclean all
 

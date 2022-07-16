@@ -14,11 +14,12 @@
 
 static void	env_variable_counter(t_shell *info)
 {
+	info->env_count = 0;
 	while (info->environ[info->env_count] != NULL)
 		info->env_count++;
 }
 
-static void	save_env_value(t_shell * info, int start, int i)
+static void	save_env_value(t_shell *info, int start, int i)
 {
 	info->environ_v = (char **)malloc(sizeof(char *) * info->env_count + 1);
 	while (info->env_count > i)
@@ -28,10 +29,9 @@ static void	save_env_value(t_shell * info, int start, int i)
 		ft_strlen(info->environ[i]));
 		i++;
 	}
-	info->environ_v[i] = NULL;
 }
 
-static void	save_env_name(t_shell * info, int start, int i)
+static void	save_env_name(t_shell *info, int start, int i)
 {
 	info->environ_n = (char **)malloc(sizeof(char *) * info->env_count + 1);
 	while (info->env_count > i)
@@ -41,12 +41,10 @@ static void	save_env_name(t_shell * info, int start, int i)
 		info->environ_n[i][start] = '\0';
 		i++;
 	}
-	info->environ_v[i] = NULL;
 }
 
-void	store_environ(t_shell *info)
+void	store_environ_variables(t_shell *info)
 {
-	info->env_count = 0;
 	env_variable_counter(info);
 	save_env_value(info, 0, 0);
 	save_env_name(info, 0, 0);
