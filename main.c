@@ -21,7 +21,6 @@ int	main(int argc, char **argv, char **envp)
 		data.environ = envp;
 		store_environ(&data);
 		ft_putstr(CYAN"$> "DEF);
-		
 	}
 	ft_putendl("");
 	ft_putendl("The end. Thanks for using minishell.");
