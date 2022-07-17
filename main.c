@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	cleanup_on_exit(t_shell *data, int i)
+static void	cleanup_and_exit(t_shell *data, int i)
 {
 	while (data->env_count > i)
 	{
@@ -24,6 +24,7 @@ static void	cleanup_on_exit(t_shell *data, int i)
 	}
 	free(data->environ_n);
 	free(data->environ_v);
+	exit(EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -34,9 +35,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.environ = envp;
 		store_environ_variables(&data);
-		command_prompt_loop(&data);
+		if (command_prompt_loop(&data) == false)
+			cleanup_and_exit(&data, 0);
 	}
-	cleanup_on_exit(&data, 0);
-	ft_putendl("The end. Thanks for using minishell.");
-	return (0);
+	exit(EXIT_SUCCESS);
 }

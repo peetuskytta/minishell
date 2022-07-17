@@ -45,7 +45,7 @@ static int	exit_or_clear(t_shell *data, char *buf)
 	return (true);
 }
 
-void	command_prompt_loop(t_shell *data)
+int	command_prompt_loop(t_shell *data)
 {
 	char	*buf;
 
@@ -56,11 +56,12 @@ void	command_prompt_loop(t_shell *data)
 		buf = (char *)malloc(sizeof(char) * BUFFER);
 		read_input_stdin(buf);
 		if (exit_or_clear(data, buf) == false)
-			break;
-		//else
-			//parse_input(&data, buf);
-		//act_on_command();
-		if (buf[0] != '\0' && ft_strcmp(buf, CLEAR) != 0)
+			return (false);
+		// else
+		//	parse_input(&data, buf);
+		// act_on_command();
+		// the two lines below are just for visualizing what is in buf
+		if (buf[0] != '\0')
 			ft_putendl(buf);
 		clear_and_free(buf);
 	}

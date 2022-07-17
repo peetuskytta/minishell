@@ -31,6 +31,7 @@
 # define DEFAULT "\033[0m"
 # define PROMPT CYAN"$> "DEFAULT
 # define BUFFER 131072
+# define EXIT_SUCCESS 0
 
 /*Error message defines*/
 # define CMD_TOO_LONG "command line argument is too long"
@@ -46,6 +47,6 @@ typedef struct s_shell
 }	t_shell;
 
 void	store_environ_variables(t_shell *info);
-void	command_prompt_loop(t_shell *data);
+int		command_prompt_loop(t_shell *data);
 
 #endif
