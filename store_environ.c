@@ -25,7 +25,7 @@ static void	save_env_value(t_shell *info, int start, int i)
 	while (info->env_count > i)
 	{
 		start = (int)(ft_strchr(info->environ[i], '=') - info->environ[i]);
-		info->environ_v[i] = ft_strsub(info->environ[i], ++start,
+		info->environ_v[i] = ft_strsub(info->environ[i], ++start, \
 		ft_strlen(info->environ[i]));
 		i++;
 	}
@@ -38,7 +38,6 @@ static void	save_env_name(t_shell *info, int start, int i)
 	{
 		start = (int)(ft_strchr(info->environ[i], '=') - info->environ[i]);
 		info->environ_n[i] = ft_strsub(info->environ[i], 0, start);
-		info->environ_n[i][start] = '\0';
 		i++;
 	}
 }
@@ -46,6 +45,9 @@ static void	save_env_name(t_shell *info, int start, int i)
 void	store_environ_variables(t_shell *info)
 {
 	info->token = NULL;
+	info->environ_n = NULL;
+	info->environ_v = NULL;
+	info->env_count = 0;
 	env_variable_counter(info);
 	save_env_value(info, 0, 0);
 	save_env_name(info, 0, 0);
