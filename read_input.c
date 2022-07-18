@@ -26,43 +26,44 @@ static void	read_input_stdin(char *buf)
 		ft_putendl(CMD_TOO_LONG);
 }
 
-static void	clear_and_free(char *string)
+static void	clear_and_free_buffer(char *string)
 {
 	ft_memset(string, '\0', ft_strlen(string));
 	free(string);
 }
 
-static int	exit_or_clear(t_shell *data, char *buf)
+static int	exit_and_clean(char *buf)
 {
-	ft_putendl_fd(data->environ_n[3], 0);
-	if (ft_strequ(buf, CLEAR) == true)
-		system("clear");
-	else if (ft_strequ(buf, EXIT) == true)
+	if (ft_strequ(buf, EXIT) == true)
 	{
-		clear_and_free(buf);
+		clear_and_free_buffer(buf);
 		return (false);
 	}
-	return (true);
+	else
+		return (true);
 }
 
 int	command_prompt_loop(t_shell *data)
 {
 	char	*buf;
 
-	ft_putendl_fd(data->environ_n[3], 0);
 	while (true)
 	{
 		ft_putstr(PROMPT);
 		buf = (char *)malloc(sizeof(char) * BUFFER);
-		read_input_stdin(buf);
-		if (exit_or_clear(data, buf) == false)
+		if (!buf)
 			return (false);
-		// else
-		//	parse_input(&data, buf);
+		read_input_stdin(buf);
+		if (exit_and_clean(buf) == false)
+			return (false);
+		if (ft_strequ(buf, CLEAR) == true)
+			system("clear");
+		else
+			parse_input(data, buf);
 		// act_on_command();
 		// the two lines below are just for visualizing what is in buf
-		if (buf[0] != '\0')
-			ft_putendl(buf);
-		clear_and_free(buf);
+		//if (buf[0] != '\0')
+		//	ft_putendl(buf);
+		clear_and_free_buffer(buf);
 	}
 }

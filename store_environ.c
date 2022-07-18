@@ -45,6 +45,7 @@ static void	save_env_name(t_shell *info, int start, int i)
 
 void	store_environ_variables(t_shell *info)
 {
+	info->token = NULL;
 	env_variable_counter(info);
 	save_env_value(info, 0, 0);
 	save_env_name(info, 0, 0);

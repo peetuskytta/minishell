@@ -30,11 +30,15 @@
 # define CYAN "\033[0;36m"
 # define DEFAULT "\033[0m"
 # define PROMPT CYAN"$> "DEFAULT
+# define BACKSLASH '\\'
+# define DOUBLEQUOTE '\"'
+# define SINGLEQUOTE '\''
 # define BUFFER 131072
 # define EXIT_SUCCESS 0
 
 /*Error message defines*/
 # define CMD_TOO_LONG "command line argument is too long"
+# define MALLOC_FAIL "malloc failed: serious memory issues"
 
 /*Data structures used*/
 typedef struct s_shell
@@ -42,11 +46,12 @@ typedef struct s_shell
 	char	**environ;
 	char	**environ_v;
 	char	**environ_n;
-	char	**history;
+	char	**token;
 	int		env_count;
 }	t_shell;
 
 void	store_environ_variables(t_shell *info);
 int		command_prompt_loop(t_shell *data);
+void	parse_input(t_shell *data, char *input);
 
 #endif

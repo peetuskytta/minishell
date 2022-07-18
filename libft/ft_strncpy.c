@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 13:48:47 by pskytta           #+#    #+#             */
-/*   Updated: 2021/12/17 18:48:02 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/07/18 19:30:09 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char	*ft_strncpy(char *dst, const char *src, size_t len)
 		}
 		i++;
 	}
+	dst[i] = '\0';
 	return (dst);
 }

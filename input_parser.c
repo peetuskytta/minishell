@@ -12,3 +12,55 @@
 
 #include "minishell.h"
 
+
+static int	simple_input_check(char *input)
+{
+	if (ft_strchr(input, BACKSLASH))
+		return (false);
+	else if (ft_strchr(input, SINGLEQUOTE))
+		return (false);
+	else if (ft_strchr(input, DOUBLEQUOTE))
+		return (false);
+	else
+		return (true);
+}
+
+static int	tokenize_input(t_shell *data, char *input, int i)
+{
+	while (input[i] != '\0')
+	{
+		if (ft_is_wspace(input[i]))
+			input[i] = ' ';
+		i++;
+	}
+	data->token = ft_strsplit(input, ' ');
+	if (data->token == NULL)
+		ft_putendl(MALLOC_FAIL);
+	return (true);
+}
+
+static void	freezer(char **token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i] != NULL)
+	{
+		ft_memset(token[i], '\0', ft_strlen(token[i]));
+		free(token[i]);
+		i++;
+	}
+	free(token);
+}
+
+void	parse_input(t_shell *data, char *input)
+{
+	if (simple_input_check(input) == true)
+	{
+		if (tokenize_input(data, input, 0) == true)
+			ft_putstr("");
+	}
+	else
+		ft_putendl("Quoting detected: handle it please");
+	freezer(data->token);
+}
