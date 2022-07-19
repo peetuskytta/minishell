@@ -46,6 +46,7 @@ typedef struct s_shell
 	char	**environ;
 	char	**environ_v;
 	char	**environ_n;
+	char	**split_path;
 	char	**token;
 	int		env_count;
 }	t_shell;
@@ -53,5 +54,6 @@ typedef struct s_shell
 void	store_environ_variables(t_shell *info);
 int		command_prompt_loop(t_shell *data);
 void	parse_input(t_shell *data, char *input);
+void	cleanup_and_free(char **token);
 
 #endif

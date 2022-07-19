@@ -39,20 +39,6 @@ static int	tokenize_input(t_shell *data, char *input, int i)
 	return (true);
 }
 
-static void	freezer(char **token)
-{
-	int	i;
-
-	i = 0;
-	while (token[i] != NULL)
-	{
-		ft_memset(token[i], '\0', ft_strlen(token[i]));
-		free(token[i]);
-		i++;
-	}
-	free(token);
-}
-
 void	parse_input(t_shell *data, char *input)
 {
 	if (simple_input_check(input) == true)
@@ -62,5 +48,5 @@ void	parse_input(t_shell *data, char *input)
 	}
 	else
 		ft_putendl("Quoting detected: handle it please");
-	freezer(data->token);
+	cleanup_and_free(data->token);
 }

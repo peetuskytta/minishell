@@ -12,8 +12,23 @@
 
 #include "minishell.h"
 
+void	cleanup_and_free(char **string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i] != NULL)
+	{
+		ft_memset(string[i], '\0', ft_strlen(string[i]));
+		free(string[i]);
+		i++;
+	}
+	free(string);
+}
+
 static void	cleanup_before_exit(t_shell *data, int i)
 {
+	cleanup_and_free(data->split_path);
 	while (data->env_count > i)
 	{
 		ft_memset(data->environ_n[i], '\0', ft_strlen(data->environ_n[i]));
