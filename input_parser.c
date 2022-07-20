@@ -44,7 +44,7 @@ void	parse_input(t_shell *data, char *input)
 	if (simple_input_check(input) == true)
 	{
 		if (tokenize_input(data, input, 0) == true)
-			ft_putstr("");
+			execute_command(data);
 	}
 	else
 		ft_putendl("Quoting detected: handle it please");

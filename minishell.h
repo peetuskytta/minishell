@@ -55,5 +55,7 @@ void	store_environ_variables(t_shell *info);
 int		command_prompt_loop(t_shell *data);
 void	parse_input(t_shell *data, char *input);
 void	cleanup_and_free(char **token);
+void	cleanup_before_exit(t_shell *data, int i);
+void	execute_command(t_shell *data);
 
 #endif

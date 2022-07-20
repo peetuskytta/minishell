@@ -19,9 +19,7 @@ static void	read_input_stdin(char *buf)
 	ft_memset(buf, '\0', BUFFER);
 	bytes_read = read(0, buf, BUFFER);
 	if (bytes_read > 0 && bytes_read <= BUFFER)
-	{
 		buf[bytes_read - 1] = '\0';
-	}
 	else
 		ft_putendl(CMD_TOO_LONG);
 }
@@ -43,6 +41,25 @@ static int	exit_and_clean(char *buf)
 		return (true);
 }
 
+static int	clear_or_env(t_shell *data, char *buf)
+{
+	int	i;
+
+	i = 0;
+	if (ft_strequ(buf, CLEAR) == true)
+	{
+		system("clear");
+		return (true);
+	}
+	else if (ft_strequ(buf, ENV) == true)
+	{
+		while (data->environ[i] != NULL)
+			ft_putendl(data->environ[i++]);
+		return (true);
+	}
+	return (false);
+}
+
 int	command_prompt_loop(t_shell *data)
 {
 	char	*buf;
@@ -56,14 +73,12 @@ int	command_prompt_loop(t_shell *data)
 		read_input_stdin(buf);
 		if (exit_and_clean(buf) == false)
 			return (false);
-		if (ft_strequ(buf, CLEAR) == true)
-			system("clear");
+		if (clear_or_env(data, buf) == true)
+			clear_and_free_buffer(buf);
 		else
+		{
 			parse_input(data, buf);
-		// act_on_command();
-		// the two lines below are just for visualizing what is in buf
-		//if (buf[0] != '\0')
-		//	ft_putendl(buf);
-		clear_and_free_buffer(buf);
+			clear_and_free_buffer(buf);
+		}
 	}
 }

@@ -7,6 +7,8 @@ SOURCES := main.c \
 	read_input.c \
 	store_environ.c \
 	input_parser.c \
+	setenv_builtin.c \
+	execute_command.c \
 
 OBJ := $(SOURCES:.c=.o)
 

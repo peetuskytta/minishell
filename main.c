@@ -26,7 +26,7 @@ void	cleanup_and_free(char **string)
 	free(string);
 }
 
-static void	cleanup_before_exit(t_shell *data, int i)
+void	cleanup_before_exit(t_shell *data, int i)
 {
 	cleanup_and_free(data->split_path);
 	while (data->env_count > i)
