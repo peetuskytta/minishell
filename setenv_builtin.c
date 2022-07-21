@@ -57,13 +57,9 @@ int	change_environ(t_shell *data, int id)
 	if (setenv_name_error_check(data) == FALSE)
 	{
 		if (id == 1)
-		{
 			set_env_variable(data);
-		}
 		if (id == 2)
-		{
 			ft_putendl("unsetenv please...");
-		}
 	}
 	return (TRUE);
 }
