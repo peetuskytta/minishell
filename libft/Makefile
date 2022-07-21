@@ -6,7 +6,7 @@
 #    By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/22 13:05:41 by pskytta           #+#    #+#              #
-#    Updated: 2022/06/21 14:46:13 by pskytta          ###   ########.fr        #
+#    Updated: 2022/07/21 22:19:19 by pskytta          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ FLAG := -Wall -Wextra -Werror #-fsanitize=address
 NAME := libft.a
 
 SRC := ft_atoi.c \
+	ft_is_directory.c \
 	ft_bzero.c \
 	ft_free_array.c \
 	ft_is_wspace.c \

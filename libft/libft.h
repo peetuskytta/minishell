@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 13:03:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/06/21 11:17:27 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/07/21 22:25:46 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include <sys/stat.h>
 
 char	**ft_strsplit(char const *s, char c);
 char	*ft_itoa(int n);
@@ -36,6 +37,7 @@ char	*ft_strstr(const char *haystack, const char *needle);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s);
 int		ft_atoi(const char *str);
+int		ft_is_directory(char *filename);
 int		ft_is_wspace(int c);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);

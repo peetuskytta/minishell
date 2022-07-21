@@ -45,7 +45,6 @@ static void	set_env_variable(t_shell *data)
 	int	var_index;
 
 	var_index = search_var_name(data->token[1], data->environ_n, data);
-	ft_putnbr_endl(var_index);
 	if (var_index > 0)
 		reset_env_value(data, var_index);
 	else
