@@ -16,13 +16,13 @@
 static int	simple_input_check(char *input)
 {
 	if (ft_strchr(input, BACKSLASH))
-		return (false);
+		return (FALSE);
 	else if (ft_strchr(input, SINGLEQUOTE))
-		return (false);
+		return (FALSE);
 	else if (ft_strchr(input, DOUBLEQUOTE))
-		return (false);
+		return (FALSE);
 	else
-		return (true);
+		return (TRUE);
 }
 
 static int	tokenize_input(t_shell *data, char *input, int i)
@@ -36,17 +36,17 @@ static int	tokenize_input(t_shell *data, char *input, int i)
 	data->token = ft_strsplit(input, ' ');
 	if (data->token == NULL)
 		ft_putendl(MALLOC_FAIL);
-	return (true);
+	return (TRUE);
 }
 
 void	parse_input(t_shell *data, char *input)
 {
-	if (simple_input_check(input) == true)
+	if (simple_input_check(input) == TRUE)
 	{
-		if (tokenize_input(data, input, 0) == true)
+		if (tokenize_input(data, input, 0) == TRUE)
 			execute_command(data);
 	}
 	else
 		ft_putendl("Quoting detected: handle it please");
-	cleanup_and_free(data->token);
+	free_double_ptr(data->token);
 }

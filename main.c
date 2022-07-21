@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	cleanup_and_free(char **string)
+void	free_double_ptr(char **string)
 {
 	int	i;
 
@@ -26,9 +26,9 @@ void	cleanup_and_free(char **string)
 	free(string);
 }
 
-void	cleanup_before_exit(t_shell *data, int i)
+void	free_and_memset(t_shell *data, int i)
 {
-	cleanup_and_free(data->split_path);
+	free_double_ptr(data->split_path);
 	while (data->env_count > i)
 	{
 		ft_memset(data->environ_n[i], '\0', ft_strlen(data->environ_n[i]));
@@ -49,8 +49,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.environ = envp;
 		store_environ_variables(&data);
-		if (command_prompt_loop(&data) == false)
-			cleanup_before_exit(&data, 0);
+		if (command_prompt_loop(&data) == FALSE)
+			free_and_memset(&data, 0);
 	}
 	exit(EXIT_SUCCESS);
 }

@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include <dirent.h>
-# include <stdbool.h>
 # include "libft/libft.h"
 
 /*Builtin command defines*/
@@ -30,15 +29,22 @@
 # define CYAN "\033[0;36m"
 # define DEFAULT "\033[0m"
 # define PROMPT CYAN"$> "DEFAULT
+# define NOSTRING ""
 # define BACKSLASH '\\'
 # define DOUBLEQUOTE '\"'
 # define SINGLEQUOTE '\''
 # define BUFFER 131072
 # define EXIT_SUCCESS 0
+# define FALSE 0
+# define TRUE 1
 
 /*Error message defines*/
 # define CMD_TOO_LONG "command line argument is too long"
 # define MALLOC_FAIL "malloc failed: serious memory issues"
+# define EMPTY_STR "name: cannot be an empty string"
+# define NULL_STR "name: cannot be a NULL pointer"
+# define ZERO_LEN_STR "name: cannot be 0 length string"
+# define STR_ILLEGAL_CHAR "name: cannot include '='"
 
 /*Data structures used*/
 typedef struct s_shell
@@ -54,8 +60,11 @@ typedef struct s_shell
 void	store_environ_variables(t_shell *info);
 int		command_prompt_loop(t_shell *data);
 void	parse_input(t_shell *data, char *input);
-void	cleanup_and_free(char **token);
-void	cleanup_before_exit(t_shell *data, int i);
+void	free_double_ptr(char **token);
+void	free_and_memset(t_shell *data, int i);
 void	execute_command(t_shell *data);
+
+int	change_environ(t_shell *data, int id);
+int	setenv_name_error_check(t_shell *data);
 
 #endif

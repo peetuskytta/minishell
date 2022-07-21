@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_command.c                                  :+:      :+:    :+:   */
+/*   setenv_builtin_auxiliary.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/20 11:15:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/07/20 11:15:57 by pskytta          ###   ########.fr       */
+/*   Created: 2022/07/21 15:53:27 by pskytta           #+#    #+#             */
+/*   Updated: 2022/07/21 15:53:27 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	check_if_builtin(t_shell *data)
+int	setenv_name_error_check(t_shell *data)
 {
-	if (ft_strequ(data->token[0], CD))
+	if (data->token[1] == NULL)
 	{
-		ft_putendl("function pointer to CD");
+		ft_putendl(NULL_STR);
 		return (TRUE);
 	}
-	else if (ft_strequ(data->token[0], ECHO))
+	else if (ft_strlen(data->token[1]) == 0)
 	{
-		ft_putendl("function pointer to ECHO");
+		ft_putendl(ZERO_LEN_STR);
 		return (TRUE);
 	}
-	else if (ft_strequ(data->token[0], SETENV))
-		return (change_environ(data, 1));
-	else if (ft_strequ(data->token[0], UNSETENV))
+	else if (ft_strchr(data->token[1], 61))
 	{
-		ft_putendl("function pointer to UNSETENV");
+		ft_putendl(STR_ILLEGAL_CHAR);
 		return (TRUE);
 	}
 	return (FALSE);
-}
-
-void	execute_command(t_shell *data)
-{
-	if (check_if_builtin(data) == FALSE)
-		ft_putendl("fork and execve");
 }

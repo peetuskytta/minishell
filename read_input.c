@@ -32,48 +32,50 @@ static void	clear_and_free_buffer(char *string)
 
 static int	exit_and_clean(char *buf)
 {
-	if (ft_strequ(buf, EXIT) == true)
+	if (ft_strequ(buf, EXIT) == TRUE)
 	{
 		clear_and_free_buffer(buf);
-		return (false);
+		return (FALSE);
 	}
 	else
-		return (true);
+		return (TRUE);
 }
 
-static int	clear_or_env(t_shell *data, char *buf)
+static int	clear_or_env_or_empty(t_shell *data, char *buf)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strequ(buf, CLEAR) == true)
+	if (ft_strequ(buf, CLEAR) == TRUE)
 	{
 		system("clear");
-		return (true);
+		return (TRUE);
 	}
-	else if (ft_strequ(buf, ENV) == true)
+	else if (ft_strequ(buf, NOSTRING) == TRUE)
+		return (TRUE);
+	else if (ft_strequ(buf, ENV) == TRUE)
 	{
 		while (data->environ[i] != NULL)
 			ft_putendl(data->environ[i++]);
-		return (true);
+		return (TRUE);
 	}
-	return (false);
+	return (FALSE);
 }
 
 int	command_prompt_loop(t_shell *data)
 {
 	char	*buf;
 
-	while (true)
+	while (TRUE)
 	{
 		ft_putstr(PROMPT);
 		buf = (char *)malloc(sizeof(char) * BUFFER);
 		if (!buf)
-			return (false);
+			return (FALSE);
 		read_input_stdin(buf);
-		if (exit_and_clean(buf) == false)
-			return (false);
-		if (clear_or_env(data, buf) == true)
+		if (exit_and_clean(buf) == FALSE)
+			return (FALSE);
+		if (clear_or_env_or_empty(data, buf) == TRUE)
 			clear_and_free_buffer(buf);
 		else
 		{
