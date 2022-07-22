@@ -31,3 +31,18 @@ int	setenv_name_error_check(t_shell *data)
 	}
 	return (FALSE);
 }
+
+int	search_var_name(char *name, char **name_array, t_shell *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->env_count > i)
+	{
+		if (ft_strequ(name, name_array[i]) == TRUE)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+

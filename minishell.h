@@ -66,5 +66,6 @@ void	execute_command(t_shell *data);
 
 int	change_environ(t_shell *data, int id);
 int	setenv_name_error_check(t_shell *data);
+int	search_var_name(char *name, char **name_array, t_shell *data);
 
 #endif
