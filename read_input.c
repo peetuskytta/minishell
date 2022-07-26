@@ -25,19 +25,8 @@ static void	read_input_stdin(char *buf)
 	//ft_putnbr_endl(bytes_read);
 }
 
-static void	clear_and_free_buffer(t_shell *data, char *string)
+static void	clear_and_free_buffer(char *string)
 {
-	int	index;
-
-	index = search_var_name("_", data->environ_n, data);
-	if (data->token_count == 1)
-	{
-		data->environ_v[index] = data->token[0];
-		ft_memdel((void *)data->environ[index]);
-		data->environ[index] = ft_strjoin(data->environ_n[index], data->token[0]);
-	}
-	else
-		data->environ_v[i] = data->token[data->token_count];
 	ft_memset(string, 0, ft_strlen(string));
 	free(string);
 }
@@ -89,11 +78,12 @@ int	command_prompt_loop(t_shell *data)
 		if (exit_and_clean(buf) == FALSE)
 			return (FALSE);
 		if (clear_env_or_empty(data, buf) == TRUE)
-			clear_and_free_buffer(data, buf);
+			clear_and_free_buffer(buf);
 		else
 		{
 			parse_input(data, buf);
-			clear_and_free_buffer(data, buf);
+			clear_and_free_buffer(buf);
 		}
+		data->token_count = -1;
 	}
 }

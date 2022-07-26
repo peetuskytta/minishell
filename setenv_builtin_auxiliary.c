@@ -14,21 +14,12 @@
 
 int	setenv_name_error_check(t_shell *data)
 {
-	if (data->token[1] == NULL)
-	{
-		ft_putendl(NULL_STR);
-		return (TRUE);
-	}
-	else if (ft_strlen(data->token[1]) == 0)
-	{
-		ft_putendl(ZERO_LEN_STR);
-		return (TRUE);
-	}
+	if (data->token_count != 2)
+		return (FALSE);
+	else if (data->token[1] == NULL || ft_strlen(data->token[1]) == 0)
+		ft_putendl(NAME_ERROR);
 	else if (ft_strchr(data->token[1], '='))
-	{
 		ft_putendl(STR_ILLEGAL_CHAR);
-		return (TRUE);
-	}
 	return (FALSE);
 }
 

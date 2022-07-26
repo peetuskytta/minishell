@@ -41,10 +41,10 @@
 /*Error message defines*/
 # define CMD_TOO_LONG "command line argument is too long"
 # define MALLOC_FAIL "malloc failed: serious memory issues"
-# define EMPTY_STR "name: cannot be an empty string"
-# define NULL_STR "name: cannot be a NULL pointer"
-# define ZERO_LEN_STR "name: cannot be 0 length string"
-# define STR_ILLEGAL_CHAR "name: cannot include '='"
+# define EMPTY_STR "setenv name: cannot be an empty string"
+# define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
+# define STR_ILLEGAL_CHAR "setenv name: cannot include '='"
+# define SETENV_USAGE "usage: setenv [name] [value]"
 
 /*Data structures used*/
 typedef struct s_shell
@@ -56,6 +56,7 @@ typedef struct s_shell
 	char	**token;
 	int		token_count;
 	int		env_count;
+	int		under;
 }	t_shell;
 
 void	store_environ_variables(t_shell *info, char **env);
@@ -65,6 +66,7 @@ void	free_double_ptr(char **token);
 void	free_and_memset(t_shell *data, int i);
 void	execute_command(t_shell *data);
 void	env_variable_counter(t_shell *info, char **environ);
+void	reset_env_value(t_shell *data, int i);
 
 int		change_environ(t_shell *data, int id);
 int		setenv_name_error_check(t_shell *data);

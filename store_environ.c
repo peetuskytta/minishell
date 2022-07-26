@@ -74,6 +74,8 @@ void	store_environ_variables(t_shell *info, char **env)
 	info->environ_n = NULL;
 	info->environ_v = NULL;
 	info->env_count = 0;
+	info->under = 0;
+	info->token_count = -1;
 	allocate_envp(info, env);
 	save_env_name(info, 0, 0);
 	save_env_value(info, 0, 0);
