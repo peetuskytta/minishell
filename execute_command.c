@@ -27,10 +27,7 @@ static int	check_if_builtin(t_shell *data)
 	else if (ft_strequ(data->token[0], SETENV))
 		return (change_environ(data, 1));
 	else if (ft_strequ(data->token[0], UNSETENV))
-	{
 		ft_putendl("function pointer to UNSETENV");
-		return (TRUE);
-	}
 	return (FALSE);
 }
 

@@ -12,10 +12,22 @@
 
 #include "minishell.h"
 
-static void	env_variable_counter(t_shell *info)
+static void	allocate_envp(t_shell *data, char **env)
 {
-	while (info->environ[info->env_count] != NULL)
-		info->env_count++;
+	int	i;
+
+	i = 0;
+	env_variable_counter(data, env);
+	data->environ = (char **)malloc(sizeof(char *) * data->env_count + 1);
+	if (data->environ == NULL)
+		exit(EXIT_FAILURE);
+	while (env[i] != NULL)
+	{
+		data->environ[i] = ft_strdup(env[i]);
+		if (data->environ[i] == NULL)
+			exit(EXIT_FAILURE);
+		i++;
+	}
 }
 
 static void	save_env_value(t_shell *info, int start, int i)
@@ -52,17 +64,17 @@ static void	split_path_variable(t_shell *info, int i)
 	var = info->environ_v[i];
 	info->split_path = ft_strsplit(var, ':');
 	if (info->split_path == NULL)
-		ft_putendl(MALLOC_FAIL);
+		exit(EXIT_FAILURE);
 }
 
-void	store_environ_variables(t_shell *info)
+void	store_environ_variables(t_shell *info, char **env)
 {
 	info->token = NULL;
 	info->split_path = NULL;
 	info->environ_n = NULL;
 	info->environ_v = NULL;
 	info->env_count = 0;
-	env_variable_counter(info);
+	allocate_envp(info, env);
 	save_env_name(info, 0, 0);
 	save_env_value(info, 0, 0);
 	split_path_variable(info, 0);

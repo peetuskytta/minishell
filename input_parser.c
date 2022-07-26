@@ -36,6 +36,9 @@ static int	tokenize_input(t_shell *data, char *input, int i)
 	data->token = ft_strsplit(input, ' ');
 	if (data->token == NULL)
 		ft_putendl(MALLOC_FAIL);
+	i = 0;
+	while (data->token[i++] != NULL)
+		data->token_count++;
 	return (TRUE);
 }
 

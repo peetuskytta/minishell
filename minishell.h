@@ -33,8 +33,8 @@
 # define BACKSLASH '\\'
 # define DOUBLEQUOTE '\"'
 # define SINGLEQUOTE '\''
+# define EQUALSIGN "="
 # define BUFFER 131072
-# define EXIT_SUCCESS 0
 # define FALSE 0
 # define TRUE 1
 
@@ -54,18 +54,20 @@ typedef struct s_shell
 	char	**environ_n;
 	char	**split_path;
 	char	**token;
+	int		token_count;
 	int		env_count;
 }	t_shell;
 
-void	store_environ_variables(t_shell *info);
+void	store_environ_variables(t_shell *info, char **env);
 int		command_prompt_loop(t_shell *data);
 void	parse_input(t_shell *data, char *input);
 void	free_double_ptr(char **token);
 void	free_and_memset(t_shell *data, int i);
 void	execute_command(t_shell *data);
+void	env_variable_counter(t_shell *info, char **environ);
 
-int	change_environ(t_shell *data, int id);
-int	setenv_name_error_check(t_shell *data);
-int	search_var_name(char *name, char **name_array, t_shell *data);
+int		change_environ(t_shell *data, int id);
+int		setenv_name_error_check(t_shell *data);
+int		search_var_name(char *name, char **name_array, t_shell *data);
 
 #endif

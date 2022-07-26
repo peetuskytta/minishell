@@ -46,3 +46,8 @@ int	search_var_name(char *name, char **name_array, t_shell *data)
 	return (0);
 }
 
+void	env_variable_counter(t_shell *info, char **environ)
+{
+	while (environ[info->env_count] != NULL)
+		info->env_count++;
+}
