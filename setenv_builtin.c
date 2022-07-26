@@ -14,12 +14,13 @@
 
 static char *join_n_and_v(char *name, char *value)
 {
-	char	temp[4096];
+	char	temp[1966];
 
 	ft_memset(temp, '\0', ft_strlen(temp));
 	ft_strcat(temp, name);
 	ft_strcat(temp, "=");
-	return (ft_strjoin(temp, value));
+	name = temp;
+	return (ft_strjoin(name, value));
 }
 
 static void	reset_env_value(t_shell *data, int index)
@@ -28,7 +29,11 @@ static void	reset_env_value(t_shell *data, int index)
 	ft_memset(data->environ_v[index], 0, ft_strlen(data->environ_v[index]));
 	ft_memdel((void *)&data->environ_v[index]);
 	data->environ_v[index] = ft_strdup(data->token[2]);
+	if (data->environ_v[index] == NULL)
+		exit(1);
 	data->environ[index] = join_n_and_v(data->environ_n[index], data->token[2]);
+	if (data->environ[index] == NULL)
+		exit(1);
 }
 
 static void	set_env_variable(t_shell *data)

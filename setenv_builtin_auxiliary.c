@@ -24,7 +24,7 @@ int	setenv_name_error_check(t_shell *data)
 		ft_putendl(ZERO_LEN_STR);
 		return (TRUE);
 	}
-	else if (ft_strchr(data->token[1], 61))
+	else if (ft_strchr(data->token[1], '='))
 	{
 		ft_putendl(STR_ILLEGAL_CHAR);
 		return (TRUE);
