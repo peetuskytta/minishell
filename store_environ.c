@@ -81,6 +81,15 @@ static void	split_path_variable(t_shell *data, int i)
 
 void	store_environ_variables(t_shell *data, char **env)
 {
+	char	*pwd;
+	int		i;
+
 	allocate_envp(data, env);
 	split_path_variable(data, 0);
+	i = search_var_name("PWD", data);
+	pwd = ft_strsub(data->environ[i], 4, ft_strlen(data->environ[i]) - 4);
+	modify_env(data, "SHELL", pwd, 0);
+	modify_env(data, "OLDPWD", "", 0);
+	ft_memset(pwd, 0, ft_strlen(pwd));
+	free(pwd);
 }

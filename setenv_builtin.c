@@ -15,7 +15,7 @@
 /*
 **	ft_strnew() exits if malloc fails.
 */
-void	reset_env_value(t_shell *data, int i)
+/*void	reset_env_value(t_shell *data, int i)
 {
 	int	len;
 
@@ -27,6 +27,22 @@ void	reset_env_value(t_shell *data, int i)
 	ft_strcat(data->environ[i], data->token[1]);
 	ft_strcat(data->environ[i], EQUALSIGN);
 	ft_strcat(data->environ[i], data->token[2]);
+}*/
+
+void	modify_env(t_shell *data, char *name, char *value, int i)
+{
+	//char	*value;
+	//int		namelen;
+	//int		len;
+
+	//namelen = ft_strlen(name) + 1;
+	//len = ft_strlen(data->environ[i]) - namelen;
+	//value = ft_strsub(data->environ[i], namelen, len);
+	i = search_var_name(name, data);
+	ft_memset(data->environ[i], 0, ft_strlen(data->environ[i]));
+	ft_memdel((void *)&data->environ[i]);
+	data->environ[i] = join_n_and_v(name, value);
+	//free(value);
 }
 
 /*
@@ -77,7 +93,7 @@ static int	set_env_variable(t_shell *data)
 	{
 		var_index = search_var_name(data->token[1], data);
 		if (var_index > 0)
-			reset_env_value(data, var_index);
+			modify_env(data, data->token[1], data->token[2], 0);
 		else
 			add_env_variable(data, data->env_count);
 		return (TRUE);

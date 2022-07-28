@@ -35,5 +35,5 @@ void	execute_command(t_shell *data)
 {
 	if (check_if_builtin(data) == FALSE)
 		reset_last_cmd_env(data);
-	ft_putendl("fork and execve");
+	//ft_putendl("fork and execve");
 }

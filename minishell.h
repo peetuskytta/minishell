@@ -71,5 +71,7 @@ int		setenv_name_error_check(t_shell *data);
 int		search_var_name(char *name, t_shell *data);
 
 char	*join_n_and_v(char *name, char *value);
+void	modify_env(t_shell *data, char *name, char *value, int i);
+
 
 #endif
