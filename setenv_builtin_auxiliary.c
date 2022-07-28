@@ -23,22 +23,27 @@ int	setenv_name_error_check(t_shell *data)
 	return (FALSE);
 }
 
-int	search_var_name(char *name, char **name_array, t_shell *data)
+int	search_var_name(char *name, t_shell *data)
 {
 	int	i;
 
 	i = 0;
 	while (data->env_count > i)
 	{
-		if (ft_strequ(name, name_array[i]) == TRUE)
+		if (ft_strnstr(data->environ[i], name, ft_strlen(name)) != NULL)
 			return (i);
 		i++;
 	}
 	return (0);
 }
 
-void	env_variable_counter(t_shell *info, char **environ)
+char	*join_n_and_v(char *name, char *value)
 {
-	while (environ[info->env_count] != NULL)
-		info->env_count++;
+	char	temp[1024];
+
+	ft_memset(temp, '\0', ft_strlen(temp));
+	ft_strcat(temp, name);
+	ft_strcat(temp, EQUALSIGN);
+	name = temp;
+	return (ft_strjoin(name, value));
 }
