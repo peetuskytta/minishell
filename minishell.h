@@ -58,16 +58,18 @@ typedef struct s_shell
 }	t_shell;
 
 void	store_environ_variables(t_shell *data, char **env);
-int		command_prompt_loop(t_shell *data);
 void	parse_input(t_shell *data, char *input);
 void	free_double_ptr(char **token);
 void	free_and_memset(t_shell *data, int i);
 void	execute_command(t_shell *data);
 void	reset_env_value(t_shell *data, int i);
+void	reset_last_cmd_env(t_shell *data);
 
-char	*join_n_and_v(char *name, char *value);
+int		command_prompt_loop(t_shell *data);
 int		change_environ(t_shell *data, int id);
 int		setenv_name_error_check(t_shell *data);
 int		search_var_name(char *name, t_shell *data);
+
+char	*join_n_and_v(char *name, char *value);
 
 #endif

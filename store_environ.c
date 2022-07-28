@@ -71,21 +71,16 @@ static void	split_path_variable(t_shell *data, int i)
 			break;
 		i++;
 	}
-		var = ft_strdup(data->environ[i]);
+	var = ft_strsub(data->environ[i], 5, ft_strlen(data->environ[i]) - 5);
 	data->split_path = ft_strsplit(var, ':');
 	if (data->split_path == NULL)
 		exit(EXIT_FAILURE);
 	ft_memset(var, 0, ft_strlen(var));
 	free(var);
-	ft_putendl(data->split_path[0]);
-	ft_putendl(data->split_path[1]);
 }
 
 void	store_environ_variables(t_shell *data, char **env)
 {
 	allocate_envp(data, env);
-	//ft_putendl(data->environ[2]);
-	//save_env_name(data, 0, 0);
-	//save_env_value(data, 0, 0);
 	split_path_variable(data, 0);
 }

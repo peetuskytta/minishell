@@ -34,5 +34,6 @@ static int	check_if_builtin(t_shell *data)
 void	execute_command(t_shell *data)
 {
 	if (check_if_builtin(data) == FALSE)
-		ft_putendl("fork and execve");
+		reset_last_cmd_env(data);
+	ft_putendl("fork and execve");
 }

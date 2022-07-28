@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:42:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/06/21 11:49:38 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/07/28 21:37:54 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	length = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	str = (char *)malloc(sizeof(char) * (length + 1));
 	if (str == NULL)
-		ft_error_handler(1, "libft/ft_strjoin <---\n");
+		exit(EXIT_FAILURE);
 	while (*s1)
 		str[i++] = *s1++;
 	while (*s2)

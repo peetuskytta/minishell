@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 13:03:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/07/21 22:25:46 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/07/28 22:02:41 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <string.h>
 # include <stdlib.h>
 # include <sys/stat.h>
+
+# define EXIT_FAILURE 1
 
 char	**ft_strsplit(char const *s, char c);
 char	*ft_itoa(int n);

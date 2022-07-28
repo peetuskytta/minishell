@@ -6,14 +6,13 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 13:23:08 by pskytta           #+#    #+#             */
-/*   Updated: 2022/07/18 19:35:03 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/07/28 22:04:01 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-static size_t	ft_word_size(char const *str, size_t i, char c)
+static size_t	word_size(char const *str, size_t i, char c)
 {
 	size_t	len;
 
@@ -28,7 +27,7 @@ static size_t	ft_word_size(char const *str, size_t i, char c)
 	return (len);
 }
 
-static int	ft_allocate_fill(char const *s, char **res, char c)
+static void	allocate_fill(char const *s, char **res, char c)
 {
 	size_t	i;
 	size_t	k;
@@ -43,24 +42,17 @@ static int	ft_allocate_fill(char const *s, char **res, char c)
 		{
 			while (s[i] && s[i] != c)
 			{
-				res[k] = ft_strsub(s, i, ft_word_size(s, i, c));
-				if (!res[k])
-				{
-					ft_free_array(k, res);
-					return (0);
-				}
-				i = i + ft_word_size(s, i, c);
+				res[k] = ft_strsub(s, i, word_size(s, i, c));
+				i = i + word_size(s, i, c);
 				k++;
 			}
 		}
 	}
-	return (1);
 }
 
 char	**ft_strsplit(char const *s, char c)
 {
 	char	**result;
-	int		ret;
 	size_t	nbr;
 
 	if (!s)
@@ -68,11 +60,8 @@ char	**ft_strsplit(char const *s, char c)
 	nbr = ft_word_count(s, c);
 	result = (char **)malloc(sizeof(char *) * (nbr + 1));
 	if (!result)
-		return (NULL);
-	ret = ft_allocate_fill(s, result, c);
-	if (!ret)
-		return (NULL);
-	else
-		result[nbr] = NULL;
+		exit(EXIT_FAILURE);
+	allocate_fill(s, result, c);
+	result[nbr] = NULL;
 	return (result);
 }

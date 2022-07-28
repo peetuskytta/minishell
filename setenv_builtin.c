@@ -12,27 +12,26 @@
 
 #include "minishell.h"
 
+/*
+**	ft_strnew() exits if malloc fails.
+*/
 void	reset_env_value(t_shell *data, int i)
 {
 	int	len;
 
-	if (data->token_count == 2)
-	{
-		len = ft_strlen(data->token[1]) + ft_strlen(data->token[2] + 1);
-		ft_memset(data->environ[i], '\0', ft_strlen(data->environ[i]));
-		ft_putendl("2");
-		ft_memdel((void *)&data->environ[i]);
-		data->environ[i] = ft_strnew(len);
-		if (data->environ[i] == NULL)
-			exit(EXIT_FAILURE);
-		ft_memset(data->environ[i], '\0', ft_strlen(data->environ[i]));
-		ft_putendl("3");
-		ft_strcat(data->environ[i], data->token[1]);
-		ft_strcat(data->environ[i], EQUALSIGN);
-		ft_strcat(data->environ[i], data->token[2]);
-	}
+	len = ft_strlen(data->token[1]) + ft_strlen(data->token[2]);
+	ft_memset(data->environ[i], '\0', ft_strlen(data->environ[i]));
+	ft_memdel((void *)&data->environ[i]);
+	data->environ[i] = ft_strnew(len);
+	ft_memset(data->environ[i], '\0', ft_strlen(data->environ[i]));
+	ft_strcat(data->environ[i], data->token[1]);
+	ft_strcat(data->environ[i], EQUALSIGN);
+	ft_strcat(data->environ[i], data->token[2]);
 }
 
+/*
+**	ft_strdup() exits if malloc fails.
+*/
 static char **plus_one_line(char **old_env, int rows)
 {
 	char	**new_env;
@@ -45,8 +44,7 @@ static char **plus_one_line(char **old_env, int rows)
 	while (rows > i)
 	{
 		new_env[i] = ft_strdup(old_env[i]);
-		ft_memdel((void *)&old_env[i]);
-		i++;
+		ft_memdel((void *)&old_env[i++]);
 	}
 	free(old_env);
 	return(new_env);
@@ -98,15 +96,9 @@ int	change_environ(t_shell *data, int id)
 		if (id == 1)
 		{
 			if (set_env_variable(data) == TRUE)
-			{
-				data->under = search_var_name("_", data);
-				reset_env_value(data, data->under);
-			}
+				reset_last_cmd_env(data);
 			else
-			{
-				data->under = search_var_name("_", data);
-				reset_env_value(data, data->under);
-			}
+				reset_last_cmd_env(data);
 		}
 		if (id == 2)
 			ft_putendl("unsetenv please...");
