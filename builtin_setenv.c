@@ -63,6 +63,7 @@ static char **plus_one_line(char **old_env, int rows)
 		ft_memdel((void *)&old_env[i++]);
 	}
 	free(old_env);
+	new_env[rows++] = NULL;
 	return(new_env);
 }
 
@@ -116,14 +117,11 @@ int	change_environ(t_shell *data, int id)
 		{
 			if (set_env_variable(data) == TRUE)
 				reset_last_cmd_env(data);
-			//else
 		}
 		else if (id == 2)
 		{
 			if (unset_env_variable(data) == TRUE)
 				reset_last_cmd_env(data);
-			//else
-				//reset_last_cmd_env(data);
 		}
 		else if (id == 3)
 		{

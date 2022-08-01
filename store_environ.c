@@ -30,10 +30,9 @@ static void	allocate_envp(t_shell *data, char **env)
 	while (env[i] != NULL)
 	{
 		data->environ[i] = ft_strdup(env[i]);
-		if (data->environ[i] == NULL)
-			exit(EXIT_FAILURE);
 		i++;
 	}
+	data->environ[data->env_count] = NULL;
 }
 
 /*static void	save_env_value(t_shell *info, int start, int i)

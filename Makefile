@@ -7,9 +7,10 @@ SOURCES := main.c \
 	read_input.c \
 	store_environ.c \
 	input_parser.c \
-	unsetenv_builtin.c \
-	setenv_builtin.c \
-	setenv_builtin_auxiliary.c \
+	builtin_unsetenv.c \
+	builtin_setenv_auxiliary.c \
+	builtin_setenv.c \
+	builtin_cd.c \
 	execute_command.c \
 	tokenize_input.c \
 
