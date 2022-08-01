@@ -107,17 +107,34 @@ static int	set_env_variable(t_shell *data)
 
 int	change_environ(t_shell *data, int id)
 {
+	int	i;
+
+	i = 0;
 	if (setenv_name_error_check(data) == FALSE)
 	{
 		if (id == 1)
 		{
 			if (set_env_variable(data) == TRUE)
 				reset_last_cmd_env(data);
-			else
-				reset_last_cmd_env(data);
+			//else
 		}
-		if (id == 2)
-			ft_putendl("unsetenv please...");
+		else if (id == 2)
+		{
+			if (unset_env_variable(data) == TRUE)
+				reset_last_cmd_env(data);
+			//else
+				//reset_last_cmd_env(data);
+		}
+		else if (id == 3)
+		{
+			while (data->env_count > i)
+			{
+				if (data->environ[i][0] != '\0')
+					ft_putendl(data->environ[i]);
+				i++;
+			}
+		}
+		reset_last_cmd_env(data);
 	}
 	return (TRUE);
 }

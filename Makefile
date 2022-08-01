@@ -11,6 +11,7 @@ SOURCES := main.c \
 	setenv_builtin.c \
 	setenv_builtin_auxiliary.c \
 	execute_command.c \
+	tokenize_input.c \
 
 OBJ := $(SOURCES:.c=.o)
 

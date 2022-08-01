@@ -25,26 +25,6 @@ static int	simple_input_check(char *input)
 		return (TRUE);
 }
 
-static int	tokenize_input(t_shell *data, char *input, int i)
-{
-	while (input[i] != '\0')
-	{
-		if (ft_is_wspace(input[i]))
-			input[i] = ' ';
-		i++;
-	}
-	data->token = ft_strsplit(input, ' ');
-	if (data->token == NULL)
-		exit(EXIT_FAILURE);
-	i = 0;
-	while (data->token[i] != NULL)
-	{
-		data->token_count++;
-		i++;
-	}
-	return (TRUE);
-}
-
 void	parse_input(t_shell *data, char *input)
 {
 	if (simple_input_check(input) == TRUE)

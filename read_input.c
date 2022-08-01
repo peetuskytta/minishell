@@ -22,7 +22,6 @@ static void	read_input_stdin(char *buf)
 		buf[bytes_read - 1] = '\0';
 	else
 		ft_putendl(CMD_TOO_LONG);
-	//ft_putnbr_endl(bytes_read);
 }
 
 static void	clear_and_free_buffer(char *string)
@@ -43,11 +42,8 @@ static int	exit_and_clean(char *buf)
 		return (TRUE);
 }
 
-static int	clear_env_or_empty(t_shell *data, char *buf)
+static int	clear_or_empty(char *buf)
 {
-	int	i;
-
-	i = 0;
 	if (ft_strequ(buf, CLEAR) == TRUE)
 	{
 		system("clear");
@@ -55,12 +51,6 @@ static int	clear_env_or_empty(t_shell *data, char *buf)
 	}
 	else if (ft_strequ(buf, NOSTRING) == TRUE)
 		return (TRUE);
-	else if (ft_strequ(buf, ENV) == TRUE)
-	{
-		while (data->env_count > i)
-			ft_putendl(data->environ[i++]);
-		return (TRUE);
-	}
 	return (FALSE);
 }
 
@@ -77,7 +67,7 @@ int	command_prompt_loop(t_shell *data)
 		read_input_stdin(buf);
 		if (exit_and_clean(buf) == FALSE)
 			return (FALSE);
-		if (clear_env_or_empty(data, buf) == TRUE)
+		if (clear_or_empty(buf) == TRUE)
 			clear_and_free_buffer(buf);
 		else
 		{
