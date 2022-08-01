@@ -17,7 +17,7 @@ So basically it's about coding a minimally functional `command prompt interprete
 ### Objectives:
 
 - read and parse user input into commands and arguments.
-- to handle expansions `$` and ` ̃`.
+- to handle expansions `$` and `~`.
 - corect handling of the environment (`char **environ`) and `$PATH`.
 
 #### Learnings (so far)
@@ -39,11 +39,11 @@ environment variables.
  
  #### Successes
  
- - no memory leaks in the `setenv`, ènv` and `exit` builtins.
+ - no memory leaks in the `setenv`, `env`, `unsetenv` and `exit` builtins.
  
  ### TODO
  
- - cd, unsetenv, pwd
+ - cd, pwd
  - permission check for the whole path to a binary
  - quoting detection
  - expansion
