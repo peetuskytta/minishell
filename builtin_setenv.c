@@ -12,43 +12,18 @@
 
 #include "minishell.h"
 
-/*
-**	ft_strnew() exits if malloc fails.
-*/
-/*void	reset_env_value(t_shell *data, int i)
-{
-	int	len;
-
-	len = ft_strlen(data->token[1]) + ft_strlen(data->token[2]);
-	ft_memset(data->environ[i], '\0', ft_strlen(data->environ[i]));
-	ft_memdel((void *)&data->environ[i]);
-	data->environ[i] = ft_strnew(len);
-	ft_memset(data->environ[i], '\0', ft_strlen(data->environ[i]));
-	ft_strcat(data->environ[i], data->token[1]);
-	ft_strcat(data->environ[i], EQUALSIGN);
-	ft_strcat(data->environ[i], data->token[2]);
-}*/
-
 void	modify_env(t_shell *data, char *name, char *value, int i)
 {
-	//char	*value;
-	//int		namelen;
-	//int		len;
-
-	//namelen = ft_strlen(name) + 1;
-	//len = ft_strlen(data->environ[i]) - namelen;
-	//value = ft_strsub(data->environ[i], namelen, len);
 	i = search_var_name(name, data);
 	ft_memset(data->environ[i], 0, ft_strlen(data->environ[i]));
 	ft_memdel((void *)&data->environ[i]);
 	data->environ[i] = join_n_and_v(name, value);
-	//free(value);
 }
 
 /*
 **	ft_strdup() exits if malloc fails.
 */
-static char **plus_one_line(char **old_env, int rows)
+static char	**plus_one_line(char **old_env, int rows)
 {
 	char	**new_env;
 	int		i;
@@ -64,7 +39,7 @@ static char **plus_one_line(char **old_env, int rows)
 	}
 	free(old_env);
 	new_env[rows++] = NULL;
-	return(new_env);
+	return (new_env);
 }
 
 static void	add_env_variable(t_shell *data, int size)
@@ -101,7 +76,7 @@ static int	set_env_variable(t_shell *data)
 	}
 	else
 	{
-		ft_putendl(SETENV_USAGE);
+		//ft_putendl(SETENV_USAGE);
 		return (FALSE);
 	}
 }
@@ -111,28 +86,15 @@ int	change_environ(t_shell *data, int id)
 	int	i;
 
 	i = 0;
-	if (setenv_name_error_check(data) == FALSE)
+	if (setenv_error_check(data) == TRUE && id == 1)
 	{
-		if (id == 1)
-		{
-			if (set_env_variable(data) == TRUE)
-				reset_last_cmd_env(data);
-		}
-		else if (id == 2)
-		{
-			if (unset_env_variable(data) == TRUE)
-				reset_last_cmd_env(data);
-		}
-		else if (id == 3)
-		{
-			while (data->env_count > i)
-			{
-				if (data->environ[i][0] != '\0')
-					ft_putendl(data->environ[i]);
-				i++;
-			}
-		}
-		reset_last_cmd_env(data);
+		if (set_env_variable(data) == TRUE)
+			reset_last_cmd_env(data);
+	}
+	if (data->token_count == 1 && id == 2)
+	{
+		if (unset_env_variable(data) == TRUE)
+			reset_last_cmd_env(data);
 	}
 	return (TRUE);
 }

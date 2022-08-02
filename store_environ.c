@@ -35,31 +35,6 @@ static void	allocate_envp(t_shell *data, char **env)
 	data->environ[data->env_count] = NULL;
 }
 
-/*static void	save_env_value(t_shell *info, int start, int i)
-{
-	int	len;
-
-	info->environ_v = (char **)malloc(sizeof(char *) * (info->env_count + 1));
-	while (info->env_count > i)
-	{
-		start = (int)(ft_strchr(info->environ[i], '=') - info->environ[i]);
-		len = ft_strlen(info->environ[i]);
-		info->environ_v[i] = ft_strsub(info->environ[i], ++start, len);
-		i++;
-	}
-}*/
-
-/*static void	save_env_name(t_shell *info, int len, int i)
-{
-	info->environ_n = (char **)malloc(sizeof(char *) * (info->env_count + 1));
-	while (info->env_count > i)
-	{
-		len = (int)(ft_strchr(info->environ[i], '=') - info->environ[i]);
-		info->environ_n[i] = ft_strsub(info->environ[i], 0, len);
-		i++;
-	}
-}*/
-
 static void	split_path_variable(t_shell *data, int i)
 {
 	char	*var;

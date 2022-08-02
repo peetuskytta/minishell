@@ -45,6 +45,8 @@
 # define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
 # define STR_ILLEGAL_CHAR "setenv name: cannot include '='"
 # define SETENV_USAGE "usage: setenv [name] [value]"
+# define UNSETENV_USAGE "usage: unsetenv [name]"
+# define TOO_MANY_ARG "setenv: too many arguments\n"SETENV_USAGE
 
 /*Data structures used*/
 typedef struct s_shell
@@ -65,10 +67,11 @@ void	execute_command(t_shell *data);
 void	reset_env_value(t_shell *data, int i);
 void	reset_last_cmd_env(t_shell *data);
 void	check_expansion(t_shell *data, int i);
+void	write_env(t_shell *data, int i);
 
 int		command_prompt_loop(t_shell *data);
 int		change_environ(t_shell *data, int id);
-int		setenv_name_error_check(t_shell *data);
+int		setenv_error_check(t_shell *data);
 int		search_var_name(char *name, t_shell *data);
 int		tokenize_input(t_shell *data, char *input, int i);
 int		unset_env_variable(t_shell *data);

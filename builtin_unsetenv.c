@@ -12,22 +12,37 @@
 
 #include "minishell.h"
 
+static void	remove_variable(char **strings, int var_i, int count)
+{
+	while (count > var_i)
+	{
+		ft_memdel((void *)&strings[var_i]);
+		strings[var_i] = ft_strdup(strings[var_i + 1]);
+		var_i++;
+	}
+	ft_memdel((void *)&strings[var_i]);
+}
+
 int	unset_env_variable(t_shell *data)
 {
 	int		var_i;
-	int		len;
+	int		i;
 
+	i = 0;
 	if (data->token_count == 1)
 	{
 		var_i = search_var_name(data->token[1], data);
-		len = ft_strlen(data->environ[var_i]);
-		if (var_i > 0)
-			ft_memset(data->environ[var_i], '\0', len);
+		if (var_i < 0)
+			return (TRUE);
+		remove_variable(data->environ, var_i, data->env_count - 1);
+		data->env_count = i;
+		while (data->environ[i++] != NULL)
+			data->env_count++;
 		return (TRUE);
 	}
 	else
 	{
-		ft_putendl(SETENV_USAGE);
+		ft_putendl(UNSETENV_USAGE);
 		return (FALSE);
 	}
 }

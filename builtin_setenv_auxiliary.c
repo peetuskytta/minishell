@@ -12,29 +12,59 @@
 
 #include "minishell.h"
 
-int	setenv_name_error_check(t_shell *data)
+int	setenv_error_check(t_shell *data)
 {
-	if (data->token_count != 2)
-		return (FALSE);
-	else if (data->token[1] == NULL || ft_strlen(data->token[1]) == 0)
-		ft_putendl(NAME_ERROR);
-	else if (ft_strchr(data->token[1], '='))
+	if (data->token_count == 2)
+	{
+		if (data->token[1] == NULL || ft_strlen(data->token[1]) == 0)
+			ft_putendl(NAME_ERROR);
+		else if (ft_strchr(data->token[1], '='))
+		{
+			ft_putendl(STR_ILLEGAL_CHAR);
+			return (FALSE);
+		}
+		else
+			return (TRUE);
+	}
+	else if (data->token_count == 1 && ft_strchr(data->token[1], '='))
 		ft_putendl(STR_ILLEGAL_CHAR);
+	else if (data->token_count > 2)
+		ft_putendl(TOO_MANY_ARG);
 	return (FALSE);
 }
 
 int	search_var_name(char *name, t_shell *data)
 {
-	int	i;
+	char	*temp;
+	int		len;
+	int		i;
 
 	i = 0;
+	len = 0;
+	temp = NULL;
 	while (data->env_count > i)
 	{
-		if (ft_strnstr(data->environ[i], name, ft_strlen(name)) != NULL)
+		len = (int)(ft_strchr(data->environ[i], '=') - data->environ[i]);
+		temp = ft_strsub(data->environ[i], 0, len);
+		if (ft_strequ(temp, name) == TRUE)
+		{
+			free(temp);
 			return (i);
+		}
+		ft_memdel((void *)&temp);
 		i++;
 	}
-	return (0);
+	return (-1);
+}
+
+void	write_env(t_shell *data, int i)
+{
+	while (data->env_count > i)
+	{
+		if (data->environ[i][0] != '\0')
+			ft_putendl(data->environ[i]);
+		i++;
+	}
 }
 
 /*

@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 static int	simple_input_check(char *input)
 {
 	if (ft_strchr(input, BACKSLASH))

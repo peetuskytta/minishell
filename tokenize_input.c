@@ -12,29 +12,55 @@
 
 #include "minishell.h"
 
-static void	expand_token(int id, int i, t_shell *data)
+static void	expand_variable(int i, int var_i, t_shell *data)
 {
-	int		len;
-	int		var_i;
 	char	*temp;
+	int		len;
 
-	var_i = 0;
-	if (id == 2)
+	temp = NULL;
+	var_i = search_var_name(temp, data);
+	if (var_i == -1)
 	{
 		ft_memdel((void *)&data->token[i]);
-		var_i = search_var_name("HOME", data);
-		len = ft_strlen(data->environ[var_i] - 5);
-		data->token[i] = ft_strsub(data->environ[var_i], 5, len);
+		data->token[i] = ft_strdup("");
 	}
-	if (id == 1)
+	else
 	{
 		temp = ft_strsub(data->token[i], 1, ft_strlen(data->token[i] - 1));
 		ft_memdel((void *)&data->token[i]);
-		var_i = search_var_name(temp, data);
 		len = ft_strlen(data->environ[var_i]) - ft_strlen(temp) + 1;
 		data->token[i] = ft_strsub(data->environ[var_i], ft_strlen(temp) + 1, len);
-		free(temp);
 	}
+	free(temp);
+}
+
+static void	expand_home(int i, int var_i, t_shell *data)
+{
+	int		len;
+
+	var_i = search_var_name("HOME", data);
+	if (var_i == -1)
+	{
+		ft_memdel((void *)&data->token[i]);
+		data->token[i] = ft_strdup("");
+	}
+	else
+	{
+		ft_memdel((void *)&data->token[i]);
+		len = ft_strlen(data->environ[var_i] - 5);
+		data->token[i] = ft_strsub(data->environ[var_i], 5, len);
+	}
+}
+
+static void	expand_token(int id, int i, t_shell *data)
+{
+	int		var_i;
+
+	var_i = 0;
+	if (id == 1)
+		expand_variable(i, var_i, data);
+	if (id == 2)
+		expand_home(i, var_i, data);
 }
 
 int	tokenize_input(t_shell *data, char *input, int i)
