@@ -17,17 +17,14 @@ static void	expand_variable(int i, int var_i, t_shell *data)
 	char	*temp;
 	int		len;
 
-	temp = NULL;
+	temp = ft_strsub(data->token[i], 1, ft_strlen(data->token[i] - 1));
 	var_i = search_var_name(temp, data);
+	ft_memdel((void *)&data->token[i]);
 	if (var_i == -1)
-	{
-		ft_memdel((void *)&data->token[i]);
 		data->token[i] = ft_strdup("");
-	}
 	else
 	{
-		temp = ft_strsub(data->token[i], 1, ft_strlen(data->token[i] - 1));
-		ft_memdel((void *)&data->token[i]);
+		//ft_memdel((void *)&data->token[i]);
 		len = ft_strlen(data->environ[var_i]) - ft_strlen(temp) + 1;
 		data->token[i] = ft_strsub(data->environ[var_i], ft_strlen(temp) + 1, len);
 	}

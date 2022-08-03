@@ -21,7 +21,7 @@ void	modify_env(t_shell *data, char *name, char *value, int i)
 }
 
 /*
-**	ft_strdup() exits if malloc fails.
+**	ft_strdup() and ft_memalloc() exit if malloc() fails.
 */
 static char	**plus_one_line(char **old_env, int rows)
 {
@@ -42,21 +42,21 @@ static char	**plus_one_line(char **old_env, int rows)
 	return (new_env);
 }
 
-static void	add_env_variable(t_shell *data, int size)
+static void	add_env_variable(t_shell *data, char *str, int size)
 {
 	char	**new_env;
 	int		len;
 
 	new_env = plus_one_line(data->environ, size);
 	size++;
-	len = ft_strlen(data->token[1]) + ft_strlen(data->token[2]) + 1;
+	len = ft_strlen(data->token[1]) + ft_strlen(str) + 1;
 	new_env[--size] = ft_strnew(len);
 	if (new_env[size] == NULL)
 		exit(EXIT_FAILURE);
 	ft_memset(new_env[size], '\0', len + 1);
 	ft_strcat(new_env[size], data->token[1]);
 	ft_strcat(new_env[size], EQUALSIGN);
-	ft_strcat(new_env[size], data->token[2]);
+	ft_strcat(new_env[size], str);
 	data->environ = new_env;
 	data->env_count++;
 }
@@ -71,30 +71,30 @@ static int	set_env_variable(t_shell *data)
 		if (var_index > 0)
 			modify_env(data, data->token[1], data->token[2], 0);
 		else
-			add_env_variable(data, data->env_count);
+			add_env_variable(data, data->token[2], data->env_count);
+		return (TRUE);
+	}
+	if (data->token_count == 1)
+	{
+		add_env_variable(data, "", data->env_count);
 		return (TRUE);
 	}
 	else
-	{
-		//ft_putendl(SETENV_USAGE);
 		return (FALSE);
-	}
 }
 
 int	change_environ(t_shell *data, int id)
 {
-	int	i;
-
-	i = 0;
 	if (setenv_error_check(data) == TRUE && id == 1)
 	{
 		if (set_env_variable(data) == TRUE)
 			reset_last_cmd_env(data);
 	}
-	if (data->token_count == 1 && id == 2)
+	else if (unset_error_check(data) == TRUE && id == 2)
 	{
 		if (unset_env_variable(data) == TRUE)
 			reset_last_cmd_env(data);
 	}
+	reset_last_cmd_env(data);
 	return (TRUE);
 }

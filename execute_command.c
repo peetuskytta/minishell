@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-static int	show_environ(t_shell *data)
-{
-	write_env(data, 0);
-	return (TRUE);
-}
-
 static int	check_if_builtin(t_shell *data)
 {
 	if (ft_strequ(data->token[0], CD))
@@ -35,7 +29,7 @@ static int	check_if_builtin(t_shell *data)
 	else if (ft_strequ(data->token[0], UNSETENV))
 		return (change_environ(data, 2));
 	else if (ft_strequ(data->token[0], ENV))
-		return (show_environ(data));
+		return (output_environment(data, 0));
 	return (FALSE);
 }
 

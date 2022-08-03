@@ -14,23 +14,30 @@
 
 int	setenv_error_check(t_shell *data)
 {
-	if (data->token_count == 2)
+	if (ft_strequ(data->token[0], SETENV) == TRUE)
 	{
-		if (data->token[1] == NULL || ft_strlen(data->token[1]) == 0)
-			ft_putendl(NAME_ERROR);
-		else if (ft_strchr(data->token[1], '='))
+		if (data->token_count == 2)
 		{
-			ft_putendl(STR_ILLEGAL_CHAR);
-			return (FALSE);
+			if (data->token[1] == NULL || ft_strlen(data->token[1]) == 0)
+				ft_putendl(NAME_ERROR);
+			else if (ft_strchr(data->token[1], '='))
+			{
+				ft_putendl(STR_ILLEGAL_CHAR);
+				return (FALSE);
+			}
+			else
+				return (TRUE);
 		}
-		else
+		else if (data->token_count == 1 && ft_strchr(data->token[1], '='))
+			ft_putendl(STR_ILLEGAL_CHAR);
+		else if (data->token_count == 1)
 			return (TRUE);
+		else if (data->token_count > 2)
+			ft_putendl(SET_TOO_MANY_ARG);
+		return (FALSE);
 	}
-	else if (data->token_count == 1 && ft_strchr(data->token[1], '='))
-		ft_putendl(STR_ILLEGAL_CHAR);
-	else if (data->token_count > 2)
-		ft_putendl(TOO_MANY_ARG);
-	return (FALSE);
+	else
+		return (FALSE);
 }
 
 int	search_var_name(char *name, t_shell *data)
@@ -57,13 +64,19 @@ int	search_var_name(char *name, t_shell *data)
 	return (-1);
 }
 
-void	write_env(t_shell *data, int i)
+int	output_environment(t_shell *data, int i)
 {
-	while (data->env_count > i)
+	if (data->token_count == 0)
 	{
-		if (data->environ[i][0] != '\0')
-			ft_putendl(data->environ[i]);
-		i++;
+		reset_last_cmd_env(data);
+		while (data->env_count > i)
+			ft_putendl(data->environ[i++]);
+		return (TRUE);
+	}
+	else
+	{
+		reset_last_cmd_env(data);
+		return (TRUE);
 	}
 }
 
@@ -72,9 +85,9 @@ void	write_env(t_shell *data, int i)
 */
 char	*join_n_and_v(char *name, char *value)
 {
-	char	temp[1024];
+	char	temp[4096];
 
-	ft_memset(temp, '\0', ft_strlen(temp));
+	ft_memset(temp, '\0', 4096);
 	ft_strcat(temp, name);
 	ft_strcat(temp, EQUALSIGN);
 	name = temp;
@@ -87,6 +100,8 @@ void	reset_last_cmd_env(t_shell *data)
 
 	index = data->token_count;
 	data->under = search_var_name("_", data);
+	if (data->under == -1)
+		return ;
 	ft_memdel((void *)&data->environ[data->under]);
 	if (data->token_count == 0)
 		data->environ[data->under] = join_n_and_v("_", data->token[0]);

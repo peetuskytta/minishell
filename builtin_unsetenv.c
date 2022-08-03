@@ -23,6 +23,27 @@ static void	remove_variable(char **strings, int var_i, int count)
 	ft_memdel((void *)&strings[var_i]);
 }
 
+int	unset_error_check(t_shell *data)
+{
+	if (ft_strequ(data->token[0], UNSETENV) == TRUE)
+	{
+		if (data->token_count == 1)
+			return (TRUE);
+		if (data->token_count > 1)
+		{
+			ft_putendl(UNSET_TOO_MANY_ARG);
+			return (FALSE);
+		}
+		else
+		{
+			ft_putendl(UNSETENV_USAGE);
+			return (FALSE);
+		}
+	}
+	else
+		return (FALSE);
+}
+
 int	unset_env_variable(t_shell *data)
 {
 	int		var_i;

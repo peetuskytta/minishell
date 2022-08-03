@@ -46,7 +46,8 @@
 # define STR_ILLEGAL_CHAR "setenv name: cannot include '='"
 # define SETENV_USAGE "usage: setenv [name] [value]"
 # define UNSETENV_USAGE "usage: unsetenv [name]"
-# define TOO_MANY_ARG "setenv: too many arguments\n"SETENV_USAGE
+# define SET_TOO_MANY_ARG "setenv: too many arguments\n"SETENV_USAGE
+# define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"UNSETENV_USAGE
 
 /*Data structures used*/
 typedef struct s_shell
@@ -67,8 +68,9 @@ void	execute_command(t_shell *data);
 void	reset_env_value(t_shell *data, int i);
 void	reset_last_cmd_env(t_shell *data);
 void	check_expansion(t_shell *data, int i);
-void	write_env(t_shell *data, int i);
 
+int		output_environment(t_shell *data, int i);
+int		unset_error_check(t_shell *data);
 int		command_prompt_loop(t_shell *data);
 int		change_environ(t_shell *data, int id);
 int		setenv_error_check(t_shell *data);
