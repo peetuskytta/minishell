@@ -12,3 +12,13 @@
 
 #include "minishell.h"
 
+// check if tokens?
+// check for -L or -P flags?
+// check for -
+// check for /
+// check for .. and .
+
+int cur_dir_starter(data)
+{
+
+}

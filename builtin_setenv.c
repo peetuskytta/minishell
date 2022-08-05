@@ -88,13 +88,13 @@ int	change_environ(t_shell *data, int id)
 	if (setenv_error_check(data) == TRUE && id == 1)
 	{
 		if (set_env_variable(data) == TRUE)
-			reset_last_cmd_env(data);
+			reset_last_cmd_env(data, data->last_cmd);
 	}
 	else if (unset_error_check(data) == TRUE && id == 2)
 	{
 		if (unset_env_variable(data) == TRUE)
-			reset_last_cmd_env(data);
+			reset_last_cmd_env(data, data->last_cmd);
 	}
-	reset_last_cmd_env(data);
+	reset_last_cmd_env(data, data->last_cmd);
 	return (TRUE);
 }

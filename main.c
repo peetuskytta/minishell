@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **envp)
 	data.token = NULL;
 	data.split_path = NULL;
 	data.env_count = 0;
-	data.under = 0;
+	data.last_cmd = 0;
 	data.token_count = -1;
 	if (argc && argv)
 	{

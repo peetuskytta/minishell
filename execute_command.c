@@ -36,5 +36,5 @@ static int	check_if_builtin(t_shell *data)
 void	execute_command(t_shell *data)
 {
 	if (check_if_builtin(data) == FALSE)
-		reset_last_cmd_env(data);
+		reset_last_cmd_env(data, data->last_cmd);
 }

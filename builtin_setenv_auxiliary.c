@@ -68,14 +68,14 @@ int	output_environment(t_shell *data, int i)
 {
 	if (data->token_count == 0)
 	{
-		reset_last_cmd_env(data);
+		reset_last_cmd_env(data, data->last_cmd);
 		while (data->env_count > i)
 			ft_putendl(data->environ[i++]);
 		return (TRUE);
 	}
 	else
 	{
-		reset_last_cmd_env(data);
+		reset_last_cmd_env(data, data->last_cmd);
 		return (TRUE);
 	}
 }
@@ -94,21 +94,21 @@ char	*join_n_and_v(char *name, char *value)
 	return (ft_strjoin(name, value));
 }
 
-void	reset_last_cmd_env(t_shell *data)
+void	reset_last_cmd_env(t_shell *data, int var_i)
 {
 	int	index;
 
 	index = data->token_count;
-	data->under = search_var_name("_", data);
-	if (data->under == -1)
+	var_i = search_var_name("_", data);
+	if (var_i == -1)
 		return ;
-	ft_memdel((void *)&data->environ[data->under]);
+	ft_memdel((void *)&data->environ[var_i]);
 	if (data->token_count == 0)
-		data->environ[data->under] = join_n_and_v("_", data->token[0]);
+		data->environ[var_i] = join_n_and_v("_", data->token[0]);
 	else if (data->token_count == 1)
-		data->environ[data->under] = join_n_and_v("_", data->token[1]);
+		data->environ[var_i] = join_n_and_v("_", data->token[1]);
 	else if (data->token_count == 2)
-		data->environ[data->under] = join_n_and_v("_", data->token[2]);
+		data->environ[var_i] = join_n_and_v("_", data->token[2]);
 	else
-		data->environ[data->under] = join_n_and_v("_", data->token[index]);
+		data->environ[var_i] = join_n_and_v("_", data->token[index]);
 }

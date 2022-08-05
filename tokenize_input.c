@@ -24,7 +24,6 @@ static void	expand_variable(int i, int var_i, t_shell *data)
 		data->token[i] = ft_strdup("");
 	else
 	{
-		//ft_memdel((void *)&data->token[i]);
 		len = ft_strlen(data->environ[var_i]) - ft_strlen(temp) + 1;
 		data->token[i] = ft_strsub(data->environ[var_i], ft_strlen(temp) + 1, len);
 	}
@@ -44,7 +43,7 @@ static void	expand_home(int i, int var_i, t_shell *data)
 	else
 	{
 		ft_memdel((void *)&data->token[i]);
-		len = ft_strlen(data->environ[var_i] - 5);
+		len = ft_strlen(data->environ[var_i]);
 		data->token[i] = ft_strsub(data->environ[var_i], 5, len);
 	}
 }
