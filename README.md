@@ -33,13 +33,14 @@ environment variables.
   - How to organize data (structs, arrays, linked list, etc..).
   - How to write basic interpreter which can be expanded (needs to be done for quotes in input).
   - How to start writing functions to create a child process in case binary is needed.
-  - How to write the required built-ins for the project: `env`, `setenv`, `unsetenv`, `cd`, `pwd`, ´exit´.
+  - How to write the required built-ins for the project: `env`, `setenv`, `unsetenv`, `cd`, `echo`, `exit`.
   
  - I underestimated the complexity of quoting and parsing of input (July 20th 2022).
  
  #### Successes
  
  - no memory leaks in the `setenv`, `env`, `unsetenv` and `exit` builtins.
+ - environment variable `$_` handling and updating after every command.
  
  ### TODO
  
