@@ -8,8 +8,8 @@ Minishell is the second project from the Unix-branch at Hive Helsinki coding sch
 
 ## Introduction
 
-First step in the creation of a shell. In this project, I will create a "mini-shell" capable of reading and evaluating simple user commands. 
-Reading will involve trivial lexical analysis and parsing of the command. The program will, for example, involve searching for the corresponding 
+First step in the creation of a shell. In this project, I will create a "mini-shell" capable of reading and evaluating simple user commands.
+Reading will involve trivial lexical analysis and parsing of the command. The program will, for example, involve searching for the corresponding
 binary on the machine and execute it, or execute the relevant code in the case of a “built-in” command in the shell.
 
 So basically it's about coding a minimally functional `command prompt interpreter` aka `minishell`.
@@ -34,17 +34,17 @@ environment variables.
   - How to write basic interpreter which can be expanded (needs to be done for quotes in input).
   - How to start writing functions to create a child process in case binary is needed.
   - How to write the required built-ins for the project: `env`, `setenv`, `unsetenv`, `cd`, `echo`, `exit`.
-  
+
  - I underestimated the complexity of quoting and parsing of input (July 20th 2022).
- 
+
  #### Successes
- 
+
  - no memory leaks in the `setenv`, `env`, `unsetenv` and `exit` builtins.
  - environment variable `$_` handling and updating after every command.
- 
+
  ### TODO
- 
- - cd, pwd
+
+ - cd (started, 8.8.2022), pwd
  - permission check for the whole path to a binary
  - quoting detection
  - expansion
