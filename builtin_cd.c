@@ -18,7 +18,38 @@
 // check for /
 // check for .. and .
 
-int cur_dir_starter(data)
+static int	check_access_permission(const char *path)
 {
 
 }
+
+static int initial_checks(char *dirpath)
+{
+	int	ret;
+
+	ret = ft_is_directory(dirpath);
+	if (ret == -1)
+	{
+		write(1, CD_NO_FILE_OR_DIR, 34);
+		ft_putendl(dirpath);
+		return (FALSE);
+	}
+	else if (ret == 1)
+		return (check_access_permission(dirpath));
+	else
+	{
+		write(1, CD_NOT_DIR, 22);
+		ft_putendl(dirpath);
+	}
+	return (FALSE);
+}
+
+int	change_cur_dir(t_shell *data)
+{
+	if (initial_checks(data->token[1]) == TRUE)
+	{
+
+	}
+	return (TRUE);
+}
+

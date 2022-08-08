@@ -40,6 +40,8 @@
 
 /*Error message defines*/
 # define CMD_TOO_LONG "command line argument is too long"
+# define CD_NOT_DIR "cd: not a directory: "
+# define CD_NO_FILE_OR_DIR "cd: no such file or directory: "
 # define MALLOC_FAIL "malloc failed: serious memory issues"
 # define EMPTY_STR "setenv name: cannot be an empty string"
 # define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
@@ -68,6 +70,7 @@ void	execute_command(t_shell *data);
 void	reset_env_value(t_shell *data, int i);
 void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
+void	modify_env(t_shell *data, char *name, char *value, int i);
 
 int		output_environment(t_shell *data, int i);
 int		unset_error_check(t_shell *data);
@@ -77,9 +80,9 @@ int		setenv_error_check(t_shell *data);
 int		search_var_name(char *name, t_shell *data);
 int		tokenize_input(t_shell *data, char *input, int i);
 int		unset_env_variable(t_shell *data);
+int		change_cur_dir(t_shell *data);
 
 char	*join_n_and_v(char *name, char *value);
-void	modify_env(t_shell *data, char *name, char *value, int i);
 
 
 #endif

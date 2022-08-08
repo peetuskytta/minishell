@@ -16,6 +16,10 @@ int	ft_is_directory(char *filename)
 {
 	struct stat	fileinfo;
 
-	stat(filename, &fileinfo);
-	return (S_ISDIR(fileinfo.st_mode));
+	if (stat(filename, &fileinfo) != 0)
+		return (-1);
+	if (S_ISDIR(fileinfo.st_mode) == TRUE)
+		return (1);
+	else
+		return (0);
 }

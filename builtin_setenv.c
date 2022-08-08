@@ -11,7 +11,9 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
+**	This function modifies the existing environment variable's VALUE.
+*/
 void	modify_env(t_shell *data, char *name, char *value, int i)
 {
 	i = search_var_name(name, data);
@@ -21,7 +23,9 @@ void	modify_env(t_shell *data, char *name, char *value, int i)
 }
 
 /*
-**	ft_strdup() and ft_memalloc() exit if malloc() fails.
+**	Adds one line to the environment in order to add the new variable
+**	to the environment.
+**	NOTE: ft_strdup() and ft_memalloc() exit if malloc() fails.
 */
 static char	**plus_one_line(char **old_env, int rows)
 {
@@ -76,7 +80,11 @@ static int	set_env_variable(t_shell *data)
 	}
 	if (data->token_count == 1)
 	{
-		add_env_variable(data, "", data->env_count);
+		var_index = search_var_name(data->token[1], data);
+		if (var_index == -1)
+			add_env_variable(data, "", data->env_count);
+		else
+			modify_env(data, data->token[1], "", 0);
 		return (TRUE);
 	}
 	else
