@@ -20,7 +20,8 @@
 
 static int	check_access_permission(const char *path)
 {
-
+	ft_putendl(path);
+	return (TRUE);
 }
 
 static int initial_checks(char *dirpath)
@@ -46,10 +47,15 @@ static int initial_checks(char *dirpath)
 
 int	change_cur_dir(t_shell *data)
 {
-	if (initial_checks(data->token[1]) == TRUE)
+	if (initial_checks(data->token[1]) == TRUE && data->token_count == 1)
 	{
-
+		ft_putendl("success");
+		reset_last_cmd_env(data, data->last_cmd);
+		return (TRUE);
 	}
+	else if (data->token_count != 1)
+		ft_putendl("not enough tokens...");
+	reset_last_cmd_env(data, data->last_cmd);
 	return (TRUE);
 }
 

@@ -15,10 +15,7 @@
 static int	check_if_builtin(t_shell *data)
 {
 	if (ft_strequ(data->token[0], CD))
-	{
-		ft_putendl("function pointer to CD");
-		return (change_current_dir(data));
-	}
+		return (change_cur_dir(data));
 	else if (ft_strequ(data->token[0], ECHO))
 	{
 		ft_putendl("function pointer to ECHO");
