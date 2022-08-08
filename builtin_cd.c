@@ -31,15 +31,20 @@ static int initial_checks(char *dirpath)
 	ret = ft_is_directory(dirpath);
 	if (ret == -1)
 	{
-		write(1, CD_NO_FILE_OR_DIR, 34);
-		ft_putendl(dirpath);
+		if (!dirpath)
+			ft_putstr(CD_NO_FILE_OR_DIR);
+		if (dirpath)
+		{
+			ft_putstr(CD_NO_FILE_OR_DIR);
+			ft_putendl(dirpath);
+		}
 		return (FALSE);
 	}
 	else if (ret == 1)
 		return (check_access_permission(dirpath));
 	else
 	{
-		write(1, CD_NOT_DIR, 22);
+		ft_putstr(CD_NOT_DIR);
 		ft_putendl(dirpath);
 	}
 	return (FALSE);
@@ -53,8 +58,8 @@ int	change_cur_dir(t_shell *data)
 		reset_last_cmd_env(data, data->last_cmd);
 		return (TRUE);
 	}
-	else if (data->token_count != 1)
-		ft_putendl("not enough tokens...");
+	else if (data->token_count == 0)
+		ft_putendl("\nchange to $HOME directory");
 	reset_last_cmd_env(data, data->last_cmd);
 	return (TRUE);
 }
