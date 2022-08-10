@@ -72,6 +72,8 @@ void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 
+int		change_current_directory(t_shell *data);
+
 int		output_environment(t_shell *data, int i);
 int		unset_error_check(t_shell *data);
 int		command_prompt_loop(t_shell *data);
@@ -80,7 +82,7 @@ int		setenv_error_check(t_shell *data);
 int		search_var_name(char *name, t_shell *data);
 int		tokenize_input(t_shell *data, char *input, int i);
 int		unset_env_variable(t_shell *data);
-int		change_cur_dir(t_shell *data);
+int		current_dir_actions(t_shell *data);
 
 char	*join_n_and_v(char *name, char *value);
 

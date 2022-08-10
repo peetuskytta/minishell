@@ -74,6 +74,7 @@ int	command_prompt_loop(t_shell *data)
 			parse_input(data, buf);
 			clear_and_free_buffer(buf);
 		}
+		//reset_last_cmd_env(data, data->last_cmd);
 		data->token_count = -1;
 	}
 }

@@ -11,6 +11,7 @@ SOURCES := main.c \
 	builtin_setenv_auxiliary.c \
 	builtin_setenv.c \
 	builtin_cd.c \
+	builtin_cd_auxiliary.c \
 	execute_command.c \
 	tokenize_input.c \
 

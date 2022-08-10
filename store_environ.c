@@ -63,7 +63,6 @@ void	store_environ_variables(t_shell *data, char **env)
 	i = search_var_name("PWD", data);
 	pwd = ft_strsub(data->environ[i], 4, ft_strlen(data->environ[i]) - 4);
 	modify_env(data, "SHELL", pwd, 0);
-	modify_env(data, "OLDPWD", "", 0);
 	ft_memset(pwd, 0, ft_strlen(pwd));
 	free(pwd);
 }

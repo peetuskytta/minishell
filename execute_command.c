@@ -15,7 +15,7 @@
 static int	check_if_builtin(t_shell *data)
 {
 	if (ft_strequ(data->token[0], CD))
-		return (change_cur_dir(data));
+		return (current_dir_actions(data));
 	else if (ft_strequ(data->token[0], ECHO))
 	{
 		ft_putendl("function pointer to ECHO");
@@ -33,5 +33,7 @@ static int	check_if_builtin(t_shell *data)
 void	execute_command(t_shell *data)
 {
 	if (check_if_builtin(data) == FALSE)
+		reset_last_cmd_env(data, data->last_cmd);
+	else
 		reset_last_cmd_env(data, data->last_cmd);
 }
