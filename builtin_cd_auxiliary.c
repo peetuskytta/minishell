@@ -19,19 +19,12 @@ static int	change_to_home_env(t_shell *data)
 	int		var_i;
 	int		len;
 
-//	ft_memset(home, '\0', 4096);
-//	getcwd(home, 4096);
-//	ft_putstr("before: ");
-//	ft_putendl(home);
-//	ft_memset(home, '\0', 4096);
 	var_i = search_var_name("HOME", data);
 	len = ft_strlen(data->environ[var_i]);
 	buf = ft_strsub(data->environ[var_i], 5, len - 5);
 	if (chdir(buf) != 0)
 		ft_putendl("error in changing the directory (change_to_home_env");
 	free(buf);
-//	ft_memset(home, '\0', 4096);
-//	ft_putstr("after: ");
 	modify_env(data, "PWD", getcwd(home, 4096), 0);
 	getcwd(home, 4096);
 	ft_putendl(home);
@@ -64,14 +57,14 @@ int	handle_cd_dash(t_shell *data)
 		free(temp);
 		return (3);
 	}
-	//modify_pwd(data, "PWD");
+	modify_env(data, "PWD", temp, 0);
 	free(temp);
 	return (3);
 }
 
 int	change_to_token(t_shell *data, const char *path)
 {
-	//char	home[4096];
+	char	pwd[4096];
 
 	if (path)
 	{
@@ -82,12 +75,10 @@ int	change_to_token(t_shell *data, const char *path)
 			ft_putendl(path);
 			return (TRUE);
 		}
-//		getcwd(home, 4096);
-//		ft_putendl(home);
-		//modify_pwd(data, "PWD");
+		getcwd(pwd, 4096);
+		modify_env(data, "PWD", pwd, 0);
 		return (TRUE);
 	}
-	ft_putendl(data->token[0]);
 	return (TRUE);
 }
 

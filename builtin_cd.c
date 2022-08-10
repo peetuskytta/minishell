@@ -28,6 +28,7 @@ static int	check_access_permission(t_shell *data, const char *path)
 	if (ft_strequ(path, "-") == TRUE)
 	{
 		var_i = search_var_name("OLDPWD", data);
+		// maybe use getcwd()?
 		temp = ft_strsub(data->environ[var_i], 8, ft_strlen(data->environ[var_i]) - 8);
 		if (change_to_token(data, temp) == TRUE)
 			modify_env(data, "OLDPWD", temp, 0);
