@@ -18,6 +18,8 @@
 // check for /
 // check for .. and .
 
+// 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
+
 static int	check_access_permission(t_shell *data, const char *path)
 {
 //	char	**split;
