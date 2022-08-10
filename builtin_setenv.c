@@ -46,7 +46,7 @@ static char	**plus_one_line(char **old_env, int rows)
 	return (new_env);
 }
 
-static void	add_env_variable(t_shell *data, char *str, int size)
+void	add_env_variable(t_shell *data, char *str, int size)
 {
 	char	**new_env;
 	int		len;

@@ -72,7 +72,13 @@ void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 
+void	add_env_variable(t_shell *data, char *str, int size);
+
 int		change_current_directory(t_shell *data);
+
+int		change_to_token(t_shell *data, const char *path);
+
+int		handle_cd_dash(t_shell *data);
 
 int		output_environment(t_shell *data, int i);
 int		unset_error_check(t_shell *data);

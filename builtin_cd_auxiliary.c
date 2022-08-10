@@ -19,27 +19,75 @@ static int	change_to_home_env(t_shell *data)
 	int		var_i;
 	int		len;
 
-	ft_memset(home, '\0', 4096);
-	getcwd(home, 4096);
-	ft_putstr("before: ");
-	ft_putendl(home);
-	ft_memset(home, '\0', 4096);
+//	ft_memset(home, '\0', 4096);
+//	getcwd(home, 4096);
+//	ft_putstr("before: ");
+//	ft_putendl(home);
+//	ft_memset(home, '\0', 4096);
 	var_i = search_var_name("HOME", data);
 	len = ft_strlen(data->environ[var_i]);
 	buf = ft_strsub(data->environ[var_i], 5, len - 5);
 	if (chdir(buf) != 0)
-		ft_putendl("error in changing the directory");
+		ft_putendl("error in changing the directory (change_to_home_env");
 	free(buf);
-	ft_memset(home, '\0', 4096);
+//	ft_memset(home, '\0', 4096);
+//	ft_putstr("after: ");
+	modify_env(data, "PWD", getcwd(home, 4096), 0);
 	getcwd(home, 4096);
-	ft_putstr("after: ");
 	ft_putendl(home);
 	return (TRUE);
 }
 
-static int	change_to_token(t_shell *data)
+static void modify_pwd(t_shell *data, char *name)
 {
-	ft_putendl(data->token[1]);
+	char	buf[4096];
+
+	ft_memset(buf, '\0', 4096);
+	getcwd(buf, 4096);
+	modify_env(data, name, buf, 0);
+}
+
+int	handle_cd_dash(t_shell *data)
+{
+	int		len;
+	int		var_i;
+	char	*temp;
+
+	var_i = search_var_name("OLDPWD", data);
+	if (var_i < 0)
+		return (2);
+	len = ft_strlen(data->environ[var_i]);
+	temp = ft_strsub(data->environ[var_i], 7, len - 7);
+	modify_pwd(data, "OLDPWD");
+	if (chdir(temp) != 0)
+	{
+		free(temp);
+		return (3);
+	}
+	//modify_pwd(data, "PWD");
+	free(temp);
+	return (3);
+}
+
+int	change_to_token(t_shell *data, const char *path)
+{
+	//char	home[4096];
+
+	if (path)
+	{
+		modify_pwd(data, "OLDPWD");
+		if (chdir(path) != 0)
+		{
+			ft_putstr(CD_NO_FILE_OR_DIR);
+			ft_putendl(path);
+			return (TRUE);
+		}
+//		getcwd(home, 4096);
+//		ft_putendl(home);
+		//modify_pwd(data, "PWD");
+		return (TRUE);
+	}
+	ft_putendl(data->token[0]);
 	return (TRUE);
 }
 
@@ -49,6 +97,8 @@ int	change_current_directory(t_shell *data)
 		return (change_to_home_env(data));
 	else
 	{
-		return (change_to_token(data));
+		if (search_var_name("OLDPWD", data) < 0)
+			add_env_variable(data, "OLDPWD", data->token_count);
+		return (change_to_token(data, NULL));
 	}
 }
