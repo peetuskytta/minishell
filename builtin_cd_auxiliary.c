@@ -58,6 +58,7 @@ int	handle_cd_dash(t_shell *data)
 		return (3);
 	}
 	modify_env(data, "PWD", temp, 0);
+	ft_putendl(temp);
 	free(temp);
 	return (3);
 }
