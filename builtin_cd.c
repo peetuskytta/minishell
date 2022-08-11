@@ -26,6 +26,7 @@ static int	check_access_permission(t_shell *data, const char *path)
 //	int		i;
 	int		var_i;
 
+	//access(dir, X_OK);
 	if (ft_strequ(path, "-") == TRUE)
 	{
 		var_i = search_var_name("OLDPWD", data);
