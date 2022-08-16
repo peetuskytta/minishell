@@ -12,36 +12,45 @@
 
 #include "minishell.h"
 
+int	check_if_env_exists(t_shell *data, char *name)
+{
+	if (search_var_name(name, data) < 0)
+		return (FALSE);
+	else
+		return (TRUE);
+}
+
 static int	change_to_home_env(t_shell *data)
 {
-	char	home[4096];
 	char	*buf;
 	int		var_i;
 	int		len;
 
-	var_i = search_var_name("HOME", data);
+	if (check_if_env_exists(data, "HOME"))
+		var_i = search_var_name("HOME", data);
+	else
+		return (TRUE);
 	len = ft_strlen(data->environ[var_i]);
 	buf = ft_strsub(data->environ[var_i], 5, len - 5);
 	if (chdir(buf) != 0)
 		ft_putendl("error in changing the directory (change_to_home_env");
 	free(buf);
-	modify_env(data, "PWD", getcwd(home, 4096), 0);
+	modify_env(data, "PWD", getcwd(data->pwd, 4096), 0);
 	if (search_var_name("OLDPWD", data) < 0)
 	{
-		add_env_variable(data, "OLDPWD", home, data->env_count);
-		modify_env(data, "OLDPWD", getcwd(home, 4096), 0);
+		add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
+		modify_env(data, "OLDPWD", getcwd(data->pwd, 4096), 0);
 	}
-	ft_putendl(home);
+	ft_putendl(data->pwd);
+	ft_memset(data->pwd, '\0', 4096);
 	return (TRUE);
 }
 
 static void modify_pwd(t_shell *data, char *name)
 {
-	char	buf[4096];
-
-	ft_memset(buf, '\0', 4096);
-	getcwd(buf, 4096);
-	modify_env(data, name, buf, 0);
+	ft_memset(data->pwd, '\0', 4096);
+	getcwd(data->pwd, 4096);
+	modify_env(data, name, data->pwd, 0);
 }
 
 int	handle_cd_dash(t_shell *data)
@@ -69,8 +78,6 @@ int	handle_cd_dash(t_shell *data)
 
 int	change_to_token(t_shell *data, const char *path)
 {
-	char	pwd[4096];
-
 	if (path)
 	{
 		modify_pwd(data, "OLDPWD");
@@ -80,8 +87,8 @@ int	change_to_token(t_shell *data, const char *path)
 			ft_putendl(path);
 			return (TRUE);
 		}
-		getcwd(pwd, 4096);
-		modify_env(data, "PWD", pwd, 0);
+		getcwd(data->pwd, 4096);
+		modify_env(data, "PWD", data->pwd, 0);
 		return (TRUE);
 	}
 	return (TRUE);
@@ -90,16 +97,15 @@ int	change_to_token(t_shell *data, const char *path)
 int	change_current_directory(t_shell *data)
 {
 	if (data->token[1] == NULL)
+	{
+		if (search_var_name("PWD", data) < 0)
+			add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->token_count);
 		return (change_to_home_env(data));
+	}
 	else
 	{
-<<<<<<< HEAD
 		if (search_var_name("OLDPWD", data) < 0)
 			add_env_variable(data, "OLDPWD", "", data->token_count);
-=======
-		//if (search_var_name("OLDPWD", data) < 0)
-		//	add_env_variable(data, "OLDPWD", "", data->token_count);
->>>>>>> 838a055acf6c5fce1f80e2852577498d7232e5f7
 		return (change_to_token(data, NULL));
 	}
 }

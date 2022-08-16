@@ -26,13 +26,10 @@ static int	check_access_permission(t_shell *data, const char *path)
 //	int		i;
 	int		var_i;
 
-<<<<<<< HEAD
 	var_i = search_var_name("OLDPWD", data);
 	if (var_i < 0)
 		add_env_variable(data, "OLDPWD", "", data->env_count);
-=======
 	//access(dir, X_OK);
->>>>>>> 838a055acf6c5fce1f80e2852577498d7232e5f7
 	if (ft_strequ(path, "-") == TRUE)
 	{
 		temp = ft_strsub(data->environ[var_i], 8, ft_strlen(data->environ[var_i]) - 8);
