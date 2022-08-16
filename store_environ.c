@@ -61,5 +61,5 @@ void	store_environ_variables(t_shell *data, char **env)
 	split_path_variable(data, 0);
 	getcwd(cwd, 4096);
 	modify_env(data, "SHELL", cwd, 0);
-	modify_env(data, "OLDPWD", "", 0);
+	modify_env(data, "OLDPWD", cwd, 0);
 }

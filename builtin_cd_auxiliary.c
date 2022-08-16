@@ -89,7 +89,7 @@ int	change_current_directory(t_shell *data)
 	else
 	{
 		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", data->token_count);
+			add_env_variable(data, "OLDPWD", "", data->token_count);
 		return (change_to_token(data, NULL));
 	}
 }

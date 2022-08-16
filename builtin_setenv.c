@@ -46,21 +46,21 @@ static char	**plus_one_line(char **old_env, int rows)
 	return (new_env);
 }
 
-void	add_env_variable(t_shell *data, char *str, int size)
+void	add_env_variable(t_shell *data, char *name, char *val, int size)
 {
 	char	**new_env;
 	int		len;
 
 	new_env = plus_one_line(data->environ, size);
 	size++;
-	len = ft_strlen(data->token[1]) + ft_strlen(str) + 1;
+	len = ft_strlen(name) + ft_strlen(val) + 1;
 	new_env[--size] = ft_strnew(len);
 	if (new_env[size] == NULL)
 		exit(EXIT_FAILURE);
 	ft_memset(new_env[size], '\0', len + 1);
-	ft_strcat(new_env[size], data->token[1]);
+	ft_strcat(new_env[size], name);
 	ft_strcat(new_env[size], EQUALSIGN);
-	ft_strcat(new_env[size], str);
+	ft_strcat(new_env[size], val);
 	data->environ = new_env;
 	data->env_count++;
 }
@@ -75,14 +75,14 @@ static int	set_env_variable(t_shell *data)
 		if (var_index > 0)
 			modify_env(data, data->token[1], data->token[2], 0);
 		else
-			add_env_variable(data, data->token[2], data->env_count);
+			add_env_variable(data, data->token[1], data->token[2], data->env_count);
 		return (TRUE);
 	}
 	if (data->token_count == 1)
 	{
 		var_index = search_var_name(data->token[1], data);
 		if (var_index == -1)
-			add_env_variable(data, "", data->env_count);
+			add_env_variable(data, data->token[1], "", data->env_count);
 		else
 			modify_env(data, data->token[1], "", 0);
 		return (TRUE);
