@@ -26,7 +26,11 @@ static int	change_to_home_env(t_shell *data)
 		ft_putendl("error in changing the directory (change_to_home_env");
 	free(buf);
 	modify_env(data, "PWD", getcwd(home, 4096), 0);
-	getcwd(home, 4096);
+	if (search_var_name("OLDPWD", data) < 0)
+	{
+		add_env_variable(data, "OLDPWD", home, data->env_count);
+		modify_env(data, "OLDPWD", getcwd(home, 4096), 0);
+	}
 	ft_putendl(home);
 	return (TRUE);
 }
@@ -58,6 +62,7 @@ int	handle_cd_dash(t_shell *data)
 		return (3);
 	}
 	modify_env(data, "PWD", temp, 0);
+	ft_putendl(temp);
 	free(temp);
 	return (3);
 }
@@ -88,8 +93,13 @@ int	change_current_directory(t_shell *data)
 		return (change_to_home_env(data));
 	else
 	{
+<<<<<<< HEAD
 		if (search_var_name("OLDPWD", data) < 0)
 			add_env_variable(data, "OLDPWD", "", data->token_count);
+=======
+		//if (search_var_name("OLDPWD", data) < 0)
+		//	add_env_variable(data, "OLDPWD", "", data->token_count);
+>>>>>>> 838a055acf6c5fce1f80e2852577498d7232e5f7
 		return (change_to_token(data, NULL));
 	}
 }

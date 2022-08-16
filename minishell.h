@@ -72,7 +72,11 @@ void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 
+<<<<<<< HEAD
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
+=======
+void	add_env_variable(t_shell *data, char *name, char *str, int size);
+>>>>>>> 838a055acf6c5fce1f80e2852577498d7232e5f7
 
 int		change_current_directory(t_shell *data);
 

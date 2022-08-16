@@ -42,10 +42,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	data;
 
-	data.token = NULL;
-	data.split_path = NULL;
-	data.env_count = 0;
-	data.last_cmd = 0;
+	ft_memset(&data, 0, sizeof(data));
 	data.token_count = -1;
 	if (argc && argv)
 	{

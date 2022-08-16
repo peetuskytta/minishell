@@ -17,6 +17,11 @@
 void	modify_env(t_shell *data, char *name, char *value, int i)
 {
 	i = search_var_name(name, data);
+	if (i < 0 && ft_strequ("OLDPWD", name) == 1)
+	{
+		add_env_variable(data, "OLDPWD", "", data->env_count);
+		//modify_env(data, "OLDPWD", , 0);
+	}
 	ft_memset(data->environ[i], 0, ft_strlen(data->environ[i]));
 	ft_memdel((void *)&data->environ[i]);
 	data->environ[i] = join_n_and_v(name, value);
@@ -46,14 +51,22 @@ static char	**plus_one_line(char **old_env, int rows)
 	return (new_env);
 }
 
+<<<<<<< HEAD
 void	add_env_variable(t_shell *data, char *name, char *val, int size)
+=======
+void	add_env_variable(t_shell *data, char *name, char *str, int size)
+>>>>>>> 838a055acf6c5fce1f80e2852577498d7232e5f7
 {
 	char	**new_env;
 	int		len;
 
 	new_env = plus_one_line(data->environ, size);
 	size++;
+<<<<<<< HEAD
 	len = ft_strlen(name) + ft_strlen(val) + 1;
+=======
+	len = ft_strlen(name) + ft_strlen(str) + 1;
+>>>>>>> 838a055acf6c5fce1f80e2852577498d7232e5f7
 	new_env[--size] = ft_strnew(len);
 	if (new_env[size] == NULL)
 		exit(EXIT_FAILURE);

@@ -33,8 +33,10 @@ void	parse_input(t_shell *data, char *input)
 	}
 	else
 	{
-		ft_putendl("Quoting detected: please handle it\nexiting...");
-		exit(1);
+		ft_putendl("Quoting detected: please handle it\nhandling, thanks for the info...");
+		if (tokenize_input(data, input, 0) == TRUE)
+			execute_command(data);
+		//exit(1);
 	}
 	free_double_ptr(data->token);
 }

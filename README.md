@@ -44,7 +44,7 @@ environment variables.
 
  ### TODO
 
- - cd (started, 8.8.2022), pwd
+ - cd (almost finished)
  - permission check for the whole path to a binary
  - quoting detection
  - expansion
