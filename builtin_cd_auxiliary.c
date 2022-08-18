@@ -37,10 +37,8 @@ static int	change_to_home_env(t_shell *data)
 	free(buf);
 	modify_env(data, "PWD", getcwd(data->pwd, 4096), 0);
 	if (search_var_name("OLDPWD", data) < 0)
-	{
 		add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
-		modify_env(data, "OLDPWD", getcwd(data->pwd, 4096), 0);
-	}
+	modify_env(data, "OLDPWD", getcwd(data->pwd, 4096), 0);
 	ft_putendl(data->pwd);
 	ft_memset(data->pwd, '\0', 4096);
 	return (TRUE);
@@ -80,6 +78,9 @@ int	change_to_token(t_shell *data, const char *path)
 {
 	if (path)
 	{
+		getcwd(data->pwd, 4096);
+		if (search_var_name("OLDPWD", data) < 0)
+			add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
 		modify_pwd(data, "OLDPWD");
 		if (chdir(path) != 0)
 		{
@@ -88,6 +89,8 @@ int	change_to_token(t_shell *data, const char *path)
 			return (TRUE);
 		}
 		getcwd(data->pwd, 4096);
+		if (search_var_name("PWD", data) < 0)
+			add_env_variable(data, "PWD", data->pwd, data->env_count);
 		modify_env(data, "PWD", data->pwd, 0);
 		return (TRUE);
 	}
