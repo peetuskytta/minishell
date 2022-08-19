@@ -30,16 +30,20 @@ static int	change_to_home_env(t_shell *data)
 		var_i = search_var_name("HOME", data);
 	else
 		return (TRUE);
+	if (search_var_name("OLDPWD", data) < 0)
+		add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), data->env_count);
+	else
+		modify_env(data, "OLDPWD", getcwd(data->pwd, 4096), 0);
 	len = ft_strlen(data->environ[var_i]);
 	buf = ft_strsub(data->environ[var_i], 5, len - 5);
 	if (chdir(buf) != 0)
-		ft_putendl("error in changing the directory (change_to_home_env");
+	{
+		ft_putendl("-minishell: cd: not a valid directory");
+		free(buf);
+		return (TRUE);
+	}
 	free(buf);
 	modify_env(data, "PWD", getcwd(data->pwd, 4096), 0);
-	if (search_var_name("OLDPWD", data) < 0)
-		add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
-	modify_env(data, "OLDPWD", getcwd(data->pwd, 4096), 0);
-	//ft_putendl(data->pwd);
 	ft_memset(data->pwd, '\0', 4096);
 	return (TRUE);
 }
@@ -81,10 +85,11 @@ int	change_to_token(t_shell *data, const char *path)
 {
 	if (path)
 	{
-		getcwd(data->pwd, 4096);
+//		getcwd(data->pwd, 4096);
 		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
-		modify_pwd(data, "OLDPWD");
+			add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), data->env_count);
+		else
+			modify_pwd(data, "OLDPWD");
 		if (chdir(path) != 0)
 		{
 			ft_putstr(CD_NO_FILE_OR_DIR);

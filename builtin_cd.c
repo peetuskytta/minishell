@@ -106,7 +106,8 @@ int	current_dir_actions(t_shell *data)
 	if (checks == 2)
 		ft_putendl("-minishell: cd: OLDPWD not set");
 	if (checks == 3)
-		return (change_current_directory(data));
+		return (TRUE);
+	//return (change_current_directory(data));
 	return (TRUE);
 }
 
