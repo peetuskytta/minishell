@@ -39,7 +39,7 @@ static int	change_to_home_env(t_shell *data)
 	if (search_var_name("OLDPWD", data) < 0)
 		add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
 	modify_env(data, "OLDPWD", getcwd(data->pwd, 4096), 0);
-	ft_putendl(data->pwd);
+	//ft_putendl(data->pwd);
 	ft_memset(data->pwd, '\0', 4096);
 	return (TRUE);
 }
@@ -68,7 +68,10 @@ int	handle_cd_dash(t_shell *data)
 		free(temp);
 		return (3);
 	}
-	modify_env(data, "PWD", temp, 0);
+	if (search_var_name("PWD", data) < 0)
+		add_env_variable(data, "PWD", temp, data->env_count);
+	else
+		modify_env(data, "PWD", temp, 0);
 	ft_putendl(temp);
 	free(temp);
 	return (3);
