@@ -12,26 +12,17 @@
 
 #include "minishell.h"
 
-// check if tokens?
-// check for -L or -P flags?
-// check for -
-// check for /
-// check for .. and .
-//
-
 static int	check_access_permission(t_shell *data, const char *path)
 {
-//	char	**split;
 	char	*temp;
-//	int		i;
 	int		var_i;
 
 	var_i = search_var_name("OLDPWD", data);
 	if (var_i < 0)
 		add_env_variable(data, "OLDPWD", "", data->env_count);
-	//access(dir, X_OK);
 	if (ft_strequ(path, "-") == TRUE)
 	{
+		ft_putendl("strange to be here");
 		temp = ft_strsub(data->environ[var_i], 8, ft_strlen(data->environ[var_i]) - 8);
 		if (change_to_token(data, temp) == TRUE)
 			modify_env(data, "OLDPWD", temp, 0);

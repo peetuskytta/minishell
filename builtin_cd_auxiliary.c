@@ -27,7 +27,7 @@ static int	change_to_home_env(t_shell *data)
 	int		len;
 
 	var_i = search_var_name("HOME", data);
-	if (data->token[1][0] == '\0' || var_i == -1)
+	if (var_i == -1)
 		return (TRUE);
 	if (search_var_name("OLDPWD", data) < 0)
 		add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), data->env_count);
