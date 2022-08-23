@@ -12,28 +12,14 @@
 
 #include "minishell.h"
 
-static int	check_access_permission(t_shell *data, const char *path)
+static int	access_or_not(t_shell *data, const char *path)
 {
-	char	*temp;
 	int		var_i;
 
+	//if (check_permission(data, path) == TRUE)
 	var_i = search_var_name("OLDPWD", data);
 	if (var_i < 0)
 		add_env_variable(data, "OLDPWD", "", data->env_count);
-	if (ft_strequ(path, "-") == TRUE)
-	{
-		ft_putendl("strange to be here");
-		temp = ft_strsub(data->environ[var_i], 8, ft_strlen(data->environ[var_i]) - 8);
-		if (change_to_token(data, temp) == TRUE)
-			modify_env(data, "OLDPWD", temp, 0);
-		free(temp);
-		return (TRUE);
-	}
-//	i = 0;
-//	split = ft_strsplit(path, '/');
-//	while (split[i] != NULL)
-//		ft_putendl(split[i++]);
-//	ft_free_array(i, split);
 	return (change_to_token(data, path));
 }
 
