@@ -55,7 +55,7 @@ static int initial_checks(t_shell *data)
 	if (ret == -1)
 		return (cd_error_message(data->token[1], 1));
 	else if (ret == 1)
-		return (check_access_permission(data, data->token[1]));
+		return (access_or_not(data, data->token[1]));
 	else
 		return (cd_error_message(data->token[1], 2));
 }
