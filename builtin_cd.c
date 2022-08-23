@@ -70,12 +70,11 @@ static int initial_checks(t_shell *data)
 {
 	int	ret;
 
-	if (data->token[1] == NULL)
+	if (data->token[1] == NULL || data->token[1][0] == '\0')
 		return (FALSE);
 	if (ft_strequ(data->token[1], "-") == 1)
 		return (handle_cd_dash(data));
 	ret = ft_is_directory(data->token[1]);
-	//ft_putnbr_endl(ret);
 	if (ret == -1)
 		return (cd_error_message(data->token[1], 1));
 	else if (ret == 1)
@@ -92,13 +91,13 @@ int	current_dir_actions(t_shell *data)
 	if (checks == 1 && data->token[1] != NULL)
 	{
 		//ft_putendl("success: token is a directory");
-		reset_last_cmd_env(data, data->last_cmd);
+		reset_last_cmd_env(data, 0);
 		return (change_current_directory(data));
 	}
 	if (checks == 0 && data->token[1] == NULL)
 	{
 		//ft_putendl("change to $HOME directory");
-		reset_last_cmd_env(data, data->last_cmd);
+		reset_last_cmd_env(data, 0);
 		if (search_var_name("HOME", data) < 0)
 			return (TRUE);
 		return (change_current_directory(data));

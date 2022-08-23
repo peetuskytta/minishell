@@ -28,7 +28,7 @@
 /*Other useful defines*/
 # define CYAN "\033[0;36m"
 # define DEFAULT "\033[0m"
-# define PROMPT CYAN"$> "DEFAULT
+# define PROMPT CYAN"minishell> "DEFAULT
 # define NOSTRING ""
 # define BACKSLASH '\\'
 # define DOUBLEQUOTE '\"'

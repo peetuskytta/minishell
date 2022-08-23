@@ -14,7 +14,7 @@
 
 int	check_if_env_exists(t_shell *data, char *name)
 {
-	if (search_var_name(name, data) < 0)
+	if (search_var_name(name, data) == -1)
 		return (FALSE);
 	else
 		return (TRUE);
@@ -26,9 +26,8 @@ static int	change_to_home_env(t_shell *data)
 	int		var_i;
 	int		len;
 
-	if (check_if_env_exists(data, "HOME"))
-		var_i = search_var_name("HOME", data);
-	else
+	var_i = search_var_name("HOME", data);
+	if (data->token[1][0] == '\0' || var_i == -1)
 		return (TRUE);
 	if (search_var_name("OLDPWD", data) < 0)
 		add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), data->env_count);
@@ -85,7 +84,6 @@ int	change_to_token(t_shell *data, const char *path)
 {
 	if (path)
 	{
-//		getcwd(data->pwd, 4096);
 		if (search_var_name("OLDPWD", data) < 0)
 			add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), data->env_count);
 		else
@@ -107,16 +105,16 @@ int	change_to_token(t_shell *data, const char *path)
 
 int	change_current_directory(t_shell *data)
 {
-	if (data->token[1] == NULL)
+	if (data->token[1] == NULL || data->token[1][0] == '\0')
 	{
 		if (search_var_name("PWD", data) < 0)
-			add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->token_count);
+			add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->env_count);
 		return (change_to_home_env(data));
 	}
 	else
 	{
 		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", "", data->token_count);
+			add_env_variable(data, "OLDPWD", "", data->env_count);
 		return (change_to_token(data, NULL));
 	}
 }

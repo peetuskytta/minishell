@@ -101,8 +101,12 @@ void	reset_last_cmd_env(t_shell *data, int var_i)
 	index = data->token_count;
 	var_i = search_var_name("_", data);
 	if (var_i == -1)
+	{
 		add_env_variable(data, "_", "", data->env_count);
-	ft_memdel((void *)&data->environ[var_i]);
+		var_i = search_var_name("_", data);
+	}
+	if (var_i >= 0)
+		ft_memdel((void *)&data->environ[var_i]);
 	if (data->token_count == 0)
 		data->environ[var_i] = join_n_and_v("_", data->token[0]);
 	else if (data->token_count == 1)
