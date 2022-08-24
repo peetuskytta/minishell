@@ -40,8 +40,8 @@
 
 /*Error message defines*/
 # define CMD_TOO_LONG "command line argument is too long"
-# define CD_NOT_DIR "cd: not a directory: "
 # define CD_NO_FILE_OR_DIR "cd: no such file or directory: "
+# define CD_NO_ACCESS "cd: permission denied: "
 # define MALLOC_FAIL "malloc failed: serious memory issues"
 # define EMPTY_STR "setenv name: cannot be an empty string"
 # define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
@@ -81,7 +81,7 @@ int		check_if_env_exists(t_shell *data, char *name);
 
 int		change_to_token(t_shell *data, const char *path);
 
-int		handle_cd_dash(t_shell *data);
+int		handle_cd_dash(t_shell *data, int var_i, int len);
 
 int		output_environment(t_shell *data, int i);
 int		unset_error_check(t_shell *data);

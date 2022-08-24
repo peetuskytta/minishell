@@ -54,15 +54,16 @@ static void modify_pwd(t_shell *data, char *name)
 	modify_env(data, name, data->pwd, 0);
 }
 
-int	handle_cd_dash(t_shell *data)
+int	handle_cd_dash(t_shell *data, int var_i, int len)
 {
-	int		len;
-	int		var_i;
 	char	*temp;
 
 	var_i = search_var_name("OLDPWD", data);
 	if (var_i < 0)
-		return (2);
+	{
+		ft_putendl("-minishell: cd: OLDPWD not set");
+		return (3);
+	}
 	len = ft_strlen(data->environ[var_i]);
 	temp = ft_strsub(data->environ[var_i], 7, len - 7);
 	modify_pwd(data, "OLDPWD");
