@@ -39,12 +39,15 @@ environment variables.
 
  #### Successes
 
- - no memory leaks in the `setenv`, `env`, `unsetenv` and `exit` builtins.
+ - no memory leaks in the `setenv`, `env`, `unsetenv`, `cd` and `exit` builtins.
+ - `cd` permission check for each folder in the pathname.
+	- this was particularly difficult to do with the use of `access()` system call as it returns -1 indicating an error if the user has no search permission or that the folder doesn't exist. Ended up using `lstat()` and `X_OK` to check the permissions and handle non-existent files later when trying to change the the working directory.
  - environment variable `$_` handling and updating after every command.
 
  ### TODO
 
- - cd (almost finished)
+ - echo
+ - cd (done)
  - permission check for the whole path to a binary
  - quoting detection
- - expansion
+ - expansion (done)
