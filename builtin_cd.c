@@ -29,33 +29,54 @@ static int	cd_error_message(char *name, int id)
 		ft_putstr(CD_NO_ACCESS);
 		ft_putendl(name);
 	}
+	if (id == 3)
+		return (3);
 	return (3);
 }
 
-static int	access_or_not(t_shell *data, const char *path)
+static int loop_path_for_error(char **split, const char *path)
 {
-	char	*temp;
-	int		end;
+	struct stat	stats;
+	char		temp[4096];
+	int			i;
 
-	end = 0;
-	temp = ft_strdup(path);
-	if (temp[ft_strlen(temp)] != '/')
-		ft_strcat((char *)temp, "/");
+	i = 0;
+	ft_memset(temp, '\0', 4096);
+	ft_strcat(temp, "/");
 	while (TRUE)
 	{
-		end = (int)(ft_strrchr(temp, '/') - temp);
-		if (end <= 0)
+		if (split[i] == NULL)
 			break;
-		temp = ft_strsub(temp, 0, end);
-		if (access(temp, X_OK) == -1)
+		ft_strcat(temp, split[i]);
+		ft_putendl(temp);
+		if (lstat(temp, &stats) == 0)
 		{
-			free((char *)temp);
-			return(cd_error_message((char *)path, 2));
+			if (!(stats.st_mode & X_OK))
+				return (cd_error_message((char *)path, 2));
 		}
+		ft_strcat(temp, "/");
+		i++;
 	}
-	if (ft_is_directory((char *)path) == 1)
-		return (change_to_token(data, path));
-	return (cd_error_message((char *)path, 1));
+	ft_putendl(path);
+	return (TRUE);
+}
+
+static int	access_or_not(t_shell *data)
+{
+	char	**split;
+	int		ret;
+
+	ret = 0;
+	check_expansion(data, 0);
+	if (ft_strchr(data->token[1], '/'))
+	{
+		split = ft_strsplit(data->token[1], '/');
+		ret = loop_path_for_error(split, data->token[1]);
+		free_double_ptr(split);
+		if (ret == 3)
+			return (3);
+	}
+	return (TRUE);
 }
 	/*
 /Users/speedupeloton/Hive/projects/minishells
@@ -68,7 +89,10 @@ static int initial_checks(t_shell *data)
 		return (FALSE);
 	if (ft_strequ(data->token[1], "-") == 1)
 		return (handle_cd_dash(data, 0, 0));
-	return (access_or_not(data, data->token[1]));
+	if (ft_strequ(data->token[1], "~") == 1 || data->token[1] == NULL
+		|| ft_strequ(data->token[1], "--") == 1)
+		return (FALSE);
+	return (access_or_not(data));
 }
 
 int	current_dir_actions(t_shell *data)
@@ -76,15 +100,16 @@ int	current_dir_actions(t_shell *data)
 	int	checks;
 
 	checks = initial_checks(data);
-	if (checks == 1 && data->token[1] != NULL)
+	if (checks == 1)
 	{
-		ft_putendl("success: token is a directory");
+		ft_putendl("success: token is a (possible) directory");
 		reset_last_cmd_env(data, 0);
-		return (change_current_directory(data));
+		return (change_to_token(data, data->token[1]));
 	}
-	if (checks == 0 && data->token[1] == NULL)
+	if (checks == 0)
 	{
 		ft_putendl("change to $HOME directory");
+		check_expansion(data, 0);
 		reset_last_cmd_env(data, 0);
 		if (search_var_name("HOME", data) < 0)
 			return (TRUE);

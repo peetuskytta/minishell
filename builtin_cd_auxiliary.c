@@ -106,16 +106,7 @@ int	change_to_token(t_shell *data, const char *path)
 
 int	change_current_directory(t_shell *data)
 {
-	if (data->token[1] == NULL || data->token[1][0] == '\0')
-	{
-		if (search_var_name("PWD", data) < 0)
-			add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->env_count);
-		return (change_to_home_env(data));
-	}
-	else
-	{
-		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", "", data->env_count);
-		return (change_to_token(data, NULL));
-	}
+	if (search_var_name("PWD", data) < 0)
+		add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->env_count);
+	return (change_to_home_env(data));
 }

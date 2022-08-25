@@ -99,7 +99,7 @@ int	tokenize_input(t_shell *data, char *input, int i)
 	i = 0;
 	while (data->token[i++] != NULL)
 		data->token_count++;
-	check_expansion(data, 0);
+	//check_expansion(data, 0);
 	return (TRUE);
 }
 
