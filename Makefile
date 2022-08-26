@@ -14,6 +14,7 @@ SOURCES := main.c \
 	builtin_cd_auxiliary.c \
 	execute_command.c \
 	tokenize_input.c \
+	fork_and_exec.c \
 
 OBJ := $(SOURCES:.c=.o)
 

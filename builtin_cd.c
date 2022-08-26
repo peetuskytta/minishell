@@ -34,7 +34,7 @@ static int	cd_error_message(char *name, int id)
 	return (3);
 }
 
-static int loop_path_for_error(char **split, const char *path)
+static int path_permission_loop(char **split, const char *path)
 {
 	struct stat	stats;
 	char		temp[4096];
@@ -48,7 +48,6 @@ static int loop_path_for_error(char **split, const char *path)
 		if (split[i] == NULL)
 			break;
 		ft_strcat(temp, split[i]);
-		ft_putendl(temp);
 		if (lstat(temp, &stats) == 0)
 		{
 			if (!(stats.st_mode & X_OK))
@@ -57,11 +56,10 @@ static int loop_path_for_error(char **split, const char *path)
 		ft_strcat(temp, "/");
 		i++;
 	}
-	ft_putendl(path);
 	return (TRUE);
 }
 
-static int	access_or_not(t_shell *data)
+static int	check_access(t_shell *data)
 {
 	char	**split;
 	int		ret;
@@ -71,7 +69,7 @@ static int	access_or_not(t_shell *data)
 	if (ft_strchr(data->token[1], '/'))
 	{
 		split = ft_strsplit(data->token[1], '/');
-		ret = loop_path_for_error(split, data->token[1]);
+		ret = path_permission_loop(split, data->token[1]);
 		free_double_ptr(split);
 		if (ret == 3)
 			return (3);
@@ -92,7 +90,7 @@ static int initial_checks(t_shell *data)
 	if (ft_strequ(data->token[1], "~") == 1 || data->token[1] == NULL
 		|| ft_strequ(data->token[1], "--") == 1)
 		return (FALSE);
-	return (access_or_not(data));
+	return (check_access(data));
 }
 
 int	current_dir_actions(t_shell *data)
@@ -113,7 +111,9 @@ int	current_dir_actions(t_shell *data)
 		reset_last_cmd_env(data, 0);
 		if (search_var_name("HOME", data) < 0)
 			return (TRUE);
-		return (change_current_directory(data));
+		if (search_var_name("PWD", data) < 0)
+			add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->env_count);
+		return (change_to_home_env(data));
 	}
 	if (checks == 3)
 		return (TRUE);

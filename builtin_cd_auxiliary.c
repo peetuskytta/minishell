@@ -20,7 +20,7 @@ int	check_if_env_exists(t_shell *data, char *name)
 		return (TRUE);
 }
 
-static int	change_to_home_env(t_shell *data)
+int	change_to_home_env(t_shell *data)
 {
 	char	*buf;
 	int		var_i;
@@ -102,11 +102,4 @@ int	change_to_token(t_shell *data, const char *path)
 		return (TRUE);
 	}
 	return (TRUE);
-}
-
-int	change_current_directory(t_shell *data)
-{
-	if (search_var_name("PWD", data) < 0)
-		add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->env_count);
-	return (change_to_home_env(data));
 }

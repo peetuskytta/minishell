@@ -98,6 +98,7 @@ static int	set_env_variable(t_shell *data)
 
 int	change_environ(t_shell *data, int id)
 {
+	check_expansion(data, 0);
 	if (setenv_error_check(data) == TRUE && id == 1)
 	{
 		if (set_env_variable(data) == TRUE)

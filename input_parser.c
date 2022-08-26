@@ -29,13 +29,22 @@ void	parse_input(t_shell *data, char *input)
 	if (simple_input_check(input) == TRUE)
 	{
 		if (tokenize_input(data, input, 0) == TRUE)
-			execute_command(data);
+		{
+			if (check_if_builtin(data) == TRUE)
+				reset_last_cmd_env(data, data->last_cmd);
+			else
+			{
+				create_child_process(data);
+				// set data->last_cmd to be the path+binary executed succesfully
+				reset_last_cmd_env(data, data->last_cmd);
+			}
+		}
 	}
 	else
 	{
 		ft_putendl("Quoting detected: please handle it\nhandling, thanks for the info...");
-		if (tokenize_input(data, input, 0) == TRUE)
-			execute_command(data);
+		//if (tokenize_input(data, input, 0) == TRUE)
+			//handle_command(data);
 		//exit(1);
 	}
 	free_double_ptr(data->token);

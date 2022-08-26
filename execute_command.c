@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static int	check_if_builtin(t_shell *data)
+int	check_if_builtin(t_shell *data)
 {
 	if (ft_strequ(data->token[0], CD))
 		return (current_dir_actions(data));
@@ -30,14 +30,14 @@ static int	check_if_builtin(t_shell *data)
 	return (FALSE);
 }
 
-void	execute_command(t_shell *data)
+/*void	handle_command(t_shell *data)
 {
 	if (check_if_builtin(data) == FALSE)
-	{
 		reset_last_cmd_env(data, data->last_cmd);
-	}
 	else
 	{
+		create_child_process(data);
+		// set data->last_cmd to be the path+binary executed succesfully
 		reset_last_cmd_env(data, data->last_cmd);
 	}
-}
+}*/
