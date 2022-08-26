@@ -28,6 +28,7 @@ void	free_double_ptr(char **string)
 
 void	free_and_memset(t_shell *data, int i)
 {
+	free(data->cmd);
 	free_double_ptr(data->split_path);
 	while (data->env_count > i)
 	{

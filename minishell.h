@@ -117,6 +117,8 @@ int		unset_env_variable(t_shell *data);
 
 int		current_dir_actions(t_shell *data);
 
+int		check_if_executable(t_shell *data);
+
 char	*join_n_and_v(char *name, char *value);
 
 

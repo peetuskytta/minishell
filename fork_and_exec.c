@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/26 16:04:42 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:10:22 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ void	create_child_process(t_shell *data)
 	pid_child = fork();
 	if (pid_child == 0)
 	{
-		process_child(data);
+		ft_putendl(data->cmd);
 		ft_putendl("Hello from the child process :)");
-
-		// check for permission
-		// add tokens together separated by spaces
-		// use the tokens in execve
+		if (execve(data->cmd, data->token, data->environ) == -1)
+			ft_putendl("minishell: error with execve");
 	}
 	else if (pid_child < 0)
 		ft_putendl(FORK_FAIL);
@@ -36,6 +34,7 @@ void	create_child_process(t_shell *data)
 		if (pid_wait == -1)
 			ft_putendl(WAITPID_FAIL);
 		ft_putendl("Parent is done waiting.");
+		//free_double_ptr(arguments);
 	}
 
 }
@@ -52,10 +51,10 @@ static int	exec_error_message(int id, char *name)
 		ft_putstr(CMD_NOT_FOUND);
 		ft_putendl(name);
 	}
-	return (TRUE);
+	return (FALSE);
 }
 
-static int check_if_exists(t_shell *data)
+static int check_existense(t_shell *data)
 {
 	char	*temp;
 	int		i;
@@ -69,7 +68,8 @@ static int check_if_exists(t_shell *data)
 		//check permissions before F_OK if (permission_ok) == FALSE, return(FALSE)
 		if (access(temp, F_OK) == 0)
 		{
-			data->cmd = temp;
+			data->cmd = ft_strdup(temp);
+			free(temp);
 			return (TRUE);
 		}
 		ft_memset(temp, '\0', ft_strlen(temp));
@@ -80,10 +80,22 @@ static int check_if_exists(t_shell *data)
 
 int	check_if_executable(t_shell *data)
 {
-	if (check_existence(data) == FALSE && data->cmd == NULL)
+	char	**arguments;
+	int		i;
+	int		ii;
+
+	i = 1;
+	ii = 0;
+	arguments = (char **)malloc(sizeof(char *) * (data->token_count));
+	if (arguments == NULL)
+		exit(0);
+	if (check_existense(data) == FALSE && data->cmd == NULL)
 		return (exec_error_message(2, data->token[0]));
 	else
+	{
 		create_child_process(data);
+		return (TRUE);
+	}
 
 
 }

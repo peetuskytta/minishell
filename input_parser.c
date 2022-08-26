@@ -34,6 +34,8 @@ void	parse_input(t_shell *data, char *input)
 				reset_last_cmd_env(data, data->last_cmd);
 			else if (check_if_executable(data) == TRUE)
 				reset_last_cmd_env(data, data->last_cmd);
+			else
+				reset_last_cmd_env(data, data->last_cmd);
 		}
 // set data->last_cmd to be the path+binary executed succesfully
 	}
