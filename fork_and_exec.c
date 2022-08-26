@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/26 13:29:08 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/26 13:43:22 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,22 @@ static void	prepare_exec(t_shell *data)
 	int		i;
 
 	i = 0;
+	temp = NULL;
 	while (data->split_path[i] != NULL)
 	{
 		temp = ft_strdup(data->split_path[i]);
-		ft_strcat(temp, "/");
-		ft_strcat(temp, data->token[0]);
-		ft_putendl(temp);
+		ft_strjoin(temp, "/");
+		ft_strjoin(temp, data->token[0]);
 		//check permissions before F_OK
 		if (access(temp, F_OK) == 0)
+		{
 			data->cmd = temp;
+			break;
+		}
 		ft_memset(temp, '\0', ft_strlen(temp));
 		i++;
 	}
+	ft_putendl(data->cmd);
 }
 
 /* PATH is split already. Command line argument has been split into different tokens. */
