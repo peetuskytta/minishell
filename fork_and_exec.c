@@ -6,13 +6,16 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/28 18:59:31 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/28 19:26:44 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* PATH is split already. Command line argument has been split into different tokens. */
+/*
+**	PATH is split already. Command line argument has been split into
+**	different tokens.
+*/
 void	create_child_process(t_shell *data)
 {
 	pid_t	pid_child;
@@ -21,7 +24,6 @@ void	create_child_process(t_shell *data)
 	pid_child = fork();
 	if (pid_child == 0)
 	{
-		//ft_putendl(data->cmd);
 		ft_putendl("Hello from the child process :)");
 		if (execve(data->cmd, data->token, data->environ) == -1)
 			ft_putendl(EXECVE_ERROR);
@@ -53,7 +55,8 @@ static int	exec_error_message(int id, char *name)
 	return (FALSE);
 }
 
-static int verify_if_in_path(t_shell *data)
+// MISSING: permission check
+static int	verify_if_in_path(t_shell *data)
 {
 	char	*temp;
 	int		i;
@@ -64,7 +67,6 @@ static int verify_if_in_path(t_shell *data)
 	{
 		temp = ft_strjoin(data->split_path[i], "/");
 		temp = ft_strjoin(temp, data->token[0]);
-		//check permissions before F_OK if (permission_ok) == FALSE, return(FALSE)
 		if (access(temp, F_OK) == 0)
 		{
 			data->cmd = ft_strdup(temp);
@@ -74,7 +76,7 @@ static int verify_if_in_path(t_shell *data)
 		ft_memset(temp, '\0', ft_strlen(temp));
 		i++;
 	}
-	return(FALSE);
+	return (FALSE);
 }
 
 int	initial_exec_checks(t_shell *data)

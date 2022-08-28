@@ -37,9 +37,9 @@ void	parse_input(t_shell *data, char *input)
 			else
 				reset_last_cmd_env(data, 0);
 		}
-// set data->last_cmd to be the path+binary executed succesfully
 	}
 	else
-		ft_putendl("Quoting detected: please handle it\nhandling, thanks for the info...");
+		ft_putendl("Quoting detected: please handle it");
 	free_double_ptr(data->token);
 }
+// set data->last_cmd to be the path+binary executed succesfully

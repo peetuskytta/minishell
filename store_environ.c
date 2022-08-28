@@ -42,7 +42,7 @@ static void	split_path_variable(t_shell *data, int i)
 	while (data->env_count > i)
 	{
 		if (ft_strnstr(data->environ[i], "PATH", 4) != NULL)
-			break;
+			break ;
 		i++;
 	}
 	var = ft_strsub(data->environ[i], 5, ft_strlen(data->environ[i]) - 5);
