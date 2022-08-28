@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/26 17:10:22 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/28 18:59:31 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void	create_child_process(t_shell *data)
 	pid_child = fork();
 	if (pid_child == 0)
 	{
-		ft_putendl(data->cmd);
+		//ft_putendl(data->cmd);
 		ft_putendl("Hello from the child process :)");
 		if (execve(data->cmd, data->token, data->environ) == -1)
-			ft_putendl("minishell: error with execve");
+			ft_putendl(EXECVE_ERROR);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid_child < 0)
 		ft_putendl(FORK_FAIL);
@@ -34,9 +35,7 @@ void	create_child_process(t_shell *data)
 		if (pid_wait == -1)
 			ft_putendl(WAITPID_FAIL);
 		ft_putendl("Parent is done waiting.");
-		//free_double_ptr(arguments);
 	}
-
 }
 
 static int	exec_error_message(int id, char *name)
@@ -54,7 +53,7 @@ static int	exec_error_message(int id, char *name)
 	return (FALSE);
 }
 
-static int check_existense(t_shell *data)
+static int verify_if_in_path(t_shell *data)
 {
 	char	*temp;
 	int		i;
@@ -78,7 +77,7 @@ static int check_existense(t_shell *data)
 	return(FALSE);
 }
 
-int	check_if_executable(t_shell *data)
+int	initial_exec_checks(t_shell *data)
 {
 	char	**arguments;
 	int		i;
@@ -88,14 +87,13 @@ int	check_if_executable(t_shell *data)
 	ii = 0;
 	arguments = (char **)malloc(sizeof(char *) * (data->token_count));
 	if (arguments == NULL)
-		exit(0);
-	if (check_existense(data) == FALSE && data->cmd == NULL)
+		exit(1);
+	if (verify_if_in_path(data) == FALSE)
 		return (exec_error_message(2, data->token[0]));
 	else
 	{
 		create_child_process(data);
 		return (TRUE);
 	}
-
-
+	free_double_ptr(arguments);
 }

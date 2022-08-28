@@ -31,11 +31,11 @@ void	parse_input(t_shell *data, char *input)
 		if (tokenize_input(data, input, 0) == TRUE)
 		{
 			if (check_if_builtin(data) == TRUE)
-				reset_last_cmd_env(data, data->last_cmd);
-			else if (check_if_executable(data) == TRUE)
-				reset_last_cmd_env(data, data->last_cmd);
+				reset_last_cmd_env(data, 0);
+			else if (initial_exec_checks(data) == TRUE)
+				reset_last_cmd_env(data, 0);
 			else
-				reset_last_cmd_env(data, data->last_cmd);
+				reset_last_cmd_env(data, 0);
 		}
 // set data->last_cmd to be the path+binary executed succesfully
 	}

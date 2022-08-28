@@ -60,6 +60,7 @@
 # define EXEC_NO_ACCESS "minishell: permission denied: "
 # define FORK_FAIL "minishell: fork error"
 # define WAITPID_FAIL "minishell: waitpid fail"
+# define EXECVE_ERROR "minishell: error with execve"
 
 /*Data structures used*/
 typedef struct s_shell
@@ -85,39 +86,23 @@ void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 void	create_child_process(t_shell *data);
-
-
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
 
 int		check_if_builtin(t_shell *data);
-
 int		check_if_env_exists(t_shell *data, char *name);
-
 int		change_to_token(t_shell *data, const char *path);
-
 int		handle_cd_dash(t_shell *data, int var_i, int len);
-
 int		change_to_home_env(t_shell *data);
-
 int		output_environment(t_shell *data, int i);
-
 int		unset_error_check(t_shell *data);
-
 int		command_prompt_loop(t_shell *data);
-
 int		change_environ(t_shell *data, int id);
-
 int		setenv_error_check(t_shell *data);
-
 int		search_var_name(char *name, t_shell *data);
-
 int		tokenize_input(t_shell *data, char *input, int i);
-
 int		unset_env_variable(t_shell *data);
-
 int		current_dir_actions(t_shell *data);
-
-int		check_if_executable(t_shell *data);
+int		initial_exec_checks(t_shell *data);
 
 char	*join_n_and_v(char *name, char *value);
 
