@@ -42,14 +42,9 @@ static int	exit_and_clean(char *buf)
 		return (TRUE);
 }
 
-static int	clear_or_empty(char *buf)
+static int	is_empty(char *buf)
 {
-	if (ft_strequ(buf, CLEAR) == TRUE)
-	{
-		system("clear");
-		return (TRUE);
-	}
-	else if (ft_strequ(buf, NOSTRING) == TRUE)
+	if (ft_strequ(buf, NOSTRING) == TRUE)
 		return (TRUE);
 	return (FALSE);
 }
@@ -69,7 +64,7 @@ int	command_prompt_loop(t_shell *data)
 		read_input_stdin(buf);
 		if (exit_and_clean(buf) == FALSE)
 			return (FALSE);
-		if (clear_or_empty(buf) == TRUE)
+		if (is_empty(buf) == TRUE)
 			clear_and_free_buffer(buf);
 		else
 		{

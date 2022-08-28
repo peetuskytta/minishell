@@ -49,6 +49,6 @@ environment variables.
  - echo
  - cd (DONE)
 	- permissions (DONE)
- - permission check for the whole path to a binary
+ - permission check for the whole path to a binary (halfway there)
  - quoting detection
  - expand `~` and `$` (DONE for cd, setenv and unsetenv)

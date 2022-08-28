@@ -42,4 +42,4 @@ void	parse_input(t_shell *data, char *input)
 		ft_putendl("Quoting detected: please handle it");
 	free_double_ptr(data->token);
 }
-// set data->last_cmd to be the path+binary executed succesfully
+// set data->cmd to be the path+binary executed succesfully
