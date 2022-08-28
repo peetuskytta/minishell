@@ -28,7 +28,7 @@
 /*Other useful defines*/
 # define CYAN "\033[0;36m"
 # define DEFAULT "\033[0m"
-# define PROMPT CYAN"minishell> "DEFAULT
+# define PROMPT "minishell> "
 # define NOSTRING ""
 # define BACKSLASH '\\'
 # define DOUBLEQUOTE '\"'
@@ -52,8 +52,8 @@
 # define STR_ILLEGAL_CHAR "setenv name: cannot include '='"
 # define SETENV_USAGE "usage: setenv [name] [value]"
 # define UNSETENV_USAGE "usage: unsetenv [name]"
-# define SET_TOO_MANY_ARG "setenv: too many arguments\n"SETENV_USAGE
-# define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"UNSETENV_USAGE
+# define SET_TOO_MANY_ARG "setenv: too many arguments\n"
+# define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"
 
 /*Error messages for fork, waitpid, and execve*/
 # define CMD_NOT_FOUND "minishell: command not found: "
@@ -87,7 +87,7 @@ void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 void	create_child_process(t_shell *data);
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
-
+int		handle_home(t_shell *data);
 int		check_if_builtin(t_shell *data);
 int		check_if_env_exists(t_shell *data, char *name);
 int		change_to_token(t_shell *data, const char *path);
@@ -103,8 +103,6 @@ int		tokenize_input(t_shell *data, char *input, int i);
 int		unset_env_variable(t_shell *data);
 int		current_dir_actions(t_shell *data);
 int		initial_exec_checks(t_shell *data);
-
 char	*join_n_and_v(char *name, char *value);
-
 
 #endif

@@ -34,7 +34,7 @@ static int	cd_error_message(char *name, int id)
 	return (3);
 }
 
-static int path_permission_loop(char **split, const char *path)
+static int	path_permission_loop(char **split, const char *path)
 {
 	struct stat	stats;
 	char		temp[4096];
@@ -46,7 +46,7 @@ static int path_permission_loop(char **split, const char *path)
 	while (TRUE)
 	{
 		if (split[i] == NULL)
-			break;
+			break ;
 		ft_strcat(temp, split[i]);
 		if (lstat(temp, &stats) == 0)
 		{
@@ -81,7 +81,7 @@ static int	check_access(t_shell *data)
 /Users/speedupeloton/Hive/projects/JOKU/OK/NOT_OK/DEF_NO_GO
 	*/
 
-static int initial_checks(t_shell *data)
+static int	initial_checks(t_shell *data)
 {
 	if (data->token[1] == NULL || data->token[1][0] == '\0')
 		return (FALSE);
@@ -100,23 +100,12 @@ int	current_dir_actions(t_shell *data)
 	checks = initial_checks(data);
 	if (checks == 1)
 	{
-		ft_putendl("success: token is a (possible) directory");
 		reset_last_cmd_env(data, 0);
 		return (change_to_token(data, data->token[1]));
 	}
 	if (checks == 0)
-	{
-		ft_putendl("change to $HOME directory");
-		check_expansion(data, 0);
-		reset_last_cmd_env(data, 0);
-		if (search_var_name("HOME", data) < 0)
-			return (TRUE);
-		if (search_var_name("PWD", data) < 0)
-			add_env_variable(data, "PWD", getcwd(data->pwd, 4096), data->env_count);
-		return (change_to_home_env(data));
-	}
+		return (handle_home(data));
 	if (checks == 3)
 		return (TRUE);
 	return (TRUE);
 }
-

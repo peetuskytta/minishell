@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/28 19:26:44 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/28 21:35:40 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ void	create_child_process(t_shell *data)
 	pid_child = fork();
 	if (pid_child == 0)
 	{
-		ft_putendl("Hello from the child process :)");
 		if (execve(data->cmd, data->token, data->environ) == -1)
 			ft_putendl(EXECVE_ERROR);
-		exit(EXIT_FAILURE);
+		exit(EXIT_SUCCESS);
 	}
 	else if (pid_child < 0)
 		ft_putendl(FORK_FAIL);
@@ -36,7 +35,6 @@ void	create_child_process(t_shell *data)
 		pid_wait = waitpid(pid_child, &data->pid_status, 0);
 		if (pid_wait == -1)
 			ft_putendl(WAITPID_FAIL);
-		ft_putendl("Parent is done waiting.");
 	}
 }
 
@@ -87,6 +85,7 @@ int	initial_exec_checks(t_shell *data)
 
 	i = 1;
 	ii = 0;
+	check_expansion(data, 0);
 	arguments = (char **)malloc(sizeof(char *) * (data->token_count));
 	if (arguments == NULL)
 		exit(1);

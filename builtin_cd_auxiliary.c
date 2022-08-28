@@ -12,27 +12,21 @@
 
 #include "minishell.h"
 
-int	check_if_env_exists(t_shell *data, char *name)
-{
-	if (search_var_name(name, data) == -1)
-		return (FALSE);
-	else
-		return (TRUE);
-}
-
 int	change_to_home_env(t_shell *data)
 {
+	char	*cur_dir;
 	char	*buf;
 	int		var_i;
 	int		len;
 
+	cur_dir = getcwd(data->pwd, 4096);
 	var_i = search_var_name("HOME", data);
 	if (var_i == -1)
 		return (TRUE);
 	if (search_var_name("OLDPWD", data) < 0)
-		add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), data->env_count);
+		add_env_variable(data, "OLDPWD", cur_dir, data->env_count);
 	else
-		modify_env(data, "OLDPWD", getcwd(data->pwd, 4096), 0);
+		modify_env(data, "OLDPWD", cur_dir, 0);
 	len = ft_strlen(data->environ[var_i]);
 	buf = ft_strsub(data->environ[var_i], 5, len - 5);
 	if (chdir(buf) != 0)
@@ -47,7 +41,7 @@ int	change_to_home_env(t_shell *data)
 	return (TRUE);
 }
 
-static void modify_pwd(t_shell *data, char *name)
+static void	modify_pwd(t_shell *data, char *name)
 {
 	ft_memset(data->pwd, '\0', 4096);
 	getcwd(data->pwd, 4096);
@@ -81,12 +75,29 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 	return (3);
 }
 
+int	handle_home(t_shell *data)
+{
+	int	count;
+
+	count = data->env_count;
+	check_expansion(data, 0);
+	reset_last_cmd_env(data, 0);
+	if (search_var_name("HOME", data) < 0)
+		return (TRUE);
+	if (search_var_name("PWD", data) < 0)
+		add_env_variable(data, "PWD", getcwd(data->pwd, 4096), count);
+	return (change_to_home_env(data));
+}
+
 int	change_to_token(t_shell *data, const char *path)
 {
+	int	nbr;
+
+	nbr = data->env_count;
 	if (path)
 	{
 		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), data->env_count);
+			add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), nbr);
 		else
 			modify_pwd(data, "OLDPWD");
 		if (chdir(path) != 0)

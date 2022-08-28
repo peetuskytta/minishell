@@ -60,7 +60,9 @@ int	command_prompt_loop(t_shell *data)
 
 	while (TRUE)
 	{
+		ft_putstr(CYAN);
 		ft_putstr(PROMPT);
+		ft_putstr(DEFAULT);
 		buf = (char *)malloc(sizeof(char) * BUFFER);
 		if (!buf)
 			return (FALSE);
