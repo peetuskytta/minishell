@@ -77,7 +77,7 @@ static int	check_access(t_shell *data)
 	return (TRUE);
 }
 	/*
-/Users/speedupeloton/Hive/projects/minishells
+/Users/speedupeloton/Hive/projects/minishell
 /Users/speedupeloton/Hive/projects/JOKU/OK/NOT_OK/DEF_NO_GO
 	*/
 
@@ -97,6 +97,7 @@ int	current_dir_actions(t_shell *data)
 {
 	int	checks;
 
+	check_expansion(data, 0);
 	checks = initial_checks(data);
 	if (checks == 1)
 	{

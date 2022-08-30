@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/28 22:44:29 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/30 16:08:35 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 **	PATH is split already. Command line argument has been split into
 **	different tokens.
 */
+void	check_if_shell(t_shell *data)
+{
+	if (ft_strequ(data->token[0], "bash") == 1)
+		change
+}
+
 void	create_child_process(t_shell *data)
 {
 	pid_t	pid_child;
@@ -24,6 +30,7 @@ void	create_child_process(t_shell *data)
 	pid_child = fork();
 	if (pid_child == 0)
 	{
+		check_if_shell(data);
 		if (execve(data->cmd, data->token, data->environ) == -1)
 			ft_putendl(EXECVE_ERROR);
 		exit(EXIT_SUCCESS);
@@ -100,12 +107,7 @@ static int	verify_if_executable(t_shell *data)
 
 int	initial_exec_checks(t_shell *data)
 {
-	char	**arguments;
-
 	check_expansion(data, 0);
-	arguments = (char **)malloc(sizeof(char *) * (data->token_count));
-	if (arguments == NULL)
-		exit(1);
 	if (verify_if_executable(data) == FALSE)
 		return (exec_error_message(2, data->token[0]));
 	else
@@ -113,5 +115,5 @@ int	initial_exec_checks(t_shell *data)
 		create_child_process(data);
 		return (TRUE);
 	}
-	free_double_ptr(arguments);
+	ft_putendl("we get here");
 }

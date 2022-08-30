@@ -80,7 +80,6 @@ int	handle_home(t_shell *data)
 	int	count;
 
 	count = data->env_count;
-	check_expansion(data, 0);
 	reset_last_cmd_env(data, 0);
 	if (search_var_name("HOME", data) < 0)
 		return (TRUE);
