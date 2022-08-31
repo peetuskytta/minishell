@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/30 16:08:35 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/31 09:56:30 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 */
 void	check_if_shell(t_shell *data)
 {
-	if (ft_strequ(data->token[0], "bash") == 1)
-		change
+	ft_putendl(data->cmd);
+	//if (ft_strequ(data->token[0], "bash") == 1)
+	//	modify_env(data, "SHELL", data->cmd, 0);
+	if (ft_strequ(data->token[0], "zsh") == 1)
+		modify_env(data, "SHELL", data->cmd, 0);
+	if (ft_strequ(data->token[0], "minishell") == 1)
+		modify_env(data, "SHELL", data->cmd, 0);
 }
 
 void	create_child_process(t_shell *data)
@@ -89,15 +94,18 @@ static int	verify_if_executable(t_shell *data)
 
 	var_i = 0;
 	cd = NULL;
-	cd = ft_strjoin(getcwd(cd, 4096), "/");
-	cd = ft_strjoin(cd, data->token[0]);
-	if (access((const char *)cd, F_OK) == 0)
+	if (ft_strchr(data->token[0], '.') && data->token[0][1] == '/')
 	{
-		data->cmd = ft_strdup(cd);
-		var_i = search_var_name("SHLVL", data);
-		++data->environ[var_i][6];
-		free(cd);
-		return (TRUE);
+		cd = ft_strjoin(getcwd(cd, 4096), "/");
+		cd = ft_strjoin(cd, data->token[0]);
+		if (access((const char *)cd, F_OK) == 0)
+		{
+			data->cmd = ft_strdup(cd);
+			free(cd);
+			return (TRUE);
+		}
+		else
+			return (FALSE);
 	}
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);
@@ -115,5 +123,4 @@ int	initial_exec_checks(t_shell *data)
 		create_child_process(data);
 		return (TRUE);
 	}
-	ft_putendl("we get here");
 }

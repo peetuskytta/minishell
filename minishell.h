@@ -87,6 +87,7 @@ void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 void	create_child_process(t_shell *data);
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
+void	check_if_shell(t_shell *data);
 int		handle_home(t_shell *data);
 int		check_if_builtin(t_shell *data);
 int		check_if_env_exists(t_shell *data, char *name);
