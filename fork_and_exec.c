@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/31 09:56:30 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/31 10:34:11 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 */
 void	check_if_shell(t_shell *data)
 {
-	ft_putendl(data->cmd);
-	//if (ft_strequ(data->token[0], "bash") == 1)
-	//	modify_env(data, "SHELL", data->cmd, 0);
+	if (ft_strequ(data->token[0], "bash") == 1)
+		modify_env(data, "SHELL", data->cmd, 0);
 	if (ft_strequ(data->token[0], "zsh") == 1)
 		modify_env(data, "SHELL", data->cmd, 0);
 	if (ft_strequ(data->token[0], "minishell") == 1)

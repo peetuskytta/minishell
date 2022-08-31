@@ -35,11 +35,15 @@ environment variables.
   - How to start writing functions to create a child process in case binary is needed.
   - How to write the required built-ins for the project: `env`, `setenv`, `unsetenv`, `cd`, `echo`, `exit`.
 
- - I underestimated the complexity of quoting and parsing of input (July 20th 2022).
+ - I underestimated the complexity of quoting (especially this one) and parsing of input (July 20th 2022).
+
+- Found a memory issue when launching `./minishell` from bash after launching bash from the minishell. It was caused by the `"OLDPWD"` environment variable which is not set at all when launching bash. As minishell was trying to modify this variable that didn't exist it resulted in a segfault. It was quit an easy fix.
+
 
  #### Successes
 
- - no memory leaks in the `setenv`, `env`, `unsetenv`, `cd` and `exit` builtins.
+ - no memory leaks in the `setenv`, `env`, `unsetenv`, `cd`, and `exit` builtins.
+ - no memory leaks when trying to run an executable from the current folder or from the PATH.
  - `cd` permission check for each folder in the pathname.
 	- this was particularly difficult to do with the use of `access()` system call as it returns -1 indicating an error if the user has no search permission or that the folder doesn't exist. Ended up using `lstat()` and `X_OK` to check the permissions and handle non-existent files later when trying to change the the working directory.
  - environment variable `$_` handling and updating after every command making sure it is correctly set.
