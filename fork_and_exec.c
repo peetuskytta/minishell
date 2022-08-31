@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/31 10:34:11 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/31 11:22:58 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,7 @@
 **	PATH is split already. Command line argument has been split into
 **	different tokens.
 */
-void	check_if_shell(t_shell *data)
-{
-	if (ft_strequ(data->token[0], "bash") == 1)
-		modify_env(data, "SHELL", data->cmd, 0);
-	if (ft_strequ(data->token[0], "zsh") == 1)
-		modify_env(data, "SHELL", data->cmd, 0);
-	if (ft_strequ(data->token[0], "minishell") == 1)
-		modify_env(data, "SHELL", data->cmd, 0);
-}
-
-void	create_child_process(t_shell *data)
+static void	create_child_process(t_shell *data)
 {
 	pid_t	pid_child;
 	pid_t	pid_wait;
@@ -47,21 +37,6 @@ void	create_child_process(t_shell *data)
 		if (pid_wait == -1)
 			ft_putendl(WAITPID_FAIL);
 	}
-}
-
-static int	exec_error_message(int id, char *name)
-{
-	if (id == 1)
-	{
-		ft_putstr(EXEC_NO_ACCESS);
-		ft_putendl(name);
-	}
-	if (id == 2)
-	{
-		ft_putstr(CMD_NOT_FOUND);
-		ft_putendl(name);
-	}
-	return (FALSE);
 }
 
 static int	is_in_path(t_shell *data, int i)
@@ -109,7 +84,6 @@ static int	verify_if_executable(t_shell *data)
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);
 	return (TRUE);
-
 }
 
 int	initial_exec_checks(t_shell *data)

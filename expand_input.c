@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:09:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/28 19:18:37 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/08/31 11:37:00 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	expand_variable(int i, int var_i, t_shell *data)
 static void	expand_home(int i, int var_i, t_shell *data)
 {
 	int		len;
+	// copy parts behind the tilde and join them back after expanding ~/Hive/projects
 
 	var_i = search_var_name("HOME", data);
 	if (var_i == -1)
