@@ -21,7 +21,6 @@
 # define ENV "env"
 # define EXIT "exit"
 # define ECHO "echo"
-# define CLEAR "clear"
 # define SETENV "setenv"
 # define UNSETENV "unsetenv"
 
@@ -29,6 +28,7 @@
 # define CYAN "\033[0;36m"
 # define DEFAULT "\033[0m"
 # define PROMPT "minishell> "
+# define MINISH "minishell: "
 # define NOSTRING ""
 # define BACKSLASH '\\'
 # define DOUBLEQUOTE '\"'
@@ -43,8 +43,10 @@
 # define MALLOC_FAIL "malloc failed: serious memory issues"
 
 /*Error message defines for CD*/
-# define CD_NO_ACCESS "cd: permission denied: "
-# define CD_NO_FILE_OR_DIR "cd: no such file or directory: "
+# define CD_SH "minishell: cd: "
+# define CD_NO_ACCESS " permission denied"
+# define CD_NO_FILE_OR_DIR " no such file or directory"
+# define CD_HOME_UNSET " HOME not set"
 
 /*Error message defines for setenv and unsetenv*/
 # define EMPTY_STR "setenv name: cannot be an empty string"
@@ -56,11 +58,12 @@
 # define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"
 
 /*Error messages for fork, waitpid, and execve*/
-# define CMD_NOT_FOUND "minishell: command not found: "
-# define EXEC_NO_ACCESS "minishell: permission denied: "
-# define FORK_FAIL "minishell: fork error"
+# define CMD_NOT_FOUND ": command not found"
+# define EXEC_NO_ACCESS ": permission denied"
+# define FORK_FAIL "minishell: fork fail"
 # define WAITPID_FAIL "minishell: waitpid fail"
 # define EXECVE_ERROR "minishell: error with execve"
+# define IS_A_DIR ": is a directory"
 
 /*Data structures used*/
 typedef struct s_shell
@@ -86,7 +89,9 @@ void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
-void	check_if_shell(t_shell *data);
+
+void	cd_error_print(char *sh, char *name, char *msg);
+
 int		exec_error_message(int id, char *name);
 int		handle_home(t_shell *data);
 int		check_if_builtin(t_shell *data);

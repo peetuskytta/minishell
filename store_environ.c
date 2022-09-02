@@ -55,17 +55,13 @@ static void	split_path_variable(t_shell *data, int i)
 
 void	store_environ_variables(t_shell *data, char **env)
 {
-	char	cwd[4096];
 	int		var_i;
 
 	allocate_envp(data, env);
 	split_path_variable(data, 0);
-	getcwd(cwd, 4096);
-	if (search_var_name("SHELL", data) >= 0)
-		modify_env(data, "SHELL", cwd, 0);
-	if (search_var_name("OLDPWD", data) >= 0)
-		modify_env(data, "OLDPWD", cwd, 0);
 	var_i = search_var_name("SHLVL", data);
-	if (var_i > 0)
+	if (var_i < 0)
+		add_env_variable(data, "SHLVL", "1", data->env_count);
+	else
 		++data->environ[var_i][6];
 }

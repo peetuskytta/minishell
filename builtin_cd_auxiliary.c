@@ -12,6 +12,18 @@
 
 #include "minishell.h"
 
+void	cd_error_print(char *sh, char *name, char *msg)
+{
+	//if (id != 3)
+	//{
+	ft_putstr(sh);
+	ft_putstr(name);
+	ft_putchar(32);
+	ft_putendl(msg);
+	//}
+	//return (3);
+}
+
 int	change_to_home_env(t_shell *data)
 {
 	char	*cur_dir;
@@ -22,7 +34,10 @@ int	change_to_home_env(t_shell *data)
 	cur_dir = getcwd(data->pwd, 4096);
 	var_i = search_var_name("HOME", data);
 	if (var_i == -1)
+	{
+		cd_error_print(CD_SH, NULL, CD_HOME_UNSET);
 		return (TRUE);
+	}
 	if (search_var_name("OLDPWD", data) < 0)
 		add_env_variable(data, "OLDPWD", cur_dir, data->env_count);
 	else
@@ -55,7 +70,7 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 	var_i = search_var_name("OLDPWD", data);
 	if (var_i < 0)
 	{
-		ft_putendl("-minishell: cd: OLDPWD not set");
+		ft_putendl("minishell: cd: OLDPWD not set");
 		return (3);
 	}
 	len = ft_strlen(data->environ[var_i]);

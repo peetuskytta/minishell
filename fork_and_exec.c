@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/08/31 11:22:58 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/02 17:18:01 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	create_child_process(t_shell *data)
 	pid_child = fork();
 	if (pid_child == 0)
 	{
-		check_if_shell(data);
 		if (execve(data->cmd, data->token, data->environ) == -1)
 			ft_putendl(EXECVE_ERROR);
 		exit(EXIT_SUCCESS);
@@ -68,18 +67,24 @@ static int	verify_if_executable(t_shell *data)
 
 	var_i = 0;
 	cd = NULL;
-	if (ft_strchr(data->token[0], '.') && data->token[0][1] == '/')
+	if (ft_strchr(data->token[0], '.') || ft_strchr(data->token[0], '/'))
 	{
 		cd = ft_strjoin(getcwd(cd, 4096), "/");
 		cd = ft_strjoin(cd, data->token[0]);
+		ft_putendl(cd);
 		if (access((const char *)cd, F_OK) == 0)
 		{
+			if (ft_is_directory(cd) == TRUE)
+				return (3);
 			data->cmd = ft_strdup(cd);
 			free(cd);
 			return (TRUE);
 		}
 		else
+		{
+			ft_putendl("here");
 			return (FALSE);
+		}
 	}
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);
@@ -88,9 +93,14 @@ static int	verify_if_executable(t_shell *data)
 
 int	initial_exec_checks(t_shell *data)
 {
+	int	check;
+
 	check_expansion(data, 0);
-	if (verify_if_executable(data) == FALSE)
+	check = verify_if_executable(data);
+	if (check == FALSE)
 		return (exec_error_message(2, data->token[0]));
+	else if (check == 3)
+		return (exec_error_message(3, data->token[0]));
 	else
 	{
 		create_child_process(data);

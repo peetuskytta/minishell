@@ -36,6 +36,7 @@ static int	exit_and_clean(char *buf)
 	{
 		ft_memset(buf, 0, ft_strlen(buf));
 		free(buf);
+		ft_putendl("exit");
 		return (FALSE);
 	}
 	else

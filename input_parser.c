@@ -16,10 +16,10 @@ static int	simple_input_check(char *input)
 {
 	if (ft_strchr(input, BACKSLASH))
 		return (FALSE);
-	else if (ft_strchr(input, SINGLEQUOTE))
+/*	else if (ft_strchr(input, SINGLEQUOTE))
 		return (FALSE);
 	else if (ft_strchr(input, DOUBLEQUOTE))
-		return (FALSE);
+		return (FALSE); */
 	else
 		return (TRUE);
 }
@@ -40,6 +40,5 @@ void	parse_input(t_shell *data, char *input)
 	}
 	else
 		ft_putendl("Quoting detected: please handle it");
-	free_double_ptr(data->token);
 }
 // set data->cmd to be the path+binary executed succesfully
