@@ -17,29 +17,16 @@ static int	cd_error_message(char *name, int id)
 	if (id == 1)
 	{
 		if (!name)
-		{
 			cd_error_print(CD_SH, name, CD_NO_FILE_OR_DIR);
-//			ft_putstr(CD_SH);
-//			ft_putstr(name);
-//			ft_putendl(CD_NO_FILE_OR_DIR);
-		}
 		else
-		{
 			cd_error_print(CD_SH, name, CD_NO_FILE_OR_DIR);
-//			ft_putstr(CD_SH);
-//			ft_putstr(name);
-//			ft_putendl(CD_NO_FILE_OR_DIR);
-		}
 	}
 	else if (id == 2)
-	{
 		cd_error_print(CD_SH, name, CD_NO_FILE_OR_DIR);
-//		ft_putstr(CD_SH);
-//		ft_putstr(name);
-//		ft_putendl(CD_NO_ACCESS);
-	}
 	else if (id == 3)
 		return (3);
+	else if (id == 4)
+		cd_error_print(CD_SH, name, CD_NO_ACCESS);
 	return (3);
 }
 
@@ -60,8 +47,10 @@ static int	path_permission_loop(char **split, const char *path)
 		if (lstat(temp, &stats) == 0)
 		{
 			if (!(stats.st_mode & X_OK))
-				return (cd_error_message((char *)path, 2));
+				return (cd_error_message((char *)path, 4));
 		}
+		else
+			return (cd_error_message((char *)path, 2));
 		ft_strcat(temp, "/");
 		i++;
 	}

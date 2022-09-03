@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/02 17:18:01 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/03 17:58:17 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ static int	is_in_path(t_shell *data, int i)
 // MISSING: permission check
 static int	verify_if_executable(t_shell *data)
 {
-	char	*cd;
-	int		var_i;
+	struct stat	info;
+	char		*cd;
+	int			var_i;
 
 	var_i = 0;
 	cd = NULL;
@@ -71,8 +72,7 @@ static int	verify_if_executable(t_shell *data)
 	{
 		cd = ft_strjoin(getcwd(cd, 4096), "/");
 		cd = ft_strjoin(cd, data->token[0]);
-		ft_putendl(cd);
-		if (access((const char *)cd, F_OK) == 0)
+		if (lstat((const char *)cd, &info) == 0)
 		{
 			if (ft_is_directory(cd) == TRUE)
 				return (3);
@@ -80,11 +80,10 @@ static int	verify_if_executable(t_shell *data)
 			free(cd);
 			return (TRUE);
 		}
+		else if (lstat((const char *)cd, &info) == -1)
+			return(2);
 		else
-		{
-			ft_putendl("here");
 			return (FALSE);
-		}
 	}
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);
@@ -99,6 +98,8 @@ int	initial_exec_checks(t_shell *data)
 	check = verify_if_executable(data);
 	if (check == FALSE)
 		return (exec_error_message(2, data->token[0]));
+	else if (check == 2)
+		return (exec_error_message(1, data->token[0]));
 	else if (check == 3)
 		return (exec_error_message(3, data->token[0]));
 	else

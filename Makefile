@@ -17,6 +17,7 @@ SOURCES := main.c \
 	fork_and_exec.c \
 	fork_and_exec_auxiliary.c \
 	expand_input.c \
+	error_handler.c \
 
 OBJ := $(SOURCES:.c=.o)
 

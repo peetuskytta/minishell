@@ -12,30 +12,16 @@
 
 #include "minishell.h"
 
-void	cd_error_print(char *sh, char *name, char *msg)
-{
-	//if (id != 3)
-	//{
-	ft_putstr(sh);
-	ft_putstr(name);
-	ft_putchar(32);
-	ft_putendl(msg);
-	//}
-	//return (3);
-}
-
-int	change_to_home_env(t_shell *data)
+int	change_to_home_env(t_shell *data, int len, int var_i)
 {
 	char	*cur_dir;
 	char	*buf;
-	int		var_i;
-	int		len;
 
 	cur_dir = getcwd(data->pwd, 4096);
 	var_i = search_var_name("HOME", data);
 	if (var_i == -1)
 	{
-		cd_error_print(CD_SH, NULL, CD_HOME_UNSET);
+		cd_error_print(CD_SH, "", CD_HOME_UNSET);
 		return (TRUE);
 	}
 	if (search_var_name("OLDPWD", data) < 0)
@@ -46,7 +32,6 @@ int	change_to_home_env(t_shell *data)
 	buf = ft_strsub(data->environ[var_i], 5, len - 5);
 	if (chdir(buf) != 0)
 	{
-		ft_putendl("-minishell: cd: not a valid directory");
 		free(buf);
 		return (TRUE);
 	}
@@ -68,25 +53,25 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 	char	*temp;
 
 	var_i = search_var_name("OLDPWD", data);
-	if (var_i < 0)
+	if (var_i > 0)
 	{
-		ft_putendl("minishell: cd: OLDPWD not set");
-		return (3);
-	}
-	len = ft_strlen(data->environ[var_i]);
-	temp = ft_strsub(data->environ[var_i], 7, len - 7);
-	modify_pwd(data, "OLDPWD");
-	if (chdir(temp) != 0)
-	{
+		len = ft_strlen(data->environ[var_i]);
+		temp = ft_strsub(data->environ[var_i], 7, len - 7);
+		modify_pwd(data, "OLDPWD");
+		if (chdir(temp) != 0)
+		{
+			free(temp);
+			return (3);
+		}
+		if (search_var_name("PWD", data) < 0)
+			add_env_variable(data, "PWD", temp, data->env_count);
+		else
+			modify_env(data, "PWD", temp, 0);
+		ft_putendl(temp);
 		free(temp);
-		return (3);
 	}
-	if (search_var_name("PWD", data) < 0)
-		add_env_variable(data, "PWD", temp, data->env_count);
 	else
-		modify_env(data, "PWD", temp, 0);
-	ft_putendl(temp);
-	free(temp);
+		ft_putendl("minishell: cd: OLDPWD not set");
 	return (3);
 }
 
@@ -100,7 +85,7 @@ int	handle_home(t_shell *data)
 		return (TRUE);
 	if (search_var_name("PWD", data) < 0)
 		add_env_variable(data, "PWD", getcwd(data->pwd, 4096), count);
-	return (change_to_home_env(data));
+	return (change_to_home_env(data, 0, 0));
 }
 
 int	change_to_token(t_shell *data, const char *path)
@@ -116,8 +101,7 @@ int	change_to_token(t_shell *data, const char *path)
 			modify_pwd(data, "OLDPWD");
 		if (chdir(path) != 0)
 		{
-			ft_putstr(CD_NO_FILE_OR_DIR);
-			ft_putendl(path);
+			cd_error_print(CD_SH, (char *)path, CD_NO_FILE_OR_DIR);
 			return (TRUE);
 		}
 		getcwd(data->pwd, 4096);
