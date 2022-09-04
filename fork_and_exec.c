@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/03 17:58:17 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/04 18:37:01 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static int	verify_if_executable(t_shell *data)
 {
 	struct stat	info;
 	char		*cd;
-	int			var_i;
+//	int			var_i;
 
-	var_i = 0;
+//	var_i = 0;
 	cd = NULL;
 	if (ft_strchr(data->token[0], '.') || ft_strchr(data->token[0], '/'))
 	{
@@ -81,9 +81,15 @@ static int	verify_if_executable(t_shell *data)
 			return (TRUE);
 		}
 		else if (lstat((const char *)cd, &info) == -1)
+		{
+			free(cd);
 			return(2);
+		}
 		else
+		{
+			free(cd);
 			return (FALSE);
+		}
 	}
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);

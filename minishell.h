@@ -15,6 +15,8 @@
 
 # include <dirent.h>
 # include "libft/libft.h"
+# include <sys/types.h>
+# include <sys/wait.h>
 
 /*Builtin command defines*/
 # define CD "cd"
@@ -82,7 +84,7 @@ typedef struct s_shell
 void	store_environ_variables(t_shell *data, char **env);
 void	parse_input(t_shell *data, char *input);
 void	free_double_ptr(char **token);
-void	free_and_memset(t_shell *data, int i);
+void	free_and_memset(t_shell *data);
 void	handle_command(t_shell *data);
 void	reset_env_value(t_shell *data, int i);
 void	reset_last_cmd_env(t_shell *data, int var_i);

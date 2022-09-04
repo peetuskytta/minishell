@@ -26,17 +26,11 @@ void	free_double_ptr(char **string)
 	free(string);
 }
 
-void	free_and_memset(t_shell *data, int i)
+void	free_and_memset(t_shell *data)
 {
 	free(data->cmd);
 	free_double_ptr(data->split_path);
-	while (data->env_count > i)
-	{
-		ft_memset(data->environ[i], 0, ft_strlen(data->environ[i]));
-		free(data->environ[i]);
-		i++;
-	}
-	free(data->environ);
+	free_double_ptr(data->environ);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,7 +43,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		store_environ_variables(&data, envp);
 		if (command_prompt_loop(&data) == FALSE)
-			free_and_memset(&data, 0);
+			free_and_memset(&data);
 	}
 	exit(EXIT_SUCCESS);
 }
