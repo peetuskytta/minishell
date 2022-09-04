@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/04 18:37:01 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/04 20:37:10 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,38 +59,39 @@ static int	is_in_path(t_shell *data, int i)
 	return (FALSE);
 }
 
-// MISSING: permission check
-static int	verify_if_executable(t_shell *data)
+static int	check_existance(t_shell *data)
 {
 	struct stat	info;
 	char		*cd;
-//	int			var_i;
 
-//	var_i = 0;
 	cd = NULL;
-	if (ft_strchr(data->token[0], '.') || ft_strchr(data->token[0], '/'))
+	cd = ft_strjoin(getcwd(cd, 4096), "/");
+	cd = ft_strjoin(cd, data->token[0]);
+	if (lstat((const char *)cd, &info) == 0)
 	{
-		cd = ft_strjoin(getcwd(cd, 4096), "/");
-		cd = ft_strjoin(cd, data->token[0]);
-		if (lstat((const char *)cd, &info) == 0)
-		{
-			if (ft_is_directory(cd) == TRUE)
-				return (3);
-			data->cmd = ft_strdup(cd);
-			free(cd);
-			return (TRUE);
-		}
-		else if (lstat((const char *)cd, &info) == -1)
-		{
-			free(cd);
-			return(2);
-		}
-		else
-		{
-			free(cd);
-			return (FALSE);
-		}
+		if (ft_is_directory(cd) == TRUE)
+			return (3);
+		data->cmd = ft_strdup(cd);
+		free(cd);
+		return (TRUE);
 	}
+	else if (lstat((const char *)cd, &info) == -1)
+	{
+		free(cd);
+		return(2);
+	}
+	else
+	{
+		free(cd);
+		return (FALSE);
+	}
+}
+
+// MISSING: permission check
+static int	verify_if_executable(t_shell *data)
+{
+	if (ft_strchr(data->token[0], '.') || ft_strchr(data->token[0], '/'))
+		return (check_existance(data));
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);
 	return (TRUE);
