@@ -43,11 +43,14 @@
 /*Error message defines*/
 # define CMD_TOO_LONG "command line argument is too long"
 # define MALLOC_FAIL "malloc failed: serious memory issues"
+# define ARG_REQUIRED ": filename argument required"
+# define ARG_USAGE_1 ": usage: "
+# define ARG_USAGE_2 " filename [arguments]"
 
 /*Error message defines for CD*/
 # define CD_SH "minishell: cd: "
 # define CD_NO_ACCESS " permission denied"
-# define CD_NO_FILE_OR_DIR " no such file or directory"
+# define CD_NO_FILE_OR_DIR ": No such file or directory"
 # define CD_HOME_UNSET " HOME not set"
 
 /*Error message defines for setenv and unsetenv*/
@@ -67,7 +70,7 @@
 # define EXECVE_ERROR "minishell: error with execve"
 # define IS_A_DIR ": is a directory"
 
-/*Data structures used*/
+/*Data structure(s) used*/
 typedef struct s_shell
 {
 	char	**environ;
@@ -92,7 +95,7 @@ void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
 
-void	cd_error_print(char *sh, char *name, char *msg);
+void	error_print(char *sh, char *name, char *msg);
 
 int		exec_error_message(int id, char *name);
 int		handle_home(t_shell *data);

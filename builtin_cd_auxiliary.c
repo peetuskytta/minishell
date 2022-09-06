@@ -21,7 +21,7 @@ int	change_to_home_env(t_shell *data, int len, int var_i)
 	var_i = search_var_name("HOME", data);
 	if (var_i == -1)
 	{
-		cd_error_print(CD_SH, "", CD_HOME_UNSET);
+		error_print(CD_SH, "", CD_HOME_UNSET);
 		return (TRUE);
 	}
 	if (search_var_name("OLDPWD", data) < 0)
@@ -101,7 +101,7 @@ int	change_to_token(t_shell *data, const char *path)
 			modify_pwd(data, "OLDPWD");
 		if (chdir(path) != 0)
 		{
-			cd_error_print(CD_SH, (char *)path, CD_NO_FILE_OR_DIR);
+			error_print(CD_SH, (char *)path, CD_NO_FILE_OR_DIR);
 			return (TRUE);
 		}
 		getcwd(data->pwd, 4096);

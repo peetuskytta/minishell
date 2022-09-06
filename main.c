@@ -31,6 +31,8 @@ void	free_and_memset(t_shell *data)
 	free(data->cmd);
 	free_double_ptr(data->split_path);
 	free_double_ptr(data->environ);
+	//if (data->token[0] != NULL)
+	//	free_double_ptr(data->token);
 }
 
 int	main(int argc, char **argv, char **envp)

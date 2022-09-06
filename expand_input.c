@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:09:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/01 13:51:09 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/05 13:52:37 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	expand_token(int id, int i, t_shell *data)
 		expand_home(i, var_i, data);
 }
 
+/*	!!!doesn't handle ~ inside a string!!!	*/
 void	check_expansion(t_shell *data, int i)
 {
 	while (data->token[i] != NULL)

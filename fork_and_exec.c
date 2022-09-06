@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/04 20:37:10 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/05 13:57:27 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,43 +46,45 @@ static int	is_in_path(t_shell *data, int i)
 	while (data->split_path[i] != NULL)
 	{
 		temp = ft_strjoin(data->split_path[i], "/");
-		temp = ft_strjoin(temp, data->token[0]);
+		ft_strcat(temp, data->token[0]);
 		if (access(temp, F_OK) == 0)
 		{
 			data->cmd = ft_strdup(temp);
 			free(temp);
 			return (TRUE);
 		}
-		ft_memset(temp, '\0', ft_strlen(temp));
+		//ft_memset(temp, '\0', ft_strlen(temp));
+		ft_putendl(temp);
+		free(temp);
 		i++;
 	}
 	return (FALSE);
 }
 
-static int	check_existance(t_shell *data)
+static int	check_existence(t_shell *data)
 {
 	struct stat	info;
-	char		*cd;
+	char		cd[4096];
 
-	cd = NULL;
-	cd = ft_strjoin(getcwd(cd, 4096), "/");
-	cd = ft_strjoin(cd, data->token[0]);
+	ft_memset(cd, '\0', 4096);
+	ft_strcat(getcwd(cd, 4096), "/");
+	ft_strcat(cd, data->token[0]);
 	if (lstat((const char *)cd, &info) == 0)
 	{
 		if (ft_is_directory(cd) == TRUE)
 			return (3);
 		data->cmd = ft_strdup(cd);
-		free(cd);
+		//free(cd);
 		return (TRUE);
 	}
 	else if (lstat((const char *)cd, &info) == -1)
 	{
-		free(cd);
-		return(2);
+		//free(cd);
+		return (2);
 	}
 	else
 	{
-		free(cd);
+		//free(cd);
 		return (FALSE);
 	}
 }
@@ -91,7 +93,11 @@ static int	check_existance(t_shell *data)
 static int	verify_if_executable(t_shell *data)
 {
 	if (ft_strchr(data->token[0], '.') || ft_strchr(data->token[0], '/'))
-		return (check_existance(data));
+	{
+		if (ft_strequ(data->token[0], ".") == 1)
+			return (4);
+		return (check_existence(data));
+	}
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);
 	return (TRUE);
@@ -109,6 +115,8 @@ int	initial_exec_checks(t_shell *data)
 		return (exec_error_message(1, data->token[0]));
 	else if (check == 3)
 		return (exec_error_message(3, data->token[0]));
+	else if (check == 4)
+		return (exec_error_message(4, data->token[0]));
 	else
 	{
 		create_child_process(data);
