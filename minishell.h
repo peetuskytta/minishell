@@ -17,6 +17,9 @@
 # include "libft/libft.h"
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
 
 /*Builtin command defines*/
 # define CD "cd"
@@ -25,6 +28,7 @@
 # define ECHO "echo"
 # define SETENV "setenv"
 # define UNSETENV "unsetenv"
+# define HISTORY "history"
 
 /*Other useful defines*/
 # define CYAN "\033[0;36m"
@@ -32,11 +36,13 @@
 # define PROMPT "minishell> "
 # define MINISH "minishell: "
 # define NOSTRING ""
+# define WHITESPACE ' '
+# define TAB '	'
 # define BACKSLASH '\\'
 # define DOUBLEQUOTE '\"'
 # define SINGLEQUOTE '\''
 # define EQUALSIGN "="
-# define BUFFER 131072
+# define BUFFER 1024
 # define FALSE 0
 # define TRUE 1
 
@@ -46,11 +52,12 @@
 # define ARG_REQUIRED ": filename argument required"
 # define ARG_USAGE_1 ": usage: "
 # define ARG_USAGE_2 " filename [arguments]"
+# define NO_FILE_OR_DIR ": No such file or directory"
 
 /*Error message defines for CD*/
 # define CD_SH "minishell: cd: "
 # define CD_NO_ACCESS " permission denied"
-# define CD_NO_FILE_OR_DIR ": No such file or directory"
+# define CD_NOT_DIR ": Not a directory"
 # define CD_HOME_UNSET " HOME not set"
 
 /*Error message defines for setenv and unsetenv*/
@@ -77,6 +84,9 @@ typedef struct s_shell
 	char	**split_path;
 	char	**token;
 	char	*cmd;
+	char	*history[2000];
+	int		bytes;
+	int		h_index;
 	int		token_count;
 	int		env_count;
 	int		last_cmd;
@@ -97,6 +107,7 @@ void	add_env_variable(t_shell *data, char *name, char *val, int size);
 
 void	error_print(char *sh, char *name, char *msg);
 
+int		command_prompt_loop(t_shell *data);
 int		exec_error_message(int id, char *name);
 int		handle_home(t_shell *data);
 int		check_if_builtin(t_shell *data);
@@ -104,9 +115,7 @@ int		check_if_env_exists(t_shell *data, char *name);
 int		change_to_token(t_shell *data, const char *path);
 int		handle_cd_dash(t_shell *data, int var_i, int len);
 int		change_to_home_env(t_shell *data, int len, int var_i);
-int		output_environment(t_shell *data, int i);
 int		unset_error_check(t_shell *data);
-int		command_prompt_loop(t_shell *data);
 int		change_environ(t_shell *data, int id);
 int		setenv_error_check(t_shell *data);
 int		search_var_name(char *name, t_shell *data);

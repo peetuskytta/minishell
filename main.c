@@ -26,13 +26,35 @@ void	free_double_ptr(char **string)
 	free(string);
 }
 
+/*
 void	free_and_memset(t_shell *data)
 {
-	free(data->cmd);
+	if (data->cmd != NULL)
+		free(data->cmd);
 	free_double_ptr(data->split_path);
 	free_double_ptr(data->environ);
-	//if (data->token[0] != NULL)
-	//	free_double_ptr(data->token);
+	if (data->token != NULL)
+		free_double_ptr(data->token);
+}
+*/
+
+static void	create_or_append_history(char **history)
+{
+	int	i;
+	int	fd;
+
+	i = 1;
+	fd = open(".minish_history", O_CREAT | O_RDWR | O_APPEND, S_IRUSR | S_IWUSR | S_IRWXU);
+	if (fd > 0)
+	{
+		while (history[i] != NULL)
+		{
+			write(fd, history[i], ft_strlen(history[i]));
+			write(fd, "\n", 2);
+			i++;
+		}
+	}
+	close(fd);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -45,7 +67,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		store_environ_variables(&data, envp);
 		if (command_prompt_loop(&data) == FALSE)
-			free_and_memset(&data);
+		{
+			create_or_append_history(data.history);
+			exit(EXIT_SUCCESS);
+		}
 	}
-	exit(EXIT_SUCCESS);
 }

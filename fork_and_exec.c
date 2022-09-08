@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/05 13:57:27 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/08 10:48:41 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	create_child_process(t_shell *data)
 	{
 		if (execve(data->cmd, data->token, data->environ) == -1)
 			ft_putendl(EXECVE_ERROR);
+		free(data->cmd);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid_child < 0)
@@ -40,23 +41,39 @@ static void	create_child_process(t_shell *data)
 
 static int	is_in_path(t_shell *data, int i)
 {
-	char	*temp;
+	char	temp[4096];
 
-	temp = NULL;
-	while (data->split_path[i] != NULL)
+	ft_memset(temp, '\0', 4096);
+	if (!(ft_strchr(data->token[0], '/')))
 	{
-		temp = ft_strjoin(data->split_path[i], "/");
-		ft_strcat(temp, data->token[0]);
-		if (access(temp, F_OK) == 0)
+		while (data->split_path[i] != NULL)
 		{
-			data->cmd = ft_strdup(temp);
-			free(temp);
-			return (TRUE);
+			ft_strcpy(temp, data->split_path[i]);
+			ft_strcat(temp, "/");
+			ft_strcat(temp, data->token[0]);
+			if (access(temp, F_OK) == 0)
+			{
+				data->cmd = ft_strdup(temp);
+				//free(temp);
+				return (TRUE);
+			}
+			//ft_memset(temp, '\0', ft_strlen(temp));
+			//ft_putendl(temp);
+			//free(temp);
+			i++;
 		}
-		//ft_memset(temp, '\0', ft_strlen(temp));
-		ft_putendl(temp);
-		free(temp);
-		i++;
+	}
+	if (ft_strchr(data->token[0], '/'))
+	{
+		while (data->split_path[i] != NULL)
+		{
+			if (ft_strequ(data->split_path[i], data->token[0]) == 1)
+			{
+				data->cmd = ft_strdup(data->token[0]);
+				return (TRUE);
+			}
+			i++;
+		}
 	}
 	return (FALSE);
 }
@@ -66,25 +83,27 @@ static int	check_existence(t_shell *data)
 	struct stat	info;
 	char		cd[4096];
 
+
 	ft_memset(cd, '\0', 4096);
 	ft_strcat(getcwd(cd, 4096), "/");
 	ft_strcat(cd, data->token[0]);
+	//ft_putendl(cd);
 	if (lstat((const char *)cd, &info) == 0)
 	{
 		if (ft_is_directory(cd) == TRUE)
 			return (3);
 		data->cmd = ft_strdup(cd);
-		//free(cd);
+		//free(data->cmd);
 		return (TRUE);
 	}
 	else if (lstat((const char *)cd, &info) == -1)
 	{
-		//free(cd);
+		ft_memset(cd, '\0', 4096);
 		return (2);
 	}
 	else
 	{
-		//free(cd);
+		ft_memset(cd, '\0', 4096);
 		return (FALSE);
 	}
 }
@@ -92,7 +111,7 @@ static int	check_existence(t_shell *data)
 // MISSING: permission check
 static int	verify_if_executable(t_shell *data)
 {
-	if (ft_strchr(data->token[0], '.') || ft_strchr(data->token[0], '/'))
+	if (data->token[0][0] == '.' || data->token[0][0] == '/')
 	{
 		if (ft_strequ(data->token[0], ".") == 1)
 			return (4);
@@ -117,9 +136,13 @@ int	initial_exec_checks(t_shell *data)
 		return (exec_error_message(3, data->token[0]));
 	else if (check == 4)
 		return (exec_error_message(4, data->token[0]));
+	else if (check == 5)
+		return (exec_error_message(5, data->token[0]));
 	else
 	{
+		modify_env(data, "_", data->token[0], 0);
 		create_child_process(data);
+		free(data->cmd);
 		return (TRUE);
 	}
 }

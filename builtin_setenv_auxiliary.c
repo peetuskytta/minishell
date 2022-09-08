@@ -64,22 +64,6 @@ int	search_var_name(char *name, t_shell *data)
 	return (-1);
 }
 
-int	output_environment(t_shell *data, int i)
-{
-	if (data->token_count == 0)
-	{
-		reset_last_cmd_env(data, data->last_cmd);
-		while (data->env_count > i)
-			ft_putendl(data->environ[i++]);
-		return (TRUE);
-	}
-	else
-	{
-		reset_last_cmd_env(data, data->last_cmd);
-		return (TRUE);
-	}
-}
-
 /*
 **	ft_strjoin exits if malloc fails
 */

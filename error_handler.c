@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:46:07 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/05 12:59:21 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/07 22:15:18 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	exec_error_message(int id, char *name)
 		error_print(MINISH, name, CMD_NOT_FOUND);
 	if (id == 3)
 		error_print(MINISH, name, IS_A_DIR);
+	if (id == 5)
+		error_print(MINISH, name, NO_FILE_OR_DIR);
 	if (id == 4)
 	{
 		error_print(MINISH, name, ARG_REQUIRED);

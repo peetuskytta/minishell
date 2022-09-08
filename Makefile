@@ -1,6 +1,6 @@
 CC := gcc
-DEBUG_F := #-g -fsanitize=address
-FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
+DEBUG_F := -g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror -g -fsanitize=address
 
 NAME := minishell
 SOURCES := main.c \

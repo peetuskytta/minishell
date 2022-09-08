@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	read_input_stdin(char *buf)
+static void	read_input_stdin(t_shell *data, char *buf)
 {
 	int	bytes_read;
 
@@ -20,8 +20,16 @@ static void	read_input_stdin(char *buf)
 	bytes_read = read(0, buf, BUFFER);
 	if (bytes_read > 0 && bytes_read <= BUFFER)
 		buf[bytes_read - 1] = '\0';
-	else
+	if (bytes_read > BUFFER)
 		ft_putendl(CMD_TOO_LONG);
+	if (bytes_read > 1)
+	{
+		if (ft_strequ(data->history[data->h_index], buf) != 1)
+		{
+			data->h_index++;
+			data->history[data->h_index] = ft_strdup(buf);
+		}
+	}
 }
 
 static void	clear_and_free_buffer(char *string)
@@ -30,7 +38,7 @@ static void	clear_and_free_buffer(char *string)
 	free(string);
 }
 
-static int	exit_and_clean(char *buf)
+static int	exit_or_not(char *buf)
 {
 	if (ft_strequ(buf, EXIT) == TRUE)
 	{
@@ -62,8 +70,8 @@ int	command_prompt_loop(t_shell *data)
 		buf = (char *)malloc(sizeof(char) * BUFFER);
 		if (!buf)
 			return (FALSE);
-		read_input_stdin(buf);
-		if (exit_and_clean(buf) == FALSE)
+		read_input_stdin(data, buf);
+		if (exit_or_not(buf) == FALSE)
 			return (FALSE);
 		if (is_empty(buf) == TRUE)
 			clear_and_free_buffer(buf);
@@ -71,6 +79,8 @@ int	command_prompt_loop(t_shell *data)
 		{
 			parse_input(data, buf);
 			clear_and_free_buffer(buf);
+			if (data->token != NULL)
+				free_double_ptr(data->token);
 		}
 		data->token_count = -1;
 	}

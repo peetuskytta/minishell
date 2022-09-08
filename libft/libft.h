@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 13:03:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/07/28 22:02:41 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/08 12:33:50 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <sys/stat.h>
 
 # define EXIT_FAILURE 1
+# define EXIT_SUCCESS 0
+# define FD_SIZE 8192
+# define BUFF_SIZE 64
 
 char	**ft_strsplit(char const *s, char c);
 char	*ft_itoa(int n);
@@ -81,5 +84,6 @@ void	ft_striter(char *s, void (*f)(char *));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_swap(int *a, int *b);
 void	ft_putnbr_endl(int nb);
+int		get_next_line(const int fd, char **line);
 
 #endif

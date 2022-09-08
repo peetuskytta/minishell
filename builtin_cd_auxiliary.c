@@ -101,7 +101,7 @@ int	change_to_token(t_shell *data, const char *path)
 			modify_pwd(data, "OLDPWD");
 		if (chdir(path) != 0)
 		{
-			error_print(CD_SH, (char *)path, CD_NO_FILE_OR_DIR);
+			error_print(CD_SH, (char *)path, NO_FILE_OR_DIR);
 			return (TRUE);
 		}
 		getcwd(data->pwd, 4096);

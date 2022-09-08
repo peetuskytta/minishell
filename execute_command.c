@@ -12,6 +12,38 @@
 
 #include "minishell.h"
 
+static int	output_history(t_shell *data, int i)
+{
+	if (!(data->history))
+		ft_putendl("minishell: no history.");
+	else
+	{
+		while (data->history[i] != NULL)
+		{
+			ft_putnbr(i);
+			ft_putstr("  ");
+			ft_putendl(data->history[i++]);
+		}
+	}
+	return (TRUE);
+}
+
+static int	output_environment(t_shell *data, int i)
+{
+	if (data->token_count == 0)
+	{
+		reset_last_cmd_env(data, data->last_cmd);
+		while (data->env_count > i)
+			ft_putendl(data->environ[i++]);
+		return (TRUE);
+	}
+	else
+	{
+		reset_last_cmd_env(data, data->last_cmd);
+		return (TRUE);
+	}
+}
+
 int	check_if_builtin(t_shell *data)
 {
 	if (ft_strequ(data->token[0], CD))
@@ -27,6 +59,9 @@ int	check_if_builtin(t_shell *data)
 		return (change_environ(data, 2));
 	else if (ft_strequ(data->token[0], ENV))
 		return (output_environment(data, 0));
+	else if (ft_strequ(data->token[0], HISTORY) ||
+		data->token[0][0] == '!')
+		return (output_history(data, 1));
 	return (FALSE);
 }
 
