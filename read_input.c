@@ -26,8 +26,8 @@ static void	read_input_stdin(t_shell *data, char *buf)
 	{
 		if (ft_strequ(data->history[data->h_index], buf) != 1)
 		{
-			data->h_index++;
 			data->history[data->h_index] = ft_strdup(buf);
+			data->h_index++;
 		}
 	}
 }

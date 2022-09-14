@@ -14,9 +14,15 @@
 
 static int	output_history(t_shell *data, int i)
 {
-	if (!(data->history))
+	if (data->history[0] == NULL)
 		ft_putendl("minishell: no history.");
-	else
+	/*else if (ft_strequ(data->token[0], "!!") == TRUE)
+	{
+		ft_memdel((void *)&data->token[0]);
+		data->token[0] = ft_strdup(data->history[last_history_index(data)]);
+		//initial_exec_checks(data);
+	}*/
+	else if (ft_strequ(data->token[0],"history") == TRUE)
 	{
 		while (data->history[i] != NULL)
 		{
