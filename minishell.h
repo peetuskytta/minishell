@@ -13,13 +13,12 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <dirent.h>
 # include "libft/libft.h"
-# include <sys/types.h>
-# include <sys/wait.h>
 # include <fcntl.h>
-# include <errno.h>
-# include <string.h>
+
+# if __linux__
+# include <sys/wait.h>
+# endif
 
 /*Builtin command defines*/
 # define CD "cd"
