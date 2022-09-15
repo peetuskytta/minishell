@@ -22,15 +22,6 @@ static void	read_input_stdin(char *buf)
 		buf[bytes_read - 1] = '\0';
 	if (bytes_read > BUFFER)
 		ft_putendl(CMD_TOO_LONG);
-	if (bytes_read > 1)
-	{
-		create_or_append_history(buf);
-/*		if (ft_strequ(data->history[data->h_index], buf) != 1)
-		{
-			data->history[data->h_index] = ft_strdup(buf);
-			data->h_index++;
-		}*/
-	}
 }
 
 static void	clear_and_free_buffer(char *string)
@@ -43,6 +34,7 @@ static int	exit_or_not(char *buf)
 {
 	if (ft_strequ(buf, EXIT) == TRUE)
 	{
+		create_or_append_history(buf);
 		ft_memset(buf, 0, ft_strlen(buf));
 		free(buf);
 		ft_putendl("exit");
@@ -77,9 +69,11 @@ int	command_prompt_loop(t_shell *data)
 		else
 		{
 			parse_input(data, buf);
+			if (ft_strequ(buf, "rm .minish_history") == 0)
+				create_or_append_history(buf);
 			clear_and_free_buffer(buf);
 			if (data->token != NULL)
-				free_double_ptr(data->token);
+				ft_free_arr_of_arrays(data->token);
 		}
 		data->token_count = -1;
 	}

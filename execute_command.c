@@ -28,15 +28,44 @@ static int	output_environment(t_shell *data, int i)
 	}
 }
 
+static int	handle_exclamation(t_shell *data)
+{
+	int		i;
+	char	temp[4096];
+
+	i = 0;
+	ft_memset(temp, 0, 4096);
+	handle_history(data, 2);
+	if (ft_strequ(HISTORY, data->token[0]) == 1)
+	{
+		handle_history(data, 1);
+		return (TRUE);
+	}
+	if (data->token[1] != NULL)
+	{
+		ft_strcat(temp, data->token[i++]);
+		while (data->token[i] != NULL)
+		{
+			ft_strcat(temp, " ");
+			ft_strcat(temp, data->token[i++]);
+		}
+		create_or_append_history(temp);
+	}
+	return (FALSE);
+}
+
 static int	history_driver(t_shell *data)
 {
 	if (ft_strequ(HISTORY, data->token[0]) == 1)
+	{
 		handle_history(data, 1);
+		return (TRUE);
+	}
 	else if (ft_strequ("!!", data->token[0]) == 1)
-		handle_history(data, 2);
+		return (handle_exclamation(data));
 	else if (data->token[0][0] == '!' && ft_isdigit(data->token[0][1]))
 		handle_history(data, 3);
-	return (TRUE);
+	return (FALSE);
 }
 
 int	check_if_builtin(t_shell *data)

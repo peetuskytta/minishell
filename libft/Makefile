@@ -6,7 +6,7 @@
 #    By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/22 13:05:41 by pskytta           #+#    #+#              #
-#    Updated: 2022/09/15 12:05:19 by pskytta          ###   ########.fr        #
+#    Updated: 2022/09/15 17:26:07 by pskytta          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRC := ft_atoi.c \
 	ft_word_count.c \
 	ft_error_handler.c \
 	ft_putnbr_endl.c \
+	ft_free_arr_of_arrays.c \
 	get_next_line.c \
 
 OBJ := $(SRC:.c=.o)

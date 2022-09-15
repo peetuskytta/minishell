@@ -85,7 +85,6 @@ typedef struct s_shell
 	char	**split_path;
 	char	**token;
 	char	*cmd;
-	char	*history[2000];
 	int		bytes;
 	int		h_index;
 	int		token_count;
