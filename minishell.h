@@ -35,6 +35,7 @@
 # define DEFAULT "\033[0m"
 # define PROMPT "minishell> "
 # define MINISH "minishell: "
+# define SH_HISTORY ".minish_history"
 # define NOSTRING ""
 # define WHITESPACE ' '
 # define TAB '	'
@@ -42,7 +43,7 @@
 # define DOUBLEQUOTE '\"'
 # define SINGLEQUOTE '\''
 # define EQUALSIGN "="
-# define BUFFER 1024
+# define BUFFER 4096
 # define FALSE 0
 # define TRUE 1
 
@@ -106,6 +107,8 @@ void	modify_env(t_shell *data, char *name, char *value, int i);
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
 
 void	error_print(char *sh, char *name, char *msg);
+void	handle_history(t_shell *data, int option);
+void	create_or_append_history(char *buf);
 
 int		command_prompt_loop(t_shell *data);
 int		exec_error_message(int id, char *name);

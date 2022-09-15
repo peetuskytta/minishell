@@ -39,6 +39,9 @@ void	parse_input(t_shell *data, char *input)
 		}
 	}
 	else
+	{
 		ft_putendl("Quoting detected: please handle it");
+		exit (EXIT_FAILURE);
+	}
 }
 // set data->cmd to be the path+binary executed succesfully

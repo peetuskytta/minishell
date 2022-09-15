@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/08 10:48:41 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/15 11:53:57 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,11 @@ static int	check_existence(t_shell *data)
 	ft_memset(cd, '\0', 4096);
 	ft_strcat(getcwd(cd, 4096), "/");
 	ft_strcat(cd, data->token[0]);
-	//ft_putendl(cd);
 	if (lstat((const char *)cd, &info) == 0)
 	{
 		if (ft_is_directory(cd) == TRUE)
 			return (3);
 		data->cmd = ft_strdup(cd);
-		//free(data->cmd);
 		return (TRUE);
 	}
 	else if (lstat((const char *)cd, &info) == -1)

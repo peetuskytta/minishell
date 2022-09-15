@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	read_input_stdin(t_shell *data, char *buf)
+static void	read_input_stdin(char *buf)
 {
 	int	bytes_read;
 
@@ -24,11 +24,12 @@ static void	read_input_stdin(t_shell *data, char *buf)
 		ft_putendl(CMD_TOO_LONG);
 	if (bytes_read > 1)
 	{
-		if (ft_strequ(data->history[data->h_index], buf) != 1)
+		create_or_append_history(buf);
+/*		if (ft_strequ(data->history[data->h_index], buf) != 1)
 		{
 			data->history[data->h_index] = ft_strdup(buf);
 			data->h_index++;
-		}
+		}*/
 	}
 }
 
@@ -67,10 +68,8 @@ int	command_prompt_loop(t_shell *data)
 		ft_putstr(CYAN);
 		ft_putstr(PROMPT);
 		ft_putstr(DEFAULT);
-		buf = (char *)malloc(sizeof(char) * BUFFER);
-		if (!buf)
-			return (FALSE);
-		read_input_stdin(data, buf);
+		buf = ft_memalloc(BUFFER);
+		read_input_stdin(buf);
 		if (exit_or_not(buf) == FALSE)
 			return (FALSE);
 		if (is_empty(buf) == TRUE)

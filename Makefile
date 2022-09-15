@@ -1,8 +1,11 @@
+#Compiler and compiler flags
 CC := gcc
 DEBUG_F := -g -fsanitize=address
-FLAGS := -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
 
+#Target Binary Program
 NAME := minishell
+
 SOURCES := main.c \
 	read_input.c \
 	store_environ.c \
@@ -18,6 +21,7 @@ SOURCES := main.c \
 	fork_and_exec_auxiliary.c \
 	expand_input.c \
 	error_handler.c \
+	shell_history.c \
 
 OBJ := $(SOURCES:.c=.o)
 
