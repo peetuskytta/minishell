@@ -16,10 +16,10 @@ static int	simple_input_check(char *input)
 {
 	if (ft_strchr(input, BACKSLASH))
 		return (FALSE);
-/*	else if (ft_strchr(input, SINGLEQUOTE))
+	else if (ft_strchr(input, SINGLEQUOTE))
 		return (FALSE);
 	else if (ft_strchr(input, DOUBLEQUOTE))
-		return (FALSE); */
+		return (FALSE);
 	else
 		return (TRUE);
 }

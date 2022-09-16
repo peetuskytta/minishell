@@ -36,14 +36,16 @@ static int	handle_exclamation(t_shell *data)
 	i = 0;
 	ft_memset(temp, 0, 4096);
 	handle_history(data, 2);
-	if (ft_strequ(HISTORY, data->token[0]) == 1)
+	if (ft_strequ(HISTORY, data->token[0]) == 1 && data->token[1] == NULL)
 	{
 		handle_history(data, 1);
+		create_or_append_history(data->token[0]);
 		return (TRUE);
 	}
 	if (data->token[1] != NULL)
 	{
 		ft_strcat(temp, data->token[i++]);
+		ft_putendl(temp);
 		while (data->token[i] != NULL)
 		{
 			ft_strcat(temp, " ");
@@ -56,9 +58,17 @@ static int	handle_exclamation(t_shell *data)
 
 static int	history_driver(t_shell *data)
 {
+	int	fd;
+
 	if (ft_strequ(HISTORY, data->token[0]) == 1)
 	{
-		handle_history(data, 1);
+		if (ft_strequ(data->token[1], "-c") == 1)
+		{
+			fd = open(SH_HISTORY, O_RDWR | O_TRUNC);
+			close(fd);
+		}
+		else
+			handle_history(data, 1);
 		return (TRUE);
 	}
 	else if (ft_strequ("!!", data->token[0]) == 1)
@@ -85,5 +95,7 @@ int	check_if_builtin(t_shell *data)
 		return (output_environment(data, 0));
 	else if (ft_strequ(data->token[0], HISTORY) || data->token[0][0] == '!')
 		return (history_driver(data));
+	else
+
 	return (FALSE);
 }

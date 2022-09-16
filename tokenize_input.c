@@ -40,13 +40,16 @@ static void	check_for_spaces(t_shell *data, char *input, int i)
 
 int	tokenize_input(t_shell *data, char *input, int i)
 {
-	while (input[i++] != '\0')
-	{
-		if (ft_is_wspace(input[i]))
-			input[i] = ' ';
-	}
 	if (ft_strchr(input, BACKSLASH))
 		check_for_spaces(data, input, 0);
+	else if (ft_word_count(input, ' ') == 0)
+	{
+		data->token = (char **)malloc(sizeof(char *) * (1 + 1));
+		if (!data->token)
+			exit(EXIT_FAILURE);
+		data->token[0] = ft_strdup(input);
+		data->token[1] = NULL;
+	}
 	else
 		data->token = ft_strsplit(input, ' ');
 	i = 0;

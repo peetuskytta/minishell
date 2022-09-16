@@ -6,12 +6,15 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/15 17:32:25 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/16 11:35:55 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+**	This function outputs the whole history to the stdout line by line.
+*/
 static void	output_history(int i, int fd)
 {
 	char	*line;
@@ -49,18 +52,36 @@ void	create_or_append_history(char *buf)
 	close(fd);
 }
 
-
-static char **find_in_history(t_shell *data, int fd)
+/*
+**	Funtion finds a specific command from the history
+*/
+static void find_in_history(t_shell *data, int fd)
 {
+	char	*buf;
 	char	**new_token;
+	int		line_count;
+	int		line_nbr;
 
+	line_count = 1;
 	new_token = NULL;
+	buf = NULL;
+	line_nbr = ft_atoi(data->token[0]);
 	if (fd > 0)
 	{
+		while (line_count != line_nbr)
+		{
+			get_next_line(fd, &buf);
+			free(buf);
+			line_count++;
+		}
+		ft_memdel((void *)&data->token[0]);
+		if (ft_strrchr(buf, WHITESPACE))
+			data->token = ft_strsplit(buf, WHITESPACE);
+		else
+			data->token[0] = ft_strdup(buf);
+		free(buf);
 		close(fd);
 	}
-	ft_putnbr_endl(data->h_index);
-	return (new_token);
 }
 
 static void	last_in_history(t_shell *data, int fd)
@@ -108,16 +129,11 @@ static void	count_history(t_shell *data, int fd)
 
 void	handle_history(t_shell *data, int option)
 {
-	char	**temp;
-
-	temp = NULL;
 	count_history(data, open(SH_HISTORY, O_RDONLY));
 	if (option == 1)
 		output_history(1, open(SH_HISTORY, O_RDONLY));
 	else if (option == 2)
 		last_in_history(data, open(SH_HISTORY, O_RDONLY));
 	else if (option == 3)
-		temp = find_in_history(data, open(SH_HISTORY, O_RDONLY));
-	if (temp != NULL && option != 2)
-		data->token = temp;
+		find_in_history(data, open(SH_HISTORY, O_RDONLY));
 }
