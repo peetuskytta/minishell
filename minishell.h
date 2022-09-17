@@ -42,7 +42,7 @@
 # define DOUBLEQUOTE '\"'
 # define SINGLEQUOTE '\''
 # define EQUALSIGN "="
-# define BUFFER 4096
+# define BUFFER 131072
 # define FALSE 0
 # define TRUE 1
 

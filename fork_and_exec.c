@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/15 11:53:57 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:35:56 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,8 @@ static int	is_in_path(t_shell *data, int i)
 			if (access(temp, F_OK) == 0)
 			{
 				data->cmd = ft_strdup(temp);
-				//free(temp);
 				return (TRUE);
 			}
-			//ft_memset(temp, '\0', ft_strlen(temp));
-			//ft_putendl(temp);
-			//free(temp);
 			i++;
 		}
 	}
@@ -85,7 +81,8 @@ static int	check_existence(t_shell *data)
 
 
 	ft_memset(cd, '\0', 4096);
-	ft_strcat(getcwd(cd, 4096), "/");
+	if (data->token[0][0] != '/')
+		ft_strcat(getcwd(cd, 4096), "/");
 	ft_strcat(cd, data->token[0]);
 	if (lstat((const char *)cd, &info) == 0)
 	{
@@ -139,7 +136,8 @@ int	initial_exec_checks(t_shell *data)
 	else
 	{
 		modify_env(data, "_", data->token[0], 0);
-		create_child_process(data);
+		if (ft_strlen(data->token[0]) > 0)
+			create_child_process(data);
 		free(data->cmd);
 		return (TRUE);
 	}

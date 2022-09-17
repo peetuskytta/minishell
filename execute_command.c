@@ -45,14 +45,15 @@ static int	handle_exclamation(t_shell *data)
 	if (data->token[1] != NULL)
 	{
 		ft_strcat(temp, data->token[i++]);
-		ft_putendl(temp);
 		while (data->token[i] != NULL)
 		{
 			ft_strcat(temp, " ");
 			ft_strcat(temp, data->token[i++]);
 		}
 		create_or_append_history(temp);
+		ft_memset(temp, 0, 4096);
 	}
+//	ft_putendl(data->cmd);
 	return (FALSE);
 }
 
@@ -71,7 +72,7 @@ static int	history_driver(t_shell *data)
 			handle_history(data, 1);
 		return (TRUE);
 	}
-	else if (ft_strequ("!!", data->token[0]) == 1)
+	else if (ft_strequ("!!", data->token[0]) == 1 && data->token[1] == NULL)
 		return (handle_exclamation(data));
 	else if (data->token[0][0] == '!' && ft_isdigit(data->token[0][1]))
 		handle_history(data, 3);
@@ -95,7 +96,5 @@ int	check_if_builtin(t_shell *data)
 		return (output_environment(data, 0));
 	else if (ft_strequ(data->token[0], HISTORY) || data->token[0][0] == '!')
 		return (history_driver(data));
-	else
-
 	return (FALSE);
 }

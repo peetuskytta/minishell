@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:15:46 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/16 11:23:15 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/17 18:48:45 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	ft_free_arr_of_arrays(char **string)
 	i = 0;
 	while (string[i] != NULL)
 	{
-		ft_memset(string[i], 0, ft_strlen(string[i]));
-		free(string[i]);
+		if (string[i])
+			ft_memset(string[i], 0, ft_strlen(string[i]));
+		ft_memdel((void *)&(string[i]));
 		i++;
 	}
-	free(string);
+	ft_memdel((void *)&(string));
 }

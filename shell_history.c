@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/16 11:35:55 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/17 19:05:50 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	output_history(int i, int fd)
 {
 	char	*line;
 
+	line = NULL;
 	if (fd > 0)
 	{
 		while (get_next_line(fd, &line) == 1)
@@ -79,7 +80,7 @@ static void find_in_history(t_shell *data, int fd)
 			data->token = ft_strsplit(buf, WHITESPACE);
 		else
 			data->token[0] = ft_strdup(buf);
-		free(buf);
+		ft_memdel((void *)&(buf));
 		close(fd);
 	}
 }
@@ -98,14 +99,17 @@ static void	last_in_history(t_shell *data, int fd)
 			if (i == data->h_index - 1)
 				break;
 			i++;
-			free(buf);
+			ft_memdel((void *)&(buf));
 		}
-		ft_memdel((void *)&data->token[0]);
+		if (data->token[0] != NULL)
+			ft_free_arr_of_arrays(data->token);
+		//else
+		//	ft_memdel((void *)&(data->token[0]));
 		if (ft_strrchr(buf, WHITESPACE))
 			data->token = ft_strsplit(buf, WHITESPACE);
 		else
 			data->token[0] = ft_strdup(buf);
-		free(buf);
+		ft_memdel((void *)&(buf));
 		close(fd);
 	}
 }
@@ -121,7 +125,7 @@ static void	count_history(t_shell *data, int fd)
 		while (get_next_line(fd, &buf) != 0)
 		{
 			data->h_index++;
-			free(buf);
+			ft_memdel((void *)&(buf));
 		}
 	}
 	close(fd);

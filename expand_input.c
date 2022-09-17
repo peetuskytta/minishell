@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:09:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/07 21:01:53 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/17 17:19:53 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	expand_variable(int i, int var_i, t_shell *data)
 	{
 		len = ft_strlen(data->environ[var_i]) - w_len;
 		data->token[i] = ft_strsub(data->environ[var_i], w_len, len);
-		//ft_putendl(data->token[i]);
 	}
 	free(temp);
 }
