@@ -53,7 +53,6 @@ static int	handle_exclamation(t_shell *data)
 		create_or_append_history(temp);
 		ft_memset(temp, 0, 4096);
 	}
-//	ft_putendl(data->cmd);
 	return (FALSE);
 }
 

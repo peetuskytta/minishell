@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/17 17:35:56 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/17 22:30:51 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static int	check_existence(t_shell *data)
 	struct stat	info;
 	char		cd[4096];
 
-
 	ft_memset(cd, '\0', 4096);
 	if (data->token[0][0] != '/')
 		ft_strcat(getcwd(cd, 4096), "/");
@@ -92,15 +91,9 @@ static int	check_existence(t_shell *data)
 		return (TRUE);
 	}
 	else if (lstat((const char *)cd, &info) == -1)
-	{
-		ft_memset(cd, '\0', 4096);
 		return (2);
-	}
 	else
-	{
-		ft_memset(cd, '\0', 4096);
 		return (FALSE);
-	}
 }
 
 // MISSING: permission check

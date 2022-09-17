@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/17 19:05:50 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/17 22:40:34 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	output_history(int i, int fd)
 			ft_putnbr(i++);
 			ft_putstr("  ");
 			ft_putendl(line);
-			free(line);
+			ft_memdel((void *)&(line));
 		}
 	}
 	else
@@ -37,7 +37,8 @@ static void	output_history(int i, int fd)
 
 /*
 **	Creates the .minish_history file if it doesn't exist and appends the
-**	command to the end of the file.
+**	command to the end of the file. File is created in the working
+**	directory instead of the $HOME.
 */
 void	create_or_append_history(char *buf)
 {
@@ -59,12 +60,10 @@ void	create_or_append_history(char *buf)
 static void find_in_history(t_shell *data, int fd)
 {
 	char	*buf;
-	char	**new_token;
 	int		line_count;
 	int		line_nbr;
 
 	line_count = 1;
-	new_token = NULL;
 	buf = NULL;
 	line_nbr = ft_atoi(data->token[0]);
 	if (fd > 0)
@@ -72,7 +71,7 @@ static void find_in_history(t_shell *data, int fd)
 		while (line_count != line_nbr)
 		{
 			get_next_line(fd, &buf);
-			free(buf);
+			ft_memdel((void *)&(buf));
 			line_count++;
 		}
 		ft_memdel((void *)&data->token[0]);
@@ -103,8 +102,8 @@ static void	last_in_history(t_shell *data, int fd)
 		}
 		if (data->token[0] != NULL)
 			ft_free_arr_of_arrays(data->token);
-		//else
-		//	ft_memdel((void *)&(data->token[0]));
+		else
+			ft_memdel((void *)&(data->token[0]));
 		if (ft_strrchr(buf, WHITESPACE))
 			data->token = ft_strsplit(buf, WHITESPACE);
 		else

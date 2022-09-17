@@ -88,6 +88,33 @@ static int	set_env_variable(t_shell *data)
 		return (FALSE);
 }
 
+void	setenv_different_input(t_shell *data, int i)
+{
+	char	**copy;
+	char	buf[1024];
+
+	copy = NULL;
+	ft_memset(buf, '\0', 1024);
+	if (data->token[1][0] == '=' || ft_isdigit(data->token[1][0]))
+		error_print(MINISH, data->token[1], NOT_IDENTIFIER);
+	else
+	{
+		copy = ft_strsplit(data->token[1], '=');
+		ft_free_arr_of_arrays(data->token);
+		ft_strcat(buf, SETENV);
+		ft_strcat(buf, " ");
+		while (ft_is_wspace(copy[0][i]))
+			i++;
+		ft_strcat(buf, copy[0] + i);
+		ft_strcat(buf, " ");
+		ft_strcat(buf, copy[1]);
+		ft_free_arr_of_arrays(copy);
+		data->token = ft_strsplit(buf, ' ');
+		ft_memset(buf, '\0', 1024);
+		data->token_count++;
+	}
+}
+
 int	change_environ(t_shell *data, int id)
 {
 	check_expansion(data, 0);

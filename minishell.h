@@ -63,11 +63,11 @@
 /*Error message defines for setenv and unsetenv*/
 # define EMPTY_STR "setenv name: cannot be an empty string"
 # define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
-# define STR_ILLEGAL_CHAR "setenv name: cannot include '='"
-# define SETENV_USAGE "usage: setenv [name] [value]"
+# define SETENV_USAGE "usage: setenv {[name] [value]} or {[name=value]}"
 # define UNSETENV_USAGE "usage: unsetenv [name]"
 # define SET_TOO_MANY_ARG "setenv: too many arguments\n"
 # define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"
+# define NOT_IDENTIFIER ": not a valid identifier"
 
 /*Error messages for fork, waitpid, and execve*/
 # define CMD_NOT_FOUND ": command not found"
@@ -107,6 +107,7 @@ void	add_env_variable(t_shell *data, char *name, char *val, int size);
 void	error_print(char *sh, char *name, char *msg);
 void	handle_history(t_shell *data, int option);
 void	create_or_append_history(char *buf);
+void	setenv_different_input(t_shell *data, int i);
 
 int		command_prompt_loop(t_shell *data);
 int		exec_error_message(int id, char *name);
