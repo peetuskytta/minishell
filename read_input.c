@@ -27,7 +27,7 @@ static void	read_input_stdin(char *buf)
 static void	clear_and_free_buffer(char *string)
 {
 	ft_memset(string, 0, ft_strlen(string));
-	free(string);
+	ft_memdel((void *)&(string));
 }
 
 static int	exit_or_not(char *buf)
@@ -36,7 +36,7 @@ static int	exit_or_not(char *buf)
 	{
 		create_or_append_history(buf);
 		ft_memset(buf, 0, ft_strlen(buf));
-		free(buf);
+		ft_memdel((void *)&(buf));
 		ft_putendl("exit");
 		return (FALSE);
 	}
@@ -46,8 +46,24 @@ static int	exit_or_not(char *buf)
 
 static int	is_empty(char *buf)
 {
+	int	i;
+	int	ws;
+
+	i = 0;
+	ws = 0;
 	if (ft_strequ(buf, NOSTRING) == TRUE)
 		return (TRUE);
+	while (buf[i] != '\0')
+	{
+		if (ft_is_wspace(buf[i]))
+			ws++;
+		i++;
+	}
+	if (ws == i)
+	{
+		create_or_append_history(buf);
+		return (TRUE);
+	}
 	return (FALSE);
 }
 

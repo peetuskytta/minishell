@@ -42,7 +42,13 @@ int	tokenize_input(t_shell *data, char *input, int i)
 {
 	if (ft_strchr(input, BACKSLASH))
 		check_for_spaces(data, input, 0);
-	else if (ft_word_count(input, ' ') == 0)
+	while (input[i] != '\0')
+	{
+		if (ft_is_wspace(input[i]))
+			input[i] = ' ';
+		i++;
+	}
+	if (ft_word_count(input, ' ') == 0)
 	{
 		data->token = (char **)malloc(sizeof(char *) * (1 + 1));
 		if (!data->token)
@@ -54,7 +60,9 @@ int	tokenize_input(t_shell *data, char *input, int i)
 			data->token[1] = NULL;
 	}
 	else
+	{
 		data->token = ft_strsplit(input, ' ');
+	}
 	i = 0;
 	while (data->token[i++] != NULL)
 		data->token_count++;
