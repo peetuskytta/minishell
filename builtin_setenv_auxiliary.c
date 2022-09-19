@@ -12,34 +12,6 @@
 
 #include "minishell.h"
 
-int	setenv_error_check(t_shell *data)
-{
-	if (ft_strequ(data->token[0], SETENV) == TRUE)
-	{
-		if (data->token_count == 1)
-			setenv_different_input(data, 0);
-		if (data->token_count == 2)
-		{
-			if (data->token[1] == NULL || ft_strlen(data->token[1]) == 0)
-				ft_putendl(NAME_ERROR);
-			else if (ft_strchr(data->token[1], '=')
-				|| ft_isdigit(data->token[1][0]))
-			{
-				ft_putstr(MINISH);
-				error_print("setenv: ", data->token[1], NOT_IDENTIFIER);
-				return (FALSE);
-			}
-			else
-				return (TRUE);
-		}
-		else if (data->token_count > 2)
-			ft_putendl(SET_TOO_MANY_ARG);
-		return (FALSE);
-	}
-	else
-		return (FALSE);
-}
-
 int	search_var_name(char *name, t_shell *data)
 {
 	char	*temp;

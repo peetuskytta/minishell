@@ -6,34 +6,11 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/17 22:40:34 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/19 15:45:31 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-**	This function outputs the whole history to the stdout line by line.
-*/
-static void	output_history(int i, int fd)
-{
-	char	*line;
-
-	line = NULL;
-	if (fd > 0)
-	{
-		while (get_next_line(fd, &line) == 1)
-		{
-			ft_putnbr(i++);
-			ft_putstr("  ");
-			ft_putendl(line);
-			ft_memdel((void *)&(line));
-		}
-	}
-	else
-		ft_putendl("minishell: No history.");
-	close(fd);
-}
 
 /*
 **	Creates the .minish_history file if it doesn't exist and appends the
@@ -57,7 +34,7 @@ void	create_or_append_history(char *buf)
 /*
 **	Funtion finds a specific command from the history
 */
-static void find_in_history(t_shell *data, int fd)
+static void	find_in_history(t_shell *data, int fd)
 {
 	char	*buf;
 	int		line_count;
@@ -96,7 +73,7 @@ static void	last_in_history(t_shell *data, int fd)
 		while (get_next_line(fd, &buf) != 0)
 		{
 			if (i == data->h_index - 1)
-				break;
+				break ;
 			i++;
 			ft_memdel((void *)&(buf));
 		}

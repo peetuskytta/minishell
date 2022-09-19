@@ -78,6 +78,29 @@ static int	history_driver(t_shell *data)
 	return (FALSE);
 }
 
+/*
+**	This function outputs the whole history to the stdout line by line.
+*/
+void	output_history(int i, int fd)
+{
+	char	*line;
+
+	line = NULL;
+	if (fd > 0)
+	{
+		while (get_next_line(fd, &line) == 1)
+		{
+			ft_putnbr(i++);
+			ft_putstr("  ");
+			ft_putendl(line);
+			ft_memdel((void *)&(line));
+		}
+	}
+	else
+		ft_putendl("minishell: No history.");
+	close(fd);
+}
+
 int	check_if_builtin(t_shell *data)
 {
 	if (ft_strequ(data->token[0], CD))

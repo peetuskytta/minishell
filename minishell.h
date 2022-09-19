@@ -17,7 +17,7 @@
 # include <fcntl.h>
 
 # if __linux__
-# include <sys/wait.h>
+#  include <sys/wait.h>
 # endif
 
 /*Builtin command defines*/
@@ -107,7 +107,7 @@ void	add_env_variable(t_shell *data, char *name, char *val, int size);
 void	error_print(char *sh, char *name, char *msg);
 void	handle_history(t_shell *data, int option);
 void	create_or_append_history(char *buf);
-void	setenv_different_input(t_shell *data, int i);
+void	output_history(int i, int fd);
 
 int		command_prompt_loop(t_shell *data);
 int		exec_error_message(int id, char *name);

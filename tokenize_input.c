@@ -48,7 +48,10 @@ int	tokenize_input(t_shell *data, char *input, int i)
 		if (!data->token)
 			exit(EXIT_FAILURE);
 		data->token[0] = ft_strdup(input);
-		data->token[1] = NULL;
+		if (ft_strequ(data->token[0], SETENV) == 1)
+			data->token[1] = ft_strdup("");
+		else
+			data->token[1] = NULL;
 	}
 	else
 		data->token = ft_strsplit(input, ' ');

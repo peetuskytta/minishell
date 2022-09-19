@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 /*
 **	This function modifies the existing environment variable's VALUE.
 */
@@ -48,6 +49,10 @@ static char	**plus_one_line(char **old_env, int rows)
 	return (new_env);
 }
 
+/*
+**	Adds new environment variable to the environment. Plus_one_line function
+**	returns new array of arrays to fit the existing and the new variable.
+*/
 void	add_env_variable(t_shell *data, char *name, char *val, int size)
 {
 	char	**new_env;
@@ -67,6 +72,12 @@ void	add_env_variable(t_shell *data, char *name, char *val, int size)
 	data->env_count++;
 }
 
+/*
+**	Checks if environment variable is modified or a new one is added.
+**	In case 'var_index' is larger or equal to 0 the variable exists and
+**	its value is modified in the environment. Otherwise the name=value
+**	is added to the environment.
+*/
 static int	set_env_variable(t_shell *data)
 {
 	int	var_index;
@@ -76,58 +87,33 @@ static int	set_env_variable(t_shell *data)
 	if (data->token_count == 2)
 	{
 		var_index = search_var_name(data->token[1], data);
-		if (var_index > 0)
+		if (var_index >= 0)
 			modify_env(data, data->token[1], data->token[2], 0);
 		else
 			add_env_variable(data, data->token[1], data->token[2], count);
 		return (TRUE);
 	}
-	if (data->token_count == 1)
-		return (TRUE);
 	else
 		return (FALSE);
 }
 
-void	setenv_different_input(t_shell *data, int i)
-{
-	char	**copy;
-	char	buf[1024];
-
-	copy = NULL;
-	ft_memset(buf, '\0', 1024);
-	if (data->token[1][0] == '=' || ft_isdigit(data->token[1][0]))
-		error_print(MINISH, data->token[1], NOT_IDENTIFIER);
-	else
-	{
-		copy = ft_strsplit(data->token[1], '=');
-		ft_free_arr_of_arrays(data->token);
-		ft_strcat(buf, SETENV);
-		ft_strcat(buf, " ");
-		while (ft_is_wspace(copy[0][i]))
-			i++;
-		ft_strcat(buf, copy[0] + i);
-		ft_strcat(buf, " ");
-		ft_strcat(buf, copy[1]);
-		ft_free_arr_of_arrays(copy);
-		data->token = ft_strsplit(buf, ' ');
-		ft_memset(buf, '\0', 1024);
-		data->token_count++;
-	}
-}
-
+/*
+**	This function directs the actions for 'setenv' and 'unsetenv' builtins.
+**	If id==1 it is 'setenv', if id==2 it is 'unsetenv'
+*/
 int	change_environ(t_shell *data, int id)
 {
 	check_expansion(data, 0);
 	if (setenv_error_check(data) == TRUE && id == 1)
 	{
 		if (set_env_variable(data) == TRUE)
-			reset_last_cmd_env(data, data->last_cmd);
+			reset_last_cmd_env(data, 0);
 	}
 	else if (unset_error_check(data) == TRUE && id == 2)
 	{
 		if (unset_env_variable(data) == TRUE)
-			reset_last_cmd_env(data, data->last_cmd);
+			reset_last_cmd_env(data, 0);
 	}
-	reset_last_cmd_env(data, data->last_cmd);
+	reset_last_cmd_env(data, 0);
 	return (TRUE);
 }
