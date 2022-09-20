@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/19 18:19:34 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/20 17:27:46 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ static void	find_in_history(t_shell *data, int fd)
 		else
 			data->token[0] = ft_strdup(buf);
 		ft_memdel((void *)&(buf));
-		close(fd);
 	}
+	close(fd);
 }
 
 static void	last_in_history(t_shell *data, int fd)
@@ -81,14 +81,19 @@ static void	last_in_history(t_shell *data, int fd)
 			i++;
 			ft_memdel((void *)&(buf));
 		}
-		if (data->token[1] != NULL)
+		if (data->token)
 			ft_free_arr_of_arrays(data->token);
-		else
-			ft_memdel((void *)&(data->token[0]));
 		if (ft_strrchr(buf, WHITESPACE))
 			data->token = ft_strsplit(buf, WHITESPACE);
 		else
+		{
+			data->token = (char **)malloc(sizeof(char *) * (1 + 1));
+			if (!data->token)
+				exit(EXIT_FAILURE);
 			data->token[0] = ft_strdup(buf);
+			data->token[1] = NULL;
+		}
+		ft_putendl(buf);
 		ft_memdel((void *)&(buf));
 		close(fd);
 	}

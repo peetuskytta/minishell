@@ -90,6 +90,7 @@ int	command_prompt_loop(t_shell *data)
 			clear_and_free_buffer(buf);
 			if (data->token != NULL)
 				ft_free_arr_of_arrays(data->token);
+			ft_memdel((void *)&(data->cmd));
 		}
 		data->token_count = -1;
 	}

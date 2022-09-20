@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/19 14:34:28 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/20 15:21:46 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int	initial_exec_checks(t_shell *data)
 	int	check;
 
 	check_expansion(data, 0);
+	if (ft_strequ(data->token[0], CD) == 1)
+		return(current_dir_actions(data));
 	check = verify_if_executable(data);
 	if (check == FALSE)
 		return (exec_error_message(2, data->token[0]));
@@ -131,7 +133,7 @@ int	initial_exec_checks(t_shell *data)
 		modify_env(data, "_", data->token[0], 0);
 		if (ft_strlen(data->token[0]) > 0)
 			create_child_process(data);
-		free(data->cmd);
+		ft_memdel((void *)&(data->cmd));
 		return (TRUE);
 	}
 }

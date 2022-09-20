@@ -38,7 +38,6 @@ static int	path_permission_loop(char **split, const char *path)
 
 	i = 0;
 	ft_memset(temp, '\0', 4096);
-	ft_strcat(temp, "/");
 	while (TRUE)
 	{
 		if (split[i] == NULL)
@@ -61,12 +60,16 @@ static int	check_access(t_shell *data)
 {
 	char	**split;
 	int		ret;
+	int		i;
 
+	i = 0;
 	ret = 0;
 	check_expansion(data, 0);
 	if (ft_strchr(data->token[1], '/'))
 	{
-		split = ft_strsplit(data->token[1], '/');
+		if (data->token[1][0] == '.')
+			i = 1;
+		split = ft_strsplit(data->token[1] + i, '/');
 		ret = path_permission_loop(split, data->token[1]);
 		ft_free_arr_of_arrays(split);
 		if (ret == 3)
