@@ -31,6 +31,21 @@ static int	is_oddnbr(int nbr)
 	return (FALSE);
 }
 
+static int	count_chars_in_str(char *str, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i++] == c)
+			count++;
+	}
+	return (count);
+}
+
 static void	read_until_quote(char c, char *new)
 {
 	char	*extra;
@@ -38,6 +53,7 @@ static void	read_until_quote(char c, char *new)
 
 	bytes_read = 0;
 	extra = (char *)ft_memalloc(BUFFER);
+	ft_memset(extra, '\0', BUFFER);
 	while (TRUE)
 	{
 		if (c == SINGLEQUOTE)
@@ -50,37 +66,35 @@ static void	read_until_quote(char c, char *new)
 		ft_strcat(new, extra);
 		if (ft_strrchr(extra, c))
 		{
-				ft_memdel((void *)&(extra));
-				break ;
+			bytes_read = ft_strrchr(extra, c) - extra;
+			if (extra[bytes_read - 1] == BACKSLASH)
+			{
+					if (is_oddnbr(count_chars_in_str(new, BACKSLASH)) == FALSE)
+						ft_putnbr_endl(count_chars_in_str(extra, BACKSLASH));
+					ft_memdel((void *)&(extra));
+					break ;
+			}
 		}
 		ft_memset(extra, '\0', BUFFER);
 	}
 	new[ft_strlen(new)] = '\0';
 }
 
-static void	check_quotes_amount(char *new, char *old, int i)
+static void	check_quotes_amount(char *new, char *old)
 {
 	int		sq;
 	int		dq;
 	char	c;
 
-	sq = 0;
-	dq = 0;
-	while (old[i] != '\0')
-	{
-		if (old[i] == SINGLEQUOTE)
-			sq++;
-		if (old[i] == DOUBLEQUOTE)
-			dq++;
-		new[i] = old[i];
-		i++;
-	}
+	sq = count_chars_in_str(old, SINGLEQUOTE);
+	dq = count_chars_in_str(old, DOUBLEQUOTE);
 	if (is_oddnbr(sq) || is_oddnbr(dq))
 	{
 		if (is_oddnbr(sq))
 			c = SINGLEQUOTE;
 		else if (is_oddnbr(dq))
 			c = DOUBLEQUOTE;
+		ft_strcpy(new, old);
 		read_until_quote(c, new);
 	}
 }
@@ -91,7 +105,7 @@ static char	*handle_quotes(char *old/*, int i*/)
 
 	new = ft_strnew(ft_strlen(old) + 4096);
 	ft_memset(new, '\0', ft_strlen(new));
-	check_quotes_amount(new, old, 0);
+	check_quotes_amount(new, old);
 /*	while (old[i] != '\0')
 	{
 		if (is_s_quote(old[i]) == TRUE)
