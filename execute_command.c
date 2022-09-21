@@ -107,7 +107,11 @@ int	check_if_builtin(t_shell *data)
 		return (current_dir_actions(data));
 	else if (ft_strequ(data->token[0], ECHO))
 	{
-		ft_putendl("do ECHO");
+		int i = 1;
+		while (data->token[i] != NULL)
+		{
+			ft_putendl(data->token[i++]);
+		}
 		return (TRUE);
 	}
 	else if (ft_strequ(data->token[0], SETENV))

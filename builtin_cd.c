@@ -99,15 +99,20 @@ int	current_dir_actions(t_shell *data)
 	int	checks;
 
 	check_expansion(data, 0);
-	checks = initial_checks(data);
-	if (checks == 1)
+	if (data->token_count < 2)
 	{
-		reset_last_cmd_env(data, 0);
-		return (change_to_token(data, data->token[1]));
-	}
-	if (checks == 0)
-		return (handle_home(data));
-	if (checks == 3)
+		checks = initial_checks(data);
+		if (checks == 1)
+		{
+			reset_last_cmd_env(data, 0);
+			return (change_to_token(data, data->token[1]));
+		}
+		if (checks == 0)
+			return (handle_home(data));
+		if (checks == 3)
+			return (TRUE);
 		return (TRUE);
+	}
+	error_print(MINISH, "cd: ", "too many arguments");
 	return (TRUE);
 }

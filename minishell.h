@@ -42,7 +42,11 @@
 # define DOUBLEQUOTE '\"'
 # define SINGLEQUOTE '\''
 # define EQUALSIGN "="
-# define BUFFER 131072
+# define D_QUOTE "dquote> "
+# define S_QUOTE "quote> "
+
+/*Integer defines*/
+# define BUFFER 8192
 # define FALSE 0
 # define TRUE 1
 
@@ -109,6 +113,7 @@ void	handle_history(t_shell *data, int option);
 void	create_or_append_history(char *buf);
 void	output_history(int i, int fd);
 
+int		simple_input_check(char *input);
 int		command_prompt_loop(t_shell *data);
 int		exec_error_message(int id, char *name);
 int		handle_home(t_shell *data);
@@ -125,6 +130,7 @@ int		tokenize_input(t_shell *data, char *input, int i);
 int		unset_env_variable(t_shell *data);
 int		current_dir_actions(t_shell *data);
 int		initial_exec_checks(t_shell *data);
+
 char	*join_n_and_v(char *name, char *value);
 
 #endif
