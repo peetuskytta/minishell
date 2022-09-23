@@ -18,12 +18,6 @@ int	change_to_home_env(t_shell *data, int len, int var_i)
 	char	*buf;
 
 	cur_dir = getcwd(data->pwd, 4096);
-	var_i = search_var_name("HOME", data);
-	if (var_i == -1)
-	{
-		error_print(CD_SH, "", CD_HOME_UNSET);
-		return (TRUE);
-	}
 	if (search_var_name("OLDPWD", data) < 0)
 		add_env_variable(data, "OLDPWD", cur_dir, data->env_count);
 	else
@@ -35,7 +29,7 @@ int	change_to_home_env(t_shell *data, int len, int var_i)
 		free(buf);
 		return (TRUE);
 	}
-	free(buf);
+	ft_memdel((void *)&(buf));
 	modify_env(data, "PWD", getcwd(data->pwd, 4096), 0);
 	ft_memset(data->pwd, '\0', 4096);
 	return (TRUE);
@@ -82,7 +76,10 @@ int	handle_home(t_shell *data)
 	count = data->env_count;
 	reset_last_cmd_env(data, 0);
 	if (search_var_name("HOME", data) < 0)
+	{
+		error_print(CD_SH, "", CD_HOME_UNSET);
 		return (TRUE);
+	}
 	if (search_var_name("PWD", data) < 0)
 		add_env_variable(data, "PWD", getcwd(data->pwd, 4096), count);
 	return (change_to_home_env(data, 0, 0));

@@ -44,6 +44,7 @@
 # define EQUALSIGN "="
 # define D_QUOTE "dquote> "
 # define S_QUOTE "quote> "
+# define SLASH "> "
 
 /*Integer defines*/
 # define BUFFER 8192

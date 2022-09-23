@@ -83,6 +83,7 @@ static void	check_quotes_amount(char *new, char *old)
 	int		dq;
 	char	c;
 
+	c = '\0';
 	sq = count_chars_in_str(old, SINGLEQUOTE);
 	dq = count_chars_in_str(old, DOUBLEQUOTE);
 	if (is_oddnbr(sq) || is_oddnbr(dq))
@@ -153,7 +154,7 @@ static void	read_input_stdin(char *buf)
 		exit(1);
 	}
 	else
-		buf[bytes_read] = '\0';
+		buf[bytes_read - 1] = '\0';
 
 }
 
@@ -170,7 +171,7 @@ static int	exit_or_not(char *buf)
 		create_or_append_history(buf);
 		ft_memset(buf, 0, ft_strlen(buf));
 		ft_memdel((void *)&(buf));
-		ft_putendl("exit");
+		ft_putendl(EXIT);
 		return (FALSE);
 	}
 	else
