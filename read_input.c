@@ -67,13 +67,10 @@ static void	read_until_quote(char c, char *new)
 		if (ft_strrchr(extra, c))
 		{
 			bytes_read = ft_strrchr(extra, c) - extra;
-			if (extra[bytes_read - 1] == BACKSLASH)
-			{
-					if (is_oddnbr(count_chars_in_str(new, BACKSLASH)) == FALSE)
-						ft_putnbr_endl(count_chars_in_str(extra, BACKSLASH));
-					ft_memdel((void *)&(extra));
-					break ;
-			}
+			if (is_oddnbr(count_chars_in_str(new, BACKSLASH)) == FALSE)
+				ft_putnbr_endl(count_chars_in_str(extra, BACKSLASH));
+			ft_memdel((void *)&(extra));
+			break ;
 		}
 		ft_memset(extra, '\0', BUFFER);
 	}
