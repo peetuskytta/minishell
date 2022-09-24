@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	change_to_home_env(t_shell *data, int len, int var_i)
+int	change_to_home_env(t_shell *data, int len, int home_i)
 {
 	char	*cur_dir;
 	char	*buf;
@@ -22,11 +22,12 @@ int	change_to_home_env(t_shell *data, int len, int var_i)
 		add_env_variable(data, "OLDPWD", cur_dir, data->env_count);
 	else
 		modify_env(data, "OLDPWD", cur_dir, 0);
-	len = ft_strlen(data->environ[var_i]);
-	buf = ft_strsub(data->environ[var_i], 5, len - 5);
+	len = ft_strlen(data->environ[home_i]);
+	buf = ft_strsub(data->environ[home_i], 5, len - 5);
+	ft_putendl(buf);
 	if (chdir(buf) != 0)
 	{
-		free(buf);
+		ft_memdel((void *)&(buf));
 		return (TRUE);
 	}
 	ft_memdel((void *)&(buf));
@@ -72,17 +73,19 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 int	handle_home(t_shell *data)
 {
 	int	count;
+	int	home_index;
 
 	count = data->env_count;
 	reset_last_cmd_env(data, 0);
-	if (search_var_name("HOME", data) < 0)
+	home_index = search_var_name("HOME", data);
+	if (home_index < 0)
 	{
-		error_print(CD_SH, "", CD_HOME_UNSET);
+		error_print(MINISH, "cd:", CD_HOME_UNSET);
 		return (TRUE);
 	}
 	if (search_var_name("PWD", data) < 0)
 		add_env_variable(data, "PWD", getcwd(data->pwd, 4096), count);
-	return (change_to_home_env(data, 0, 0));
+	return (change_to_home_env(data, 0, home_index));
 }
 
 int	change_to_token(t_shell *data, const char *path)
