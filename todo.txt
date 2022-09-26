@@ -2,4 +2,9 @@ TODO:
 
 ->	TILDE expands when as separate argument, or being the first item
 	and followed by '/'
+
 ->	$ expansions expand everywhere and only do so if found (cd lol$HOMElol)
+
+->	echo
+
+->	quotes
