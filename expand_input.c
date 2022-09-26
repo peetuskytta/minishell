@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:09:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/26 20:59:10 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/26 21:54:15 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	expand_home(int i, int var_i, t_shell *data)
 		ft_strcat(temp, after_tilde);
 		ft_memdel((void *)&(data->token[i]));
 		data->token[i] = ft_strdup(temp);
-		ft_putendl(temp);
 		ft_memdel((void *)&(temp));
 	}
 }
@@ -75,7 +74,6 @@ static void	expand_token(int id, int i, t_shell *data)
 		expand_home(i, var_i, data);
 }
 
-/*	!!!doesn't handle ~ inside a string!!!	*/
 void	check_expansion(t_shell *data, int i)
 {
 	while (data->token[i] != NULL)
