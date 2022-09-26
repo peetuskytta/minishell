@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:09:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/19 14:34:00 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/26 20:59:10 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static void	expand_variable(int i, int var_i, t_shell *data)
 // consider minishell (command not found)
 static void	expand_home(int i, int var_i, t_shell *data)
 {
-	int		len;
+	char	*temp;
+	char	after_tilde[1024];
 
 	var_i = search_var_name("HOME", data);
 	if (var_i == -1)
@@ -45,11 +46,21 @@ static void	expand_home(int i, int var_i, t_shell *data)
 		ft_memdel((void *)&data->token[i]);
 		data->token[i] = ft_strdup("");
 	}
+	else if ((data->token[i][1] != '/'))
+		return ;
 	else
 	{
-		ft_memdel((void *)&data->token[i]);
-		len = ft_strlen(data->environ[var_i]);
-		data->token[i] = ft_strsub(data->environ[var_i], 5, len);
+		temp = ft_strnew(1024);
+		ft_memset(temp, '\0', 1024);
+		ft_memset(after_tilde, '\0', 1024);
+		if (data->token[i][0] == TILDE && data->token[i][1] == '/')
+			ft_strcpy(after_tilde, data->token[i] + 1);
+		ft_strcpy(temp, data->environ[var_i] + 5);
+		ft_strcat(temp, after_tilde);
+		ft_memdel((void *)&(data->token[i]));
+		data->token[i] = ft_strdup(temp);
+		ft_putendl(temp);
+		ft_memdel((void *)&(temp));
 	}
 }
 
@@ -71,7 +82,7 @@ void	check_expansion(t_shell *data, int i)
 	{
 		if (data->token[i][0] == '$')
 			expand_token(1, i, data);
-		else if (ft_strequ(data->token[i], "~") == TRUE)
+		else if (data->token[i][0] == TILDE && data->token[i][1] != '$')
 			expand_token(2, i, data);
 		i++;
 	}

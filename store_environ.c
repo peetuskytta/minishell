@@ -50,7 +50,7 @@ static void	split_path_variable(t_shell *data, int i)
 	if (data->split_path == NULL)
 		exit(EXIT_FAILURE);
 	ft_memset(var, 0, ft_strlen(var));
-	free(var);
+	ft_memdel((void *)&(var));
 }
 
 void	store_environ_variables(t_shell *data, char **env)

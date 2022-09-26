@@ -138,12 +138,12 @@ static void	read_input_stdin(char *buf)
 	if (bytes_read > 0 && bytes_read <= BUFFER)
 		buf[bytes_read] = '\0';
 	if (bytes_read > BUFFER)
-		ft_putendl(CMD_TOO_LONG);
+		ft_putendl_fd(CMD_TOO_LONG, 2);
 	if (simple_input_check(buf) == FALSE)
 	{
 		new = handle_quotes(buf/*, 0*/);
 		ft_putstr(new);
-		int count = 0;
+/*		int count = 0;
 		while (*new++ !='\0')
 		{
 			if (*new == '\n')
@@ -151,7 +151,7 @@ static void	read_input_stdin(char *buf)
 		}
 		ft_putstr_fd("number of \\n: ", 1);
 		ft_putnbr_endl(count);
-		exit(1);
+*/		exit(1);
 	}
 	else
 		buf[bytes_read - 1] = '\0';

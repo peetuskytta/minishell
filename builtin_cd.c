@@ -42,9 +42,10 @@ static int	path_permission_loop(char **split, const char *path)
 	{
 		if (split[i] == NULL)
 			break ;
-		ft_strcat(temp, "/");
+		if (temp[ft_strlen(temp)] != '/')
+			ft_strcat(temp, "/");
 		ft_strcat(temp, split[i]);
-		ft_putendl(temp);
+		//ft_putendl(temp);
 		if (lstat(temp, &stats) == 0)
 		{
 			if (!(stats.st_mode & X_OK))
@@ -52,7 +53,8 @@ static int	path_permission_loop(char **split, const char *path)
 		}
 		else
 			return (cd_error_message((char *)path, 2));
-		ft_strcat(temp, "/");
+		if (temp[ft_strlen(temp)] != '/')
+			ft_strcat(temp, "/");
 		i++;
 	}
 	return (TRUE);
@@ -79,11 +81,11 @@ static int	check_access(t_shell *data)
 	}
 	return (TRUE);
 }
-	/*
+
+/*
 /Users/speedupeloton/Hive/projects/minishell
 /Users/speedupeloton/Hive/projects/JOKU/OK/NOT_OK/DEF_NO_GO
-	*/
-
+*/
 static int	initial_checks(t_shell *data)
 {
 	if (data->token[1] == NULL)

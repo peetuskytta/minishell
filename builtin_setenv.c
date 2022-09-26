@@ -42,7 +42,7 @@ static char	**plus_one_line(char **old_env, int rows)
 	while (rows > i)
 	{
 		new_env[i] = ft_strdup(old_env[i]);
-		ft_memdel((void *)&old_env[i++]);
+		ft_memdel((void *)&(old_env[i++]));
 	}
 	free(old_env);
 	new_env[rows++] = NULL;

@@ -27,7 +27,7 @@ int	search_var_name(char *name, t_shell *data)
 		temp = ft_strsub(data->environ[i], 0, len);
 		if (ft_strequ(temp, name) == TRUE)
 		{
-			free(temp);
+			ft_memdel((void *)&temp);
 			return (i);
 		}
 		ft_memdel((void *)&temp);

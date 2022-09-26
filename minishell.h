@@ -37,17 +37,19 @@
 # define SH_HISTORY ".minish_history"
 # define NOSTRING ""
 # define WHITESPACE ' '
-# define TAB '	'
+# define TAB '\t'
+# define NEWLINE '\n'
 # define BACKSLASH '\\'
 # define DOUBLEQUOTE '\"'
 # define SINGLEQUOTE '\''
 # define EQUALSIGN "="
 # define D_QUOTE "dquote> "
 # define S_QUOTE "quote> "
-# define SLASH "> "
+# define ESCAPE "> "
+# define TILDE '~'
 
 /*Integer defines*/
-# define BUFFER 8192
+# define BUFFER 4096
 # define FALSE 0
 # define TRUE 1
 
@@ -68,7 +70,7 @@
 /*Error message defines for setenv and unsetenv*/
 # define EMPTY_STR "setenv name: cannot be an empty string"
 # define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
-# define SETENV_USAGE "usage: setenv {[name] [value]} or {[name=value]}"
+# define SETENV_USAGE "usage: 'setenv [name] [value]' or 'setenv [name=value]'"
 # define UNSETENV_USAGE "usage: unsetenv [name]"
 # define SET_TOO_MANY_ARG "setenv: too many arguments\n"
 # define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"

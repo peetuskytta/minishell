@@ -16,11 +16,11 @@ static void	remove_variable(char **strings, int var_i, int count)
 {
 	while (count > var_i)
 	{
-		ft_memdel((void *)&strings[var_i]);
+		ft_memdel((void *)&(strings[var_i]));
 		strings[var_i] = ft_strdup(strings[var_i + 1]);
 		var_i++;
 	}
-	ft_memdel((void *)&strings[var_i]);
+	ft_memdel((void *)&(strings[var_i]));
 }
 
 int	unset_error_check(t_shell *data)
@@ -31,12 +31,12 @@ int	unset_error_check(t_shell *data)
 			return (TRUE);
 		if (data->token_count > 1)
 		{
-			ft_putendl(UNSET_TOO_MANY_ARG);
+			ft_putendl_fd(UNSET_TOO_MANY_ARG, 2);
 			return (FALSE);
 		}
 		else
 		{
-			ft_putendl(UNSETENV_USAGE);
+			ft_putendl_fd(UNSETENV_USAGE, 2);
 			return (FALSE);
 		}
 	}
@@ -63,7 +63,7 @@ int	unset_env_variable(t_shell *data)
 	}
 	else
 	{
-		ft_putendl(UNSETENV_USAGE);
+		ft_putendl_fd(UNSETENV_USAGE, 2);
 		return (FALSE);
 	}
 }
