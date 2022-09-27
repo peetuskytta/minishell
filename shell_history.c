@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/20 17:27:46 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/27 15:35:52 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,16 @@ static void	find_in_history(t_shell *data, int fd)
 	int		line_count;
 	int		line_nbr;
 
-	line_count = 1;
 	buf = NULL;
-	line_nbr = ft_atoi(data->token[0]);
+	line_count = 1;
+	line_nbr = ft_atoi(data->token[0] + 1);
 	if (fd > 0)
 	{
-		while (line_count != line_nbr)
+		while (TRUE)
 		{
 			get_next_line(fd, &buf);
+			if (line_count == line_nbr)
+				break ;
 			ft_memdel((void *)&(buf));
 			line_count++;
 		}

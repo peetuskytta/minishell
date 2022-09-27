@@ -228,8 +228,7 @@ int	command_prompt_loop(t_shell *data)
 		{
 			parse_input(data, buf);
 			if (ft_strequ(buf, "rm .minish_history") == 0)
-				create_or_append_history(buf);
-			clear_and_free_buffer(buf);
+				clear_and_free_buffer(buf);
 			if (data->token != NULL)
 				ft_free_arr_of_arrays(data->token);
 			ft_memdel((void *)&(data->cmd));
