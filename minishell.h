@@ -45,7 +45,7 @@
 # define EQUALSIGN "="
 # define D_QUOTE "dquote> "
 # define S_QUOTE "quote> "
-# define ESCAPE "> "
+# define ARROW "> "
 # define TILDE '~'
 
 /*Integer defines*/

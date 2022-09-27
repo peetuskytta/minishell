@@ -110,8 +110,10 @@ int	check_if_builtin(t_shell *data)
 		int i = 1;
 		while (data->token[i] != NULL)
 		{
-			ft_putendl(data->token[i++]);
+			ft_putstr(data->token[i++]);
 		}
+		ft_putchar(NEWLINE);
+		//return (echo_driver(data));
 		return (TRUE);
 	}
 	else if (ft_strequ(data->token[0], SETENV))

@@ -31,7 +31,7 @@ static int	is_oddnbr(int nbr)
 	return (FALSE);
 }
 
-static int	count_chars_in_str(char *str, char c)
+static int	count_chrstr(char *str, char c)
 {
 	int	i;
 	int	count;
@@ -46,29 +46,37 @@ static int	count_chars_in_str(char *str, char c)
 	return (count);
 }
 
+static void	write_open_quote(char c)
+{
+	if (c == SINGLEQUOTE)
+		ft_putstr_fd(S_QUOTE, 1);
+	if (c == DOUBLEQUOTE)
+		ft_putstr_fd(D_QUOTE, 1);
+	if (c == BACKSLASH)
+		ft_putstr_fd(ARROW, 1);
+}
+
 static void	read_until_quote(char c, char *new)
 {
 	char	*extra;
 	int		bytes_read;
+	int		num_quotes;
 
 	bytes_read = 0;
+	num_quotes = 0;
 	extra = (char *)ft_memalloc(BUFFER);
 	ft_memset(extra, '\0', BUFFER);
 	while (TRUE)
 	{
-		if (c == SINGLEQUOTE)
-			ft_putstr_fd(S_QUOTE, 1);
-		if (c == DOUBLEQUOTE)
-			ft_putstr_fd(D_QUOTE, 1);
+		write_open_quote(c);
 		bytes_read = read(0, extra, BUFFER);
 		if (bytes_read > 0 && bytes_read <= BUFFER)
 			extra[bytes_read] = '\0';
 		ft_strcat(new, extra);
-		if (ft_strrchr(extra, c))
+		num_quotes = count_chrstr(new, c);
+		if (is_oddnbr(num_quotes) == FALSE)
 		{
 			bytes_read = ft_strrchr(extra, c) - extra;
-//			if (is_oddnbr(count_chars_in_str(new, BACKSLASH)) == FALSE)
-//				ft_putnbr_endl(count_chars_in_str(extra, BACKSLASH));
 			ft_memdel((void *)&(extra));
 			break ;
 		}
@@ -94,15 +102,17 @@ static void	check_quote_amount(char *new, char *old)
 	char	c;
 
 	c = '\0';
-	quotes[0] = count_chars_in_str(old, SINGLEQUOTE);
-	quotes[1] = count_chars_in_str(old, DOUBLEQUOTE);
-	quotes[2] = count_chars_in_str(old, BACKSLASH);
+	quotes[0] = count_chrstr(old, SINGLEQUOTE);
+	quotes[1] = count_chrstr(old, DOUBLEQUOTE);
+	quotes[2] = count_chrstr(old, BACKSLASH);
 	if (is_oddnbr(quotes[0]) || is_oddnbr(quotes[1]) || is_oddnbr(quotes[2]))
 	{
 		c = identify_open_quote(c, quotes);
 		ft_strcpy(new, old);
 		read_until_quote(c, new);
 	}
+	else
+		ft_strcpy(new, old);
 }
 
 static char	*handle_quotes(char *old/*, int i*/)
@@ -159,7 +169,7 @@ static void	read_input_stdin(char *buf)
 		}
 		ft_putstr_fd("number of \\n: ", 1);
 		ft_putnbr_endl(count);
-*/		exit(1);
+*/		//exit(1);
 	}
 	else
 		buf[bytes_read - 1] = '\0';
@@ -227,8 +237,10 @@ int	command_prompt_loop(t_shell *data)
 		else
 		{
 			parse_input(data, buf);
+//			create_or_append_history(buf);
 			if (ft_strequ(buf, "rm .minish_history") == 0)
-				clear_and_free_buffer(buf);
+				create_or_append_history(buf);
+			clear_and_free_buffer(buf);
 			if (data->token != NULL)
 				ft_free_arr_of_arrays(data->token);
 			ft_memdel((void *)&(data->cmd));
