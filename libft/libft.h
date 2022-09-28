@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 13:03:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/15 13:17:48 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 14:38:18 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ void	ft_swap(int *a, int *b);
 void	ft_putnbr_endl(int nb);
 int		get_next_line(const int fd, char **line);
 void	ft_free_arr_of_arrays(char **string);
+int		ft_is_oddnbr(int nbr);
+int		ft_chrstr(char *str, char c);
 
 #endif

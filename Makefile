@@ -24,6 +24,8 @@ SOURCES := main.c \
 	expand_input.c \
 	error_handler.c \
 	shell_history.c \
+	special_purpose_functions.c \
+	quotes.c \
 
 OBJ := $(SOURCES:.c=.o)
 

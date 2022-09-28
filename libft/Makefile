@@ -6,7 +6,7 @@
 #    By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/22 13:05:41 by pskytta           #+#    #+#              #
-#    Updated: 2022/09/23 11:51:16 by pskytta          ###   ########.fr        #
+#    Updated: 2022/09/28 14:39:58 by pskytta          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC := ft_atoi.c \
 	ft_isascii.c \
 	ft_isdigit.c \
 	ft_isprint.c \
+	ft_is_oddnbr.c \
 	ft_itoa.c \
 	ft_memalloc.c \
 	ft_memccpy.c \
@@ -75,6 +76,7 @@ SRC := ft_atoi.c \
 	ft_error_handler.c \
 	ft_putnbr_endl.c \
 	ft_free_arr_of_arrays.c \
+	ft_chrstr.c \
 	get_next_line.c \
 
 OBJ := $(SRC:.c=.o)

@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_complex_input.c                           :+:      :+:    :+:   */
+/*   ft_chrstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 11:12:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 14:42:25 by pskytta          ###   ########.fr       */
+/*   Created: 2022/09/28 14:35:18 by pskytta           #+#    #+#             */
+/*   Updated: 2022/09/28 14:37:52 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	tokenize_complex_input(t_shell *data, char *input, int i)
+/*
+**	This functions counts the amount of times a character specificied in
+**	the parameter c occurs in the string given as a parameter.
+**	Returns the amount of characters found in the string.
+*/
+int	ft_chrstr(char *str, char c)
 {
-	ft_putchar(NEWLINE);
-	ft_putchar(NEWLINE);
-	ft_putnbr_endl(data->quotes);
-	i = 1;
-	ft_putstr(input);
-	exit(1);
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i++] == c)
+			count++;
+	}
+	return (count);
 }

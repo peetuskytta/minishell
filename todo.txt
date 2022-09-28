@@ -5,6 +5,8 @@ TODO:
 
 ->	$ expansions expand everywhere and only do so if found (cd lol$HOMElol)
 
+->	setenv pepe=$SHELL (or any other expansion in one liner)
+
 ->	echo
 
 ->	quotes

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/27 20:48:54 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 14:51:24 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static void	last_in_history(t_shell *data, int fd)
 	int		i;
 
 	i = 0;
-	buf = NULL;
 	if (fd > 0)
 	{
 		while (get_next_line(fd, &buf) != 0)
@@ -88,14 +87,8 @@ static void	last_in_history(t_shell *data, int fd)
 		if (ft_strrchr(buf, WHITESPACE))
 			data->token = ft_strsplit(buf, WHITESPACE);
 		else
-		{
-			data->token = (char **)malloc(sizeof(char *) * (1 + 1));
-			if (!data->token)
-				exit(EXIT_FAILURE);
-			data->token[0] = ft_strdup(buf);
-			data->token[1] = NULL;
-		}
-		ft_putendl(buf);
+			data->token = allocate_last_in_history(buf);
+		ft_putendl_fd(buf, 1);
 		ft_memdel((void *)&(buf));
 		close(fd);
 	}

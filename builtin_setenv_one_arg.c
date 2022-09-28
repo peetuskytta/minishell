@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:23:51 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/26 17:44:33 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:57:05 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,34 @@ static int	single_err_check(char *token, int i)
 
 static int	setenv_handle_single_argument(t_shell *data, int i, int len)
 {
-	int		end;
-	int		var_i;
-	char	*name;
-	char	*value;
-
 	if (single_err_check(data->token[1], 0) == FALSE)
 		return (FALSE);
 	while (ft_is_wspace(data->token[1][i]))
 		i++;
 	if (!(ft_strchr(data->token[1], '=')))
-	{
-		var_i = search_var_name(data->token[1], data);
-		if (var_i >= 0)
-			modify_env(data, data->token[1], "", 0);
-		else
-			add_env_variable(data, data->token[1], "", data->env_count);
-	}
+		add_only_name(data, search_var_name(data->token[1], data));
 	else
-	{
-		len = ft_strchr(data->token[1], '=') - data->token[1];
-		name = ft_strsub(data->token[1], i, len);
-		end = ft_strlen(data->token[1]) - ft_strlen(name);
-		value = ft_strsub(data->token[1], len + 1, end);
-		var_i = search_var_name(name, data);
-		if (var_i > 0)
-			modify_env(data, name, value, 0);
-		else
-			add_env_variable(data, name, value, data->env_count);
-		ft_memdel((void *)&(name));
-		ft_memdel((void *)&(value));
-	}
+		add_name_value(data, len, i, 0);
 	return (FALSE);
+}
+
+void	add_name_value(t_shell *data, int len, int i, int var_i)
+{
+	char	*name;
+	char	*value;
+	int		end;
+
+	len = ft_strchr(data->token[1], '=') - data->token[1];
+	name = ft_strsub(data->token[1], i, len);
+	end = ft_strlen(data->token[1]) - ft_strlen(name);
+	value = ft_strsub(data->token[1], len + 1, end);
+	var_i = search_var_name(name, data);
+	if (var_i > 0)
+		modify_env(data, name, value, 0);
+	else
+		add_env_variable(data, name, value, data->env_count);
+	ft_memdel((void *)&(name));
+	ft_memdel((void *)&(value));
 }
 
 int	setenv_error_check(t_shell *data)

@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_complex_input.c                           :+:      :+:    :+:   */
+/*   ft_is_oddnbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 11:12:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 14:42:25 by pskytta          ###   ########.fr       */
+/*   Created: 2022/09/28 14:29:57 by pskytta           #+#    #+#             */
+/*   Updated: 2022/09/28 14:30:52 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	tokenize_complex_input(t_shell *data, char *input, int i)
+int	ft_is_oddnbr(int nbr)
 {
-	ft_putchar(NEWLINE);
-	ft_putchar(NEWLINE);
-	ft_putnbr_endl(data->quotes);
-	i = 1;
-	ft_putstr(input);
-	exit(1);
+	if (nbr % 2 != 0)
+		return (1);
+	return (0);
 }
