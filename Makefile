@@ -17,7 +17,8 @@ SOURCES := main.c \
 	builtin_cd.c \
 	builtin_cd_auxiliary.c \
 	execute_command.c \
-	tokenize_input.c \
+	tokenize_simple_input.c \
+	tokenize_complex_input.c \
 	fork_and_exec.c \
 	fork_and_exec_auxiliary.c \
 	expand_input.c \

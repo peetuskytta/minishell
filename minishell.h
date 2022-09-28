@@ -91,13 +91,14 @@ typedef struct s_shell
 	char	**split_path;
 	char	**token;
 	char	*cmd;
+	char	pwd[4096];
+	int		quotes;
 	int		bytes;
 	int		h_index;
 	int		token_count;
 	int		env_count;
 	int		last_cmd;
 	int		pid_status;
-	char	pwd[4096];
 }	t_shell;
 
 void	store_environ_variables(t_shell *data, char **env);
@@ -115,6 +116,8 @@ void	error_print(char *sh, char *name, char *msg);
 void	handle_history(t_shell *data, int option);
 void	create_or_append_history(char *buf);
 void	output_history(int i, int fd);
+void	tokenize_simple_input(t_shell *data, char *input, int i);
+void	tokenize_complex_input(t_shell *data, char *input, int i);
 
 int		simple_input_check(char *input);
 int		command_prompt_loop(t_shell *data);
@@ -129,7 +132,6 @@ int		unset_error_check(t_shell *data);
 int		change_environ(t_shell *data, int id);
 int		setenv_error_check(t_shell *data);
 int		search_var_name(char *name, t_shell *data);
-int		tokenize_input(t_shell *data, char *input, int i);
 int		unset_env_variable(t_shell *data);
 int		current_dir_actions(t_shell *data);
 int		initial_exec_checks(t_shell *data);

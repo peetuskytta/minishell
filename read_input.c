@@ -76,7 +76,7 @@ static void	read_until_quote(char c, char *new)
 		num_quotes = count_chrstr(new, c);
 		if (is_oddnbr(num_quotes) == FALSE)
 		{
-			bytes_read = ft_strrchr(extra, c) - extra;
+			bytes_read = ft_strrchr(new, c) - extra;
 			ft_memdel((void *)&(extra));
 			break ;
 		}
@@ -146,7 +146,7 @@ static char	*handle_quotes(char *old/*, int i*/)
 	return (new);
 }
 
-static void	read_input_stdin(char *buf)
+static char	*read_input_stdin(char *buf, int *quotes)
 {
 	char		*new;
 	int			bytes_read;
@@ -159,20 +159,15 @@ static void	read_input_stdin(char *buf)
 		ft_putendl_fd(CMD_TOO_LONG, 2);
 	if (simple_input_check(buf) == FALSE)
 	{
+		*quotes = TRUE;
 		new = handle_quotes(buf/*, 0*/);
-		ft_putstr(new);
-/*		int count = 0;
-		while (*new++ !='\0')
-		{
-			if (*new == '\n')
-				count++;
-		}
-		ft_putstr_fd("number of \\n: ", 1);
-		ft_putnbr_endl(count);
-*/		//exit(1);
+		return (new);
 	}
 	else
+	{
 		buf[bytes_read - 1] = '\0';
+		return (buf);
+	}
 
 }
 
@@ -229,7 +224,7 @@ int	command_prompt_loop(t_shell *data)
 		ft_putstr(PROMPT);
 		ft_putstr(DEFAULT);
 		buf = (char *)ft_memalloc(BUFFER);
-		read_input_stdin(buf);
+		buf = read_input_stdin(buf, &data->quotes);
 		if (exit_or_not(buf) == FALSE)
 			return (FALSE);
 		if (is_empty(buf) == TRUE)
@@ -237,7 +232,6 @@ int	command_prompt_loop(t_shell *data)
 		else
 		{
 			parse_input(data, buf);
-//			create_or_append_history(buf);
 			if (ft_strequ(buf, "rm .minish_history") == 0)
 				create_or_append_history(buf);
 			clear_and_free_buffer(buf);

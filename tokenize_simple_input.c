@@ -38,7 +38,7 @@ static void	check_for_spaces(t_shell *data, char *input, int i)
 	data->token[tok] = ft_strdup(temp);
 }
 
-int	tokenize_input(t_shell *data, char *input, int i)
+void	tokenize_simple_input(t_shell *data, char *input, int i)
 {
 	if (ft_strchr(input, BACKSLASH))
 		check_for_spaces(data, input, 0);
@@ -64,5 +64,4 @@ int	tokenize_input(t_shell *data, char *input, int i)
 	i = 0;
 	while (data->token[i++] != NULL)
 		data->token_count++;
-	return (TRUE);
 }
