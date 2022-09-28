@@ -101,19 +101,21 @@ void	output_history(int i, int fd)
 	close(fd);
 }
 
+//return (echo_driver(data));
 int	check_if_builtin(t_shell *data)
 {
+	int	i;
+
+	i = 1;
 	if (ft_strequ(data->token[0], CD))
 		return (current_dir_actions(data));
 	else if (ft_strequ(data->token[0], ECHO))
 	{
-		int i = 1;
 		while (data->token[i] != NULL)
 		{
 			ft_putstr(data->token[i++]);
 		}
 		ft_putchar(NEWLINE);
-		//return (echo_driver(data));
 		return (TRUE);
 	}
 	else if (ft_strequ(data->token[0], SETENV))

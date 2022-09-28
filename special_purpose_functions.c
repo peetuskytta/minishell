@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 15:48:02 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:55:25 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,3 @@ void	add_only_name(t_shell *data, int var_i)
 	else
 		add_env_variable(data, data->token[1], "", data->env_count);
 }
-
-/*
-char	*return_var_name(char *var, int var_i)
-{
-	char	*name;
-
-
-	return(name);
-}
-
-char	*return_var_value(char *var, int var_i)
-{
-	char	*value;
-
-
-	return (value);
-}
-*/

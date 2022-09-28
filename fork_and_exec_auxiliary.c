@@ -6,8 +6,25 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 11:21:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/05 12:48:38 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:17:18 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	loop_path_variable(t_shell *data, char *temp, int i)
+{
+	while (data->split_path[i] != NULL)
+	{
+		ft_strcpy(temp, data->split_path[i]);
+		ft_strcat(temp, "/");
+		ft_strcat(temp, data->token[0]);
+		if (access(temp, F_OK) == 0)
+		{
+			data->cmd = ft_strdup(temp);
+			return (TRUE);
+		}
+		i++;
+	}
+	return (FALSE);
+}

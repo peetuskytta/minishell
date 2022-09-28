@@ -6,14 +6,14 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:02:52 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/27 22:33:51 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:23:13 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 int echo_driver(t_shell *data)
 {
 
 	return (TRUE);
-}
+}*/

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:12:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 14:42:25 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:56:06 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	tokenize_complex_input(t_shell *data, char *input, int i)
 {
-	ft_putchar(NEWLINE);
 	ft_putchar(NEWLINE);
 	ft_putnbr_endl(data->quotes);
 	i = 1;

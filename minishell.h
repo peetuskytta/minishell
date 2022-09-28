@@ -121,6 +121,7 @@ void	tokenize_complex_input(t_shell *data, char *input, int i);
 void	add_only_name(t_shell *data, int var_i);
 void	add_name_value(t_shell *data, int len, int i, int var_i);
 
+int		loop_path_variable(t_shell *data, char *temp, int i);
 int		simple_input_check(char *input);
 int		command_prompt_loop(t_shell *data);
 int		exec_error_message(int id, char *name);
@@ -141,7 +142,5 @@ int		initial_exec_checks(t_shell *data);
 char	*join_n_and_v(char *name, char *value);
 char	*handle_quotes(char *old);
 char	**allocate_last_in_history(char *buf);
-char	*return_var_name(char *var, int var_i);
-char	*return_var_value(char *var, int var_i);
 
 #endif

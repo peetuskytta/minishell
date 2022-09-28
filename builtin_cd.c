@@ -45,7 +45,6 @@ static int	path_permission_loop(char **split, const char *path)
 		if (temp[ft_strlen(temp)] != '/')
 			ft_strcat(temp, "/");
 		ft_strcat(temp, split[i]);
-		//ft_putendl(temp);
 		if (lstat(temp, &stats) == 0)
 		{
 			if (!(stats.st_mode & X_OK))

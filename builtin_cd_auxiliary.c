@@ -24,7 +24,6 @@ int	change_to_home_env(t_shell *data, int len, int home_i)
 		modify_env(data, "OLDPWD", cur_dir, 0);
 	len = ft_strlen(data->environ[home_i]);
 	buf = ft_strsub(data->environ[home_i], 5, len - 5);
-//	ft_putendl(buf);
 	if (chdir(buf) != 0)
 	{
 		ft_memdel((void *)&(buf));

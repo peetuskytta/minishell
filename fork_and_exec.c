@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/26 17:40:17 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:15:44 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,8 @@ static int	is_in_path(t_shell *data, int i)
 	ft_memset(temp, '\0', 4096);
 	if (!(ft_strchr(data->token[0], '/')))
 	{
-		while (data->split_path[i] != NULL)
-		{
-			ft_strcpy(temp, data->split_path[i]);
-			ft_strcat(temp, "/");
-			ft_strcat(temp, data->token[0]);
-			if (access(temp, F_OK) == 0)
-			{
-				data->cmd = ft_strdup(temp);
-				return (TRUE);
-			}
-			i++;
-		}
+		if (loop_path_variable(data, temp, 0) == TRUE)
+			return (TRUE);
 	}
 	if (ft_strchr(data->token[0], '/'))
 	{
@@ -116,7 +106,7 @@ int	initial_exec_checks(t_shell *data)
 
 	check_expansion(data, 0);
 	if (ft_strequ(data->token[0], CD) == 1)
-		return(current_dir_actions(data));
+		return (current_dir_actions(data));
 	check = verify_if_executable(data);
 	if (check == FALSE)
 		return (exec_error_message(2, data->token[0]));

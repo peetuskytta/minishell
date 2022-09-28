@@ -34,7 +34,6 @@ static char	*read_input_stdin(char *buf, int *quotes)
 		buf[bytes_read - 1] = '\0';
 		return (buf);
 	}
-
 }
 
 static void	clear_and_free_buffer(char *string)
