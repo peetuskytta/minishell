@@ -51,8 +51,7 @@ void	tokenize_simple_input(t_shell *data, char *input, int i)
 	if (ft_word_count(input, ' ') == 0)
 	{
 		data->token = (char **)malloc(sizeof(char *) * (1 + 1));
-		if (!data->token)
-			exit(EXIT_FAILURE);
+		allocation_check(data->token);
 		data->token[0] = ft_strdup(input);
 		if (ft_strequ(data->token[0], SETENV) == 1)
 			data->token[1] = ft_strdup("");

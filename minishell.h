@@ -120,6 +120,8 @@ void	tokenize_simple_input(t_shell *data, char *input, int i);
 void	tokenize_complex_input(t_shell *data, char *input, int i);
 void	add_only_name(t_shell *data, int var_i);
 void	add_name_value(t_shell *data, int len, int i, int var_i);
+void	translate_to_input(char *input);
+void	allocation_check(void *to_check);
 
 int		loop_path_variable(t_shell *data, char *temp, int i);
 int		simple_input_check(char *input);

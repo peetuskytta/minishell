@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 16:55:25 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 18:43:41 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,10 @@ void	add_only_name(t_shell *data, int var_i)
 		modify_env(data, data->token[1], "", 0);
 	else
 		add_env_variable(data, data->token[1], "", data->env_count);
+}
+
+void	allocation_check(void *to_check)
+{
+	if (!to_check)
+		exit(EXIT_FAILURE);
 }
