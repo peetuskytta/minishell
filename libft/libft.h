@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 13:03:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 14:38:18 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/29 16:49:10 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s);
 int		ft_atoi(const char *str);
 int		ft_is_directory(char *filename);
-int		ft_is_wspace(int c);
+int		ft_is_wspace(char c);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);

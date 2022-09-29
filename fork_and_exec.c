@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 16:15:44 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/29 21:35:01 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	initial_exec_checks(t_shell *data)
 {
 	int	check;
 
-	check_expansion(data, 0);
 	if (ft_strequ(data->token[0], CD) == 1)
 		return (current_dir_actions(data));
 	check = verify_if_executable(data);

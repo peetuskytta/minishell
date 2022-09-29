@@ -6,13 +6,13 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 17:02:37 by pskytta           #+#    #+#             */
-/*   Updated: 2022/01/03 14:57:07 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/29 16:48:26 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_is_wspace(int c)
+int	ft_is_wspace(char c)
 {
 	return ((c >= 9 && c <= 13) || (c == ' '));
 }

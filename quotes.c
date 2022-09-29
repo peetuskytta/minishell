@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/28 18:16:45 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/30 00:26:15 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,18 @@ static void	read_until_quote(char c, char *new)
 	{
 		write_open_quote(c);
 		bytes_read = read(0, extra, BUFFER);
-		if (bytes_read > 0 && bytes_read <= BUFFER)
-			extra[bytes_read] = '\0';
+		if (bytes_read < 0)
+			break ;
 		ft_strcat(new, extra);
 		num_quotes = ft_chrstr(new, c);
 		if (ft_is_oddnbr(num_quotes) == FALSE)
 		{
-			bytes_read = ft_strrchr(new, c) - extra;
 			ft_memdel((void *)&(extra));
 			break ;
 		}
 		ft_memset(extra, '\0', BUFFER);
 	}
-	new[ft_strlen(new)] = '\0';
+	new[ft_strlen(new) - 1] = '\0';
 }
 
 static char	identify_open_quote(char c, int *quote)
@@ -79,7 +78,10 @@ static void	check_quote_amount(char *new, char *old)
 		read_until_quote(c, new);
 	}
 	else
+	{
+		old[ft_strlen(old) - 1] = '\0';
 		ft_strcpy(new, old);
+	}
 }
 
 char	*handle_quotes(char *old)

@@ -19,14 +19,13 @@ static char	*read_input_stdin(char *buf, int *quotes)
 
 	ft_memset(buf, 0, BUFFER);
 	bytes_read = read(0, buf, BUFFER);
-	if (bytes_read > 0 && bytes_read <= BUFFER)
-		buf[bytes_read] = '\0';
 	if (bytes_read > BUFFER)
 		ft_putendl_fd(CMD_TOO_LONG, 2);
 	if (simple_input_check(buf) == FALSE)
 	{
 		*quotes = TRUE;
 		new = handle_quotes(buf);
+		ft_memdel((void *)&(buf));
 		return (new);
 	}
 	else
@@ -103,6 +102,7 @@ int	command_prompt_loop(t_shell *data)
 			if (data->token != NULL)
 				ft_free_arr_of_arrays(data->token);
 			ft_memdel((void *)&(data->cmd));
+			ft_putendl("ZEROED");
 		}
 		data->token_count = -1;
 	}

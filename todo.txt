@@ -10,3 +10,9 @@ TODO:
 ->	echo
 
 ->	quotes
+
+
+moi"lol\nmoi"
+
+strchr = start
+strrchr = end
