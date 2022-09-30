@@ -14,5 +14,3 @@ TODO:
 
 moi"lol\nmoi"
 
-strchr = start
-strrchr = end

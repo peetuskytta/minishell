@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*read_input_stdin(char *buf, int *quotes)
+static char	*read_input_stdin(t_shell *data, char *buf)
 {
 	char		*new;
 	int			bytes_read;
@@ -23,8 +23,8 @@ static char	*read_input_stdin(char *buf, int *quotes)
 		ft_putendl_fd(CMD_TOO_LONG, 2);
 	if (simple_input_check(buf) == FALSE)
 	{
-		*quotes = TRUE;
-		new = handle_quotes(buf);
+		data->quotes = TRUE;
+		new = handle_quotes(data, buf);
 		ft_memdel((void *)&(buf));
 		return (new);
 	}
@@ -88,7 +88,7 @@ int	command_prompt_loop(t_shell *data)
 		ft_putstr(PROMPT);
 		ft_putstr(DEFAULT);
 		buf = (char *)ft_memalloc(BUFFER);
-		buf = read_input_stdin(buf, &data->quotes);
+		buf = read_input_stdin(data, buf);
 		if (exit_or_not(buf) == FALSE)
 			return (FALSE);
 		if (is_empty(buf) == TRUE)
@@ -102,7 +102,6 @@ int	command_prompt_loop(t_shell *data)
 			if (data->token != NULL)
 				ft_free_arr_of_arrays(data->token);
 			ft_memdel((void *)&(data->cmd));
-			ft_putendl("ZEROED");
 		}
 		data->token_count = -1;
 	}

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/30 00:26:15 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/30 16:55:37 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	write_open_quote(char c)
 		ft_putstr_fd(S_QUOTE, 1);
 	if (c == DOUBLEQUOTE)
 		ft_putstr_fd(D_QUOTE, 1);
-	if (c == BACKSLASH)
-		ft_putstr_fd(ARROW, 1);
 }
 
 static void	read_until_quote(char c, char *new)
@@ -47,7 +45,6 @@ static void	read_until_quote(char c, char *new)
 		}
 		ft_memset(extra, '\0', BUFFER);
 	}
-	new[ft_strlen(new) - 1] = '\0';
 }
 
 static char	identify_open_quote(char c, int *quote)
@@ -56,40 +53,40 @@ static char	identify_open_quote(char c, int *quote)
 		c = SINGLEQUOTE;
 	else if (ft_is_oddnbr(quote[1]))
 		c = DOUBLEQUOTE;
-	else if (ft_is_oddnbr(quote[2]))
-		c = BACKSLASH;
 	return (c);
 }
 
 static void	check_quote_amount(char *new, char *old)
 {
-	int		quotes[3];
+	int		quotes[2];
 	char	c;
 
 	c = '\0';
 	quotes[0] = ft_chrstr(old, SINGLEQUOTE);
 	quotes[1] = ft_chrstr(old, DOUBLEQUOTE);
-	quotes[2] = ft_chrstr(old, BACKSLASH);
-	if (ft_is_oddnbr(quotes[0]) || ft_is_oddnbr(quotes[1])
-		|| ft_is_oddnbr(quotes[2]))
+	if (ft_is_oddnbr(quotes[0]) || ft_is_oddnbr(quotes[1]))
 	{
 		c = identify_open_quote(c, quotes);
 		ft_strcpy(new, old);
 		read_until_quote(c, new);
 	}
 	else
-	{
-		old[ft_strlen(old) - 1] = '\0';
 		ft_strcpy(new, old);
-	}
+	new[ft_strlen(new) - 1] = '\0';
 }
 
-char	*handle_quotes(char *old)
+char	*handle_quotes(t_shell *data, char *old)
 {
-	char	*new;
+	char	*buf;
 
-	new = ft_strnew(ft_strlen(old) + 2048);
-	ft_memset(new, '\0', sizeof(new));
-	check_quote_amount(new, old);
-	return (new);
+	buf = ft_strnew(ft_strlen(old) + 2048);
+	ft_memset(buf, '\0', sizeof(buf));
+	check_quote_amount(buf, old);
+	if (ft_strchr(buf, BACKSLASH))
+	{
+		ft_putendl_fd("minishell: '\\\' as input not supported.", 2);
+		return ((char *)ft_memset(buf, '\0', ft_strlen(buf)));
+	}
+	clean_input_string(data, buf, 0);
+	return (buf);
 }
