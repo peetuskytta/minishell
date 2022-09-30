@@ -26,7 +26,7 @@ int	simple_input_check(char *input)
 
 void	parse_input(t_shell *data, char *input)
 {
-	int	i;
+	/*int	i;
 
 	i = 0;
 	if (data->quotes == TRUE)
@@ -36,10 +36,9 @@ void	parse_input(t_shell *data, char *input)
 			data->token_count++;
 	}
 	else
-	{
-		tokenize_simple_input(data, input, 0);
-		check_expansion(data, 0);
-	}
+	{*/
+	tokenize_simple_input(data, input, 0);
+	check_expansion(data, 0);
 	if (check_if_builtin(data) == TRUE)
 		reset_last_cmd_env(data, 0);
 	else if (initial_exec_checks(data) == TRUE)

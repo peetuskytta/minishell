@@ -64,3 +64,4 @@ void	tokenize_simple_input(t_shell *data, char *input, int i)
 	while (data->token[i++] != NULL)
 		data->token_count++;
 }
+

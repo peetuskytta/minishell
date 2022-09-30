@@ -6,12 +6,12 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:12:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/30 02:32:12 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/30 09:09:45 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 static char	*copy_dq(char *string)
 {
 	char	temp[1024];
@@ -85,7 +85,7 @@ static char	*work_ws(char *temp, char *string, int *index, int *i)
 	return (token);
 }
 
-/* index[0] = temp[pos] and index[1] = input[pos]*/
+// index[0] = temp[pos] and index[1] = input[pos]
 void	tokenize_complex_input(t_shell *data, char *input, int i)
 {
 	char	temp[1024];
@@ -115,7 +115,7 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 		if (input[index[0]] == WHITESPACE)
 		{
 			data->token[i] = work_ws(temp, input, index, &i);
-		/*	ft_putstr("ws: ");
+			ft_putstr("ws: ");
 			ft_putendl(data->token[i - 1]);
 			ft_putstr("char in input: ");
 			ft_putchar(input[index[0]]);
@@ -123,16 +123,16 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 			ft_putnbr_endl(index[0]);
 			ft_putstr("temp index: ");
 			ft_putnbr_endl(index[1]);
-		*/}
+		}
 		else if (input[index[0]] != '\0')
 		{
 			temp[index[1]++] = input[index[0]++];
-		/*	ft_putstr("norm: ");
+			ft_putstr("norm: ");
 			ft_putendl(temp);
 			ft_putstr("char in input: ");
 			ft_putchar(input[index[0]]);
 			ft_putchar(NEWLINE);
-		*/}
+		}
 	}
 	data->token[i] = ft_strdup(temp);
 	data->token[i + 1] = NULL;
@@ -146,3 +146,4 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 	}
 	//exit(1);
 }
+*/
