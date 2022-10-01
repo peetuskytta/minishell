@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/30 16:55:37 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/01 12:09:45 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ char	*handle_quotes(t_shell *data, char *old)
 		ft_putendl_fd("minishell: '\\\' as input not supported.", 2);
 		return ((char *)ft_memset(buf, '\0', ft_strlen(buf)));
 	}
-	clean_input_string(data, buf, 0);
+	data->quotes = TRUE;
 	return (buf);
 }
