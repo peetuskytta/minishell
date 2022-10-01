@@ -24,7 +24,29 @@ int	simple_input_check(char *input)
 		return (TRUE);
 }
 
-static char	*copy_quotes(char *token, int k)
+static char	*copy_squotes(char *token, int k)
+{
+	char	new[1024];
+	int		i;
+
+	i = 0;
+	ft_memset(new, '\0', 1024);
+	while (token[k] != '\0')
+	{
+		if (token[k] == SINGLEQUOTE)
+			k++;
+		if (token[k] == '\0')
+			break;
+		new[i] = token[k];
+		k++;
+		i++;
+	}
+	new[i] = '\0';
+	//ft_putendl(new);
+	return (ft_strcpy(new, new));
+}
+
+static char	*copy_dquotes(char *token, int k)
 {
 	char	new[1024];
 	int		i;
@@ -53,9 +75,18 @@ static void	translate_quotes(t_shell *data, int i)
 	ft_memset(tmp, '\0', 1024);
 	while (data->token[i] != NULL)
 	{
-		if (ft_strchr(data->token[i], DOUBLEQUOTE)/* || ft_strchr(data->token[i], SINGLEQUOTE)*/)
+		if (ft_strchr(data->token[i], DOUBLEQUOTE))
 		{
-			ft_strcat(tmp, copy_quotes(data->token[i], 0));
+			ft_strcat(tmp, copy_dquotes(data->token[i], 0));
+			ft_memdel((void *)&(data->token[i]));
+			data->token[i] = ft_strdup(tmp);
+			ft_memset(tmp, '\0', 1024);
+			//ft_putendl(tmp);
+			i++;
+		}
+		else if (ft_strchr(data->token[i], SINGLEQUOTE))
+		{
+			ft_strcat(tmp, copy_squotes(data->token[i], 0));
 			ft_memdel((void *)&(data->token[i]));
 			data->token[i] = ft_strdup(tmp);
 			ft_memset(tmp, '\0', 1024);
