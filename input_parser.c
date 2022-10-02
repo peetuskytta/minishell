@@ -103,7 +103,10 @@ void	parse_input(t_shell *data, char *input)
 {
 	tokenize_simple_input(data, input, 0);
 	if (data->quotes == TRUE)
+	{
 		translate_quotes(data, 0);
+		exit(1);
+	}
 	else
 		check_expansion(data, 0);
 	if (check_if_builtin(data) == TRUE)

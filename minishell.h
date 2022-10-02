@@ -30,9 +30,12 @@
 # define HISTORY "history"
 
 /*Other useful defines*/
-# define CYAN "\033[0;36m"
+# define BLUE "\033[0;34m"
+# define GREEN "\033[0;32m"
 # define DEFAULT "\033[0m"
-# define PROMPT "minishell> "
+
+/*Other useful defines*/
+# define PROMPT "minishell"
 # define MINISH "minishell: "
 # define SH_HISTORY ".minish_history"
 # define NO_STRING ""
@@ -121,6 +124,7 @@ int		exec_error_check(t_shell *data, int check);
 void	create_child_process(t_shell *data, char **env);
 int		echo_driver(t_shell *data, int i);
 void	cwd_size_check(t_shell *data, int size);
+void	write_prompt_and_folder(t_shell *data);
 
 void	error_print(char *sh, char *name, char *msg);
 void	handle_history(t_shell *data, int option);

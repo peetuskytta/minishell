@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 21:13:28 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 23:34:36 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,20 @@ void	allocation_check(void *to_check)
 {
 	if (!to_check)
 		exit(EXIT_FAILURE);
+}
+
+void	write_prompt_and_folder(t_shell *data)
+{
+	cwd_size_check(data, 255);
+	ft_putstr_fd(GREEN, 1);
+	ft_putstr_fd(PROMPT, 1);
+	ft_putstr_fd(DEFAULT, 1);
+	ft_putchar_fd(':', 1);
+	ft_putstr_fd(BLUE, 1);
+	ft_putstr_fd(data->pwd, 1);
+	ft_putstr_fd(DEFAULT, 1);
+	ft_putstr_fd("$ ", 1);
+	ft_memdel((void *)&(data->pwd));
 }
 
 /*
