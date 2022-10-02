@@ -112,5 +112,6 @@ void	parse_input(t_shell *data, char *input)
 		reset_last_cmd_env(data, 0);
 	else
 		reset_last_cmd_env(data, 0);
+	ft_memdel((void *)&(data->pwd));
 	data->quotes = FALSE;
 }

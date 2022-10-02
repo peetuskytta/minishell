@@ -14,14 +14,12 @@
 
 int	change_to_home_env(t_shell *data, int len, int home_i)
 {
-	char	*cur_dir;
 	char	*buf;
 
-	cur_dir = getcwd(data->pwd, 4096);
 	if (search_var_name("OLDPWD", data) < 0)
-		add_env_variable(data, "OLDPWD", cur_dir, data->env_count);
+		add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
 	else
-		modify_env(data, "OLDPWD", cur_dir, 0);
+		modify_env(data, "OLDPWD", data->pwd, 0);
 	len = ft_strlen(data->environ[home_i]);
 	buf = ft_strsub(data->environ[home_i], 5, len - 5);
 	if (chdir(buf) != 0)
@@ -30,15 +28,12 @@ int	change_to_home_env(t_shell *data, int len, int home_i)
 		return (TRUE);
 	}
 	ft_memdel((void *)&(buf));
-	modify_env(data, "PWD", getcwd(data->pwd, 4096), 0);
-	ft_memset(data->pwd, '\0', 4096);
+	modify_env(data, "PWD", data->pwd, 0);
 	return (TRUE);
 }
 
 static void	modify_pwd(t_shell *data, char *name)
 {
-	ft_memset(data->pwd, '\0', 4096);
-	getcwd(data->pwd, 4096);
 	modify_env(data, name, data->pwd, 0);
 }
 
@@ -54,7 +49,7 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 		modify_pwd(data, "OLDPWD");
 		if (chdir(temp) != 0)
 		{
-			free(temp);
+			ft_memdel((void *)&(temp));
 			return (3);
 		}
 		if (search_var_name("PWD", data) < 0)
@@ -62,7 +57,7 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 		else
 			modify_env(data, "PWD", temp, 0);
 		ft_putendl(temp);
-		free(temp);
+		ft_memdel((void *)&(temp));
 	}
 	else
 		ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
@@ -83,7 +78,7 @@ int	handle_home(t_shell *data)
 		return (TRUE);
 	}
 	if (search_var_name("PWD", data) < 0)
-		add_env_variable(data, "PWD", getcwd(data->pwd, 4096), count);
+		add_env_variable(data, "PWD", data->pwd, count);
 	return (change_to_home_env(data, 0, home_index));
 }
 
@@ -95,7 +90,7 @@ int	change_to_token(t_shell *data, const char *path)
 	if (path)
 	{
 		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", getcwd(data->pwd, 4096), nbr);
+			add_env_variable(data, "OLDPWD", data->pwd, nbr);
 		else
 			modify_pwd(data, "OLDPWD");
 		if (chdir(path) != 0)

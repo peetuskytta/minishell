@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/29 14:15:33 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 16:48:14 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 */
 void	create_or_append_history(char *buf)
 {
-	int	fd;
-	int	i;
+	int		fd;
+	int		i;
 
 	i = 0;
 	fd = open(SH_HISTORY, O_CREAT | O_WRONLY | O_APPEND, S_IRUSR \
@@ -36,37 +36,8 @@ void	create_or_append_history(char *buf)
 }
 
 /*
-**	Funtion finds a specific command from the history
+**	Finds the last command executed from the history
 */
-static void	find_in_history(t_shell *data, int fd)
-{
-	char	*buf;
-	int		line_count;
-	int		line_nbr;
-
-	buf = NULL;
-	line_count = 1;
-	line_nbr = ft_atoi(data->token[0] + 1);
-	if (fd > 0)
-	{
-		while (TRUE)
-		{
-			get_next_line(fd, &buf);
-			if (line_count == line_nbr)
-				break ;
-			ft_memdel((void *)&(buf));
-			line_count++;
-		}
-		ft_memdel((void *)&data->token[0]);
-		if (ft_strrchr(buf, WHITESPACE))
-			data->token = ft_strsplit(buf, WHITESPACE);
-		else
-			data->token[0] = ft_strdup(buf);
-		ft_memdel((void *)&(buf));
-	}
-	close(fd);
-}
-
 static void	last_in_history(t_shell *data, int fd)
 {
 	char	*buf;
@@ -92,6 +63,7 @@ static void	last_in_history(t_shell *data, int fd)
 		ft_memdel((void *)&(buf));
 		close(fd);
 	}
+
 }
 
 static void	count_history(t_shell *data, int fd)
@@ -108,16 +80,18 @@ static void	count_history(t_shell *data, int fd)
 			ft_memdel((void *)&(buf));
 		}
 	}
-	close(fd);
+	if (fd > 0)
+		close(fd);
 }
 
 void	handle_history(t_shell *data, int option)
 {
+	char	tmp[1024];
+
+	ft_memset(tmp, 0, 1024);
 	count_history(data, open(SH_HISTORY, O_RDONLY));
 	if (option == 1)
 		output_history(1, open(SH_HISTORY, O_RDONLY));
 	else if (option == 2)
 		last_in_history(data, open(SH_HISTORY, O_RDONLY));
-	else if (option == 3)
-		find_in_history(data, open(SH_HISTORY, O_RDONLY));
 }

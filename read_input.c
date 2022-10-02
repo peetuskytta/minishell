@@ -62,7 +62,7 @@ static int	is_empty(char *buf)
 
 	i = 0;
 	ws = 0;
-	if (ft_strequ(buf, NOSTRING) == TRUE)
+	if (ft_strequ(buf, NO_STRING) == TRUE)
 		return (TRUE);
 	while (buf[i] != '\0')
 	{

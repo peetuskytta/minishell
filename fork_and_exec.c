@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/29 21:35:01 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 20:34:04 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	PATH is split already. Command line argument has been split into
 **	different tokens.
 */
-static void	create_child_process(t_shell *data)
+void	create_child_process(t_shell *data, char **env)
 {
 	pid_t	pid_child;
 	pid_t	pid_wait;
@@ -24,7 +24,7 @@ static void	create_child_process(t_shell *data)
 	pid_child = fork();
 	if (pid_child == 0)
 	{
-		if (execve(data->cmd, data->token, data->environ) == -1)
+		if (execve(data->cmd, data->token, env) == -1)
 			ft_putendl_fd(EXECVE_ERROR, 2);
 		ft_memdel((void *)&(data->cmd));
 		exit(EXIT_SUCCESS);
@@ -67,20 +67,19 @@ static int	is_in_path(t_shell *data, int i)
 static int	check_existence(t_shell *data)
 {
 	struct stat	info;
-	char		cd[4096];
 
-	ft_memset(cd, '\0', 4096);
+	cwd_size_check(data, 255);
 	if (data->token[0][0] != '/')
-		ft_strcat(getcwd(cd, 4096), "/");
-	ft_strcat(cd, data->token[0]);
-	if (lstat((const char *)cd, &info) == 0)
+		ft_strcat(data->pwd, "/");
+	ft_strcat(data->pwd, data->token[0]);
+	if (lstat((const char *)data->pwd, &info) == 0)
 	{
-		if (ft_is_directory(cd) == TRUE)
+		if (ft_is_directory(data->pwd) == TRUE)
 			return (3);
-		data->cmd = ft_strdup(cd);
+		data->cmd = ft_strdup(data->pwd);
 		return (TRUE);
 	}
-	else if (lstat((const char *)cd, &info) == -1)
+	else if (lstat((const char *)data->pwd, &info) == -1)
 		return (2);
 	else
 		return (FALSE);
@@ -107,21 +106,14 @@ int	initial_exec_checks(t_shell *data)
 	if (ft_strequ(data->token[0], CD) == 1)
 		return (current_dir_actions(data));
 	check = verify_if_executable(data);
-	if (check == FALSE)
-		return (exec_error_message(2, data->token[0]));
-	else if (check == 2)
-		return (exec_error_message(1, data->token[0]));
-	else if (check == 3)
-		return (exec_error_message(3, data->token[0]));
-	else if (check == 4)
-		return (exec_error_message(4, data->token[0]));
-	else if (check == 5)
-		return (exec_error_message(5, data->token[0]));
+	ft_memdel((void *)&(data->pwd));
+	if (exec_error_check(data, check) != 1)
+		return (FALSE);
 	else
 	{
 		modify_env(data, "_", data->token[0], 0);
 		if (ft_strlen(data->token[0]) > 0)
-			create_child_process(data);
+			create_child_process(data, data->environ);
 		ft_memdel((void *)&(data->cmd));
 		return (TRUE);
 	}

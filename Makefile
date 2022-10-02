@@ -11,12 +11,13 @@ SOURCES := main.c \
 	store_environ.c \
 	input_parser.c \
 	builtin_unsetenv.c \
+	builtin_echo.c \
 	builtin_setenv_auxiliary.c \
 	builtin_setenv_one_arg.c \
 	builtin_setenv.c \
 	builtin_cd.c \
 	builtin_cd_auxiliary.c \
-	execute_command.c \
+	execute_builtin.c \
 	tokenize_simple_input.c \
 	tokenize_complex_input.c \
 	fork_and_exec.c \
@@ -26,6 +27,7 @@ SOURCES := main.c \
 	shell_history.c \
 	special_purpose_functions.c \
 	quotes.c \
+	builtin_env.c \
 
 OBJ := $(SOURCES:.c=.o)
 

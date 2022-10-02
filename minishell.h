@@ -35,7 +35,7 @@
 # define PROMPT "minishell> "
 # define MINISH "minishell: "
 # define SH_HISTORY ".minish_history"
-# define NOSTRING ""
+# define NO_STRING ""
 # define WHITESPACE ' '
 # define TAB '\t'
 # define NEWLINE '\n'
@@ -88,10 +88,12 @@
 typedef struct s_shell
 {
 	char	**environ;
+	char	**env_i;
 	char	**split_path;
 	char	**token;
 	char	*cmd;
-	char	pwd[4096];
+	char	*pwd;
+	int		pwd_size;
 	int		quotes;
 	int		bytes;
 	int		h_index;
@@ -99,6 +101,7 @@ typedef struct s_shell
 	int		env_count;
 	int		last_cmd;
 	int		pid_status;
+	int		no_nl;
 }	t_shell;
 
 void	store_environ_variables(t_shell *data, char **env);
@@ -111,6 +114,13 @@ void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
+void	split_path_variable(t_shell *data, int i);
+
+int		handle_env(t_shell *data);
+int		exec_error_check(t_shell *data, int check);
+void	create_child_process(t_shell *data, char **env);
+int		echo_driver(t_shell *data, int i);
+void	cwd_size_check(t_shell *data, int size);
 
 void	error_print(char *sh, char *name, char *msg);
 void	handle_history(t_shell *data, int option);

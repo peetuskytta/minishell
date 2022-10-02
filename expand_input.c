@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:09:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/26 21:54:15 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 10:51:09 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	check_expansion(t_shell *data, int i)
 {
 	while (data->token[i] != NULL)
 	{
-		if (data->token[i][0] == '$')
+		if (data->token[i][0] == '$' && data->token[i][1] != '\0')
 			expand_token(1, i, data);
 		else if (data->token[i][0] == TILDE && data->token[i][1] != '$')
 			expand_token(2, i, data);

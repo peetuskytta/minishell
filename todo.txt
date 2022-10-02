@@ -11,6 +11,8 @@ TODO:
 
 ->	quotes
 
+-> ./main.c should give correct error
+
 
 moi"lol\nmoi"
 

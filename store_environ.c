@@ -35,10 +35,12 @@ static void	allocate_envp(t_shell *data, char **env)
 	data->environ[data->env_count] = NULL;
 }
 
-static void	split_path_variable(t_shell *data, int i)
+void	split_path_variable(t_shell *data, int i)
 {
 	char	*var;
 
+	if (data->env_count == 0)
+		return ;
 	while (data->env_count > i)
 	{
 		if (ft_strnstr(data->environ[i], "PATH", 4) != NULL)

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/01 12:09:45 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 20:30:49 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,33 @@ static void	write_open_quote(char c)
 		ft_putstr_fd(D_QUOTE, 1);
 }
 
-static void	read_until_quote(char c, char *new)
+static void	read_until_quote(char c, char *new, int bytes_read)
 {
 	char	*extra;
-	int		bytes_read;
 	int		num_quotes;
 
-	bytes_read = 0;
 	num_quotes = 0;
 	extra = (char *)ft_memalloc(BUFFER);
-	ft_memset(extra, '\0', BUFFER);
 	while (TRUE)
 	{
 		write_open_quote(c);
 		bytes_read = read(0, extra, BUFFER);
-		if (bytes_read < 0)
-			break ;
-		ft_strcat(new, extra);
-		num_quotes = ft_chrstr(new, c);
-		if (ft_is_oddnbr(num_quotes) == FALSE)
+		if (bytes_read > 0)
+		{
+			ft_strcat(new, extra);
+			num_quotes = ft_chrstr(new, c);
+			if (ft_is_oddnbr(num_quotes) == FALSE)
+			{
+				ft_memdel((void *)&(extra));
+				break ;
+			}
+			ft_memset(extra, '\0', BUFFER);
+		}
+		else
 		{
 			ft_memdel((void *)&(extra));
 			break ;
 		}
-		ft_memset(extra, '\0', BUFFER);
 	}
 }
 
@@ -68,7 +71,7 @@ static void	check_quote_amount(char *new, char *old)
 	{
 		c = identify_open_quote(c, quotes);
 		ft_strcpy(new, old);
-		read_until_quote(c, new);
+		read_until_quote(c, new, 0);
 	}
 	else
 		ft_strcpy(new, old);
@@ -84,7 +87,7 @@ char	*handle_quotes(t_shell *data, char *old)
 	check_quote_amount(buf, old);
 	if (ft_strchr(buf, BACKSLASH))
 	{
-		ft_putendl_fd("minishell: '\\\' as input not supported.", 2);
+		ft_putendl_fd("minishell: '\\\' as input is not supported.", 2);
 		return ((char *)ft_memset(buf, '\0', ft_strlen(buf)));
 	}
 	data->quotes = TRUE;

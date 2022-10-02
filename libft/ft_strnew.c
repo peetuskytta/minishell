@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 11:11:53 by pskytta           #+#    #+#             */
-/*   Updated: 2022/06/21 11:36:44 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 10:08:30 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 char	*ft_strnew(size_t size)
 {
-	return ((char *)malloc(size + 1));
+	return ((char *)ft_memalloc(size + 1));
 }

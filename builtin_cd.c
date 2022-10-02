@@ -44,7 +44,8 @@ static int	path_permission_loop(char **split, const char *path)
 			break ;
 		if (temp[ft_strlen(temp)] != '/')
 			ft_strcat(temp, "/");
-		ft_strcat(temp, split[i]);
+		if (ft_strstr(split[i], ".."))
+			ft_strcat(temp, split[i]);
 		if (lstat(temp, &stats) == 0)
 		{
 			if (!(stats.st_mode & X_OK))
@@ -67,11 +68,9 @@ static int	check_access(t_shell *data)
 
 	i = 0;
 	ret = 0;
-	check_expansion(data, 0);
+	//check_expansion(data, 0);
 	if (ft_strchr(data->token[1], '/'))
 	{
-		if (data->token[1][0] == '.')
-			i++;
 		split = ft_strsplit(data->token[1] + i, '/');
 		ret = path_permission_loop(split, data->token[1]);
 		ft_free_arr_of_arrays(split);
@@ -102,6 +101,7 @@ int	current_dir_actions(t_shell *data)
 	int	checks;
 
 	check_expansion(data, 0);
+	cwd_size_check(data, 255);
 	if (data->token_count < 2)
 	{
 		checks = initial_checks(data);

@@ -12,29 +12,13 @@
 
 #include "minishell.h"
 
-static int	output_environment(t_shell *data, int i)
-{
-	if (data->token_count == 0)
-	{
-		reset_last_cmd_env(data, data->last_cmd);
-		while (data->env_count > i)
-			ft_putendl(data->environ[i++]);
-		return (TRUE);
-	}
-	else
-	{
-		reset_last_cmd_env(data, data->last_cmd);
-		return (TRUE);
-	}
-}
-
 static int	handle_exclamation(t_shell *data)
 {
 	int		i;
-	char	temp[4096];
+	char	temp[1024];
 
 	i = 0;
-	ft_memset(temp, 0, 4096);
+	ft_memset(temp, 0, 1024);
 	handle_history(data, 2);
 	if (ft_strequ(HISTORY, data->token[0]) == 1 && data->token[1] == NULL)
 	{
@@ -51,11 +35,14 @@ static int	handle_exclamation(t_shell *data)
 			ft_strcat(temp, data->token[i++]);
 		}
 		create_or_append_history(temp);
-		ft_memset(temp, 0, 4096);
+		ft_memset(temp, 0, 1024);
 	}
 	return (FALSE);
 }
 
+/*
+**	Funtion handles which action to take when history command is used
+*/
 static int	history_driver(t_shell *data)
 {
 	int	fd;
@@ -65,7 +52,8 @@ static int	history_driver(t_shell *data)
 		if (ft_strequ(data->token[1], "-c") == 1)
 		{
 			fd = open(SH_HISTORY, O_RDWR | O_TRUNC);
-			close(fd);
+			if (fd > 0)
+				close(fd);
 		}
 		else
 			handle_history(data, 1);
@@ -73,8 +61,6 @@ static int	history_driver(t_shell *data)
 	}
 	else if (ft_strequ("!!", data->token[0]) == 1 && data->token[1] == NULL)
 		return (handle_exclamation(data));
-	else if (data->token[0][0] == '!' && ft_isdigit(data->token[0][1]))
-		handle_history(data, 3);
 	return (FALSE);
 }
 
@@ -95,36 +81,30 @@ void	output_history(int i, int fd)
 			ft_putendl(line);
 			ft_memdel((void *)&(line));
 		}
+		close(fd);
 	}
 	else
 		ft_putendl_fd("minishell: No history.", 2);
-	close(fd);
 }
 
-//return (echo_driver(data));
+/*
+**	Checks and executes the builtin. If command (data->token[0])
+**	is not builtin the function returns FALSE.
+*/
 int	check_if_builtin(t_shell *data)
 {
-	int	i;
-
-	i = 1;
 	if (ft_strequ(data->token[0], CD))
 		return (current_dir_actions(data));
 	else if (ft_strequ(data->token[0], ECHO))
-	{
-		while (data->token[i] != NULL)
-		{
-			ft_putstr(data->token[i++]);
-		}
-		ft_putchar(NEWLINE);
-		return (TRUE);
-	}
+		return (echo_driver(data, 1));
 	else if (ft_strequ(data->token[0], SETENV))
 		return (change_environ(data, 1));
 	else if (ft_strequ(data->token[0], UNSETENV))
 		return (change_environ(data, 2));
 	else if (ft_strequ(data->token[0], ENV))
-		return (output_environment(data, 0));
-	else if (ft_strequ(data->token[0], HISTORY) || data->token[0][0] == '!')
+		return (handle_env(data));
+	else if (ft_strequ(data->token[0], HISTORY)
+		|| ft_strequ(data->token[0], "!!"))
 		return (history_driver(data));
 	return (FALSE);
 }
