@@ -28,7 +28,7 @@ static int	output_environment(t_shell *data, int i)
 	}
 }
 
-/*static void	swap_char_star(char **first, char **second)
+static void	swap_char_ptr(char **first, char **second)
 {
 	char	*temp;
 
@@ -36,21 +36,39 @@ static int	output_environment(t_shell *data, int i)
 	*first = *second;
 	*second = temp;
 }
-*/
-int	handle_env(t_shell *data)
+
+static int	env_i_flag_error_check(char *executable, int err)
+{
+	if (ft_strequ(executable, "minishell") == 1)
+		err = TRUE;
+	else if (ft_strequ(executable, "./minishell") == 1)
+		err = FALSE;
+	else
+		err = TRUE;
+	return (err);
+
+}
+
+int	handle_env(t_shell *data, int error)
 {
 	if (data->token_count == 0)
 		output_environment(data, 0);
 	if (ft_strequ(data->token[1], "-i") == 1 && data->token[2])
 	{
+		error = env_i_flag_error_check(data->token[2], 0);
 		data->env_i = (char **)ft_memalloc(sizeof(data->env_i));
-		if (!(ft_strnstr(data->token[2], "./", 2)))
+		if (error == TRUE)
 		{
+			error_print("env: ", data->token[2], NO_FILE_OR_DIR);
 			ft_memdel((void *)&(data->env_i));
-			return(FALSE);
+			return(TRUE);
 		}
-		data->cmd = ft_strdup(data->token[2]);
-		create_child_process(data, data->env_i);
+		if (error == FALSE)
+		{
+			swap_char_ptr(&data->token[0], &data->token[2]);
+			data->cmd = ft_strdup(data->token[0]);
+			create_child_process(data, data->env_i);
+		}
 		ft_memdel((void *)&(data->env_i));
 		ft_memdel((void *)&(data->cmd));
 	}

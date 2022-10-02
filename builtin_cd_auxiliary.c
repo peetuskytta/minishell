@@ -32,11 +32,6 @@ int	change_to_home_env(t_shell *data, int len, int home_i)
 	return (TRUE);
 }
 
-static void	modify_pwd(t_shell *data, char *name)
-{
-	modify_env(data, name, data->pwd, 0);
-}
-
 int	handle_cd_dash(t_shell *data, int var_i, int len)
 {
 	char	*temp;
@@ -46,7 +41,7 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 	{
 		len = ft_strlen(data->environ[var_i]);
 		temp = ft_strsub(data->environ[var_i], 7, len - 7);
-		modify_pwd(data, "OLDPWD");
+		modify_env(data, "OLDPWD", data->pwd, 0);
 		if (chdir(temp) != 0)
 		{
 			ft_memdel((void *)&(temp));
@@ -92,13 +87,12 @@ int	change_to_token(t_shell *data, const char *path)
 		if (search_var_name("OLDPWD", data) < 0)
 			add_env_variable(data, "OLDPWD", data->pwd, nbr);
 		else
-			modify_pwd(data, "OLDPWD");
+			modify_env(data, "OLDPWD", data->pwd, 0);;
 		if (chdir(path) != 0)
 		{
 			error_print(CD_SH, (char *)path, NO_FILE_OR_DIR);
 			return (TRUE);
 		}
-		getcwd(data->pwd, 4096);
 		if (search_var_name("PWD", data) < 0)
 			add_env_variable(data, "PWD", data->pwd, data->env_count);
 		modify_env(data, "PWD", data->pwd, 0);

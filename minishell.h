@@ -40,11 +40,11 @@
 # define TAB '\t'
 # define NEWLINE '\n'
 # define BACKSLASH '\\'
-# define DOUBLEQUOTE '\"'
-# define SINGLEQUOTE '\''
+# define D_QUOTE '\"'
+# define S_QUOTE '\''
 # define EQUALSIGN "="
-# define D_QUOTE "dquote> "
-# define S_QUOTE "quote> "
+# define D_QUOTE_ARROW "dquote> "
+# define S_QUOTE_ARROW "quote> "
 # define ARROW "> "
 # define TILDE '~'
 
@@ -116,7 +116,7 @@ void	modify_env(t_shell *data, char *name, char *value, int i);
 void	add_env_variable(t_shell *data, char *name, char *val, int size);
 void	split_path_variable(t_shell *data, int i);
 
-int		handle_env(t_shell *data);
+int		handle_env(t_shell *data, int error);
 int		exec_error_check(t_shell *data, int check);
 void	create_child_process(t_shell *data, char **env);
 int		echo_driver(t_shell *data, int i);

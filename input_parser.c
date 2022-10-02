@@ -16,9 +16,9 @@ int	simple_input_check(char *input)
 {
 	if (ft_strchr(input, BACKSLASH))
 		return (FALSE);
-	else if (ft_strchr(input, SINGLEQUOTE))
+	else if (ft_strchr(input, S_QUOTE))
 		return (FALSE);
-	else if (ft_strchr(input, DOUBLEQUOTE))
+	else if (ft_strchr(input, D_QUOTE))
 		return (FALSE);
 	else
 		return (TRUE);
@@ -33,7 +33,7 @@ static char	*copy_squotes(char *token, int k)
 	ft_memset(new, '\0', 1024);
 	while (token[k] != '\0')
 	{
-		if (token[k] == SINGLEQUOTE)
+		if (token[k] == S_QUOTE)
 			k++;
 		if (token[k] == '\0')
 			break;
@@ -55,7 +55,7 @@ static char	*copy_dquotes(char *token, int k)
 	ft_memset(new, '\0', 1024);
 	while (token[k] != '\0')
 	{
-		if (token[k] == DOUBLEQUOTE)
+		if (token[k] == D_QUOTE)
 			k++;
 		if (token[k] == '\0')
 			break;
@@ -75,7 +75,7 @@ static void	translate_quotes(t_shell *data, int i)
 	ft_memset(tmp, '\0', 1024);
 	while (data->token[i] != NULL)
 	{
-		if (ft_strchr(data->token[i], DOUBLEQUOTE))
+		if (ft_strchr(data->token[i], D_QUOTE))
 		{
 			ft_strcat(tmp, copy_dquotes(data->token[i], 0));
 			ft_memdel((void *)&(data->token[i]));
@@ -84,7 +84,7 @@ static void	translate_quotes(t_shell *data, int i)
 			//ft_putendl(tmp);
 			i++;
 		}
-		else if (ft_strchr(data->token[i], SINGLEQUOTE))
+		else if (ft_strchr(data->token[i], S_QUOTE))
 		{
 			ft_strcat(tmp, copy_squotes(data->token[i], 0));
 			ft_memdel((void *)&(data->token[i]));

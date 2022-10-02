@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 20:30:49 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 21:14:31 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	write_open_quote(char c)
 {
-	if (c == SINGLEQUOTE)
-		ft_putstr_fd(S_QUOTE, 1);
-	if (c == DOUBLEQUOTE)
-		ft_putstr_fd(D_QUOTE, 1);
+	if (c == S_QUOTE)
+		ft_putstr_fd(S_QUOTE_ARROW, 1);
+	if (c == D_QUOTE)
+		ft_putstr_fd(D_QUOTE_ARROW, 1);
 }
 
 static void	read_until_quote(char c, char *new, int bytes_read)
@@ -53,9 +53,9 @@ static void	read_until_quote(char c, char *new, int bytes_read)
 static char	identify_open_quote(char c, int *quote)
 {
 	if (ft_is_oddnbr(quote[0]))
-		c = SINGLEQUOTE;
+		c = S_QUOTE;
 	else if (ft_is_oddnbr(quote[1]))
-		c = DOUBLEQUOTE;
+		c = D_QUOTE;
 	return (c);
 }
 
@@ -65,8 +65,8 @@ static void	check_quote_amount(char *new, char *old)
 	char	c;
 
 	c = '\0';
-	quotes[0] = ft_chrstr(old, SINGLEQUOTE);
-	quotes[1] = ft_chrstr(old, DOUBLEQUOTE);
+	quotes[0] = ft_chrstr(old, S_QUOTE);
+	quotes[1] = ft_chrstr(old, D_QUOTE);
 	if (ft_is_oddnbr(quotes[0]) || ft_is_oddnbr(quotes[1]))
 	{
 		c = identify_open_quote(c, quotes);

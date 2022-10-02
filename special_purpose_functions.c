@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 20:33:35 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/02 21:13:28 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ void	allocation_check(void *to_check)
 		exit(EXIT_FAILURE);
 }
 
+/*
+**	This function gets the current workind directory and makes sure enough
+**	space has been allocated for it by doubling the size after each
+**	failed attempt of getcwd() function. In the end 10 times more space
+**	is allocated to make sure there's enough space for concatenation.
+*/
 void	cwd_size_check(t_shell *data, int size)
 {
 	char	*cwd;
@@ -55,14 +61,8 @@ void	cwd_size_check(t_shell *data, int size)
 			break ;
 	}
 	ft_memdel((void *)&(cwd));
-	size *= 15;
+	size *= 10;
 	data->pwd_size = size;
 	data->pwd = ft_strnew(size);
 	getcwd(data->pwd, size);
 }
-
-/*char	*return_env_value(t_shell *data, char *name)
-{
-	if ((ft_strchr(dqstr, '~') && ft_strchr(dqstr, '~') - dqstr - 1 != '\\')
-	|| (ft_strchr(dqstr, '$') && ft_strchr(dqstr, '$') - dqstr - 1 != '\\'))
-}*/

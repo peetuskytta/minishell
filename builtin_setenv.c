@@ -44,7 +44,7 @@ static char	**plus_one_line(char **old_env, int rows)
 		new_env[i] = ft_strdup(old_env[i]);
 		ft_memdel((void *)&(old_env[i++]));
 	}
-	free(old_env);
+	ft_memdel((void *)&(old_env));
 	new_env[rows++] = NULL;
 	return (new_env);
 }
