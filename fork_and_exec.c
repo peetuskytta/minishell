@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 22:17:28 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/03 13:06:14 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	create_child_process(t_shell *data, char **env)
 	pid_t	pid_child;
 	pid_t	pid_wait;
 
+	//ft_putendl(data->cmd);
 	pid_child = fork();
 	if (pid_child == 0)
 	{
@@ -33,7 +34,7 @@ void	create_child_process(t_shell *data, char **env)
 		ft_putendl_fd(FORK_FAIL, 2);
 	else
 	{
-		pid_wait = waitpid(pid_child, &data->pid_status, 0);
+		pid_wait = waitpid(pid_child, &data->pid_status, 0); //WUNTRACED);
 		if (pid_wait == -1)
 			ft_putendl_fd(WAITPID_FAIL, 2);
 	}

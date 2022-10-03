@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 21:14:31 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/03 13:01:53 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,3 +93,4 @@ char	*handle_quotes(t_shell *data, char *old)
 	data->quotes = TRUE;
 	return (buf);
 }
+

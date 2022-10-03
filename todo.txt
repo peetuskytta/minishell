@@ -13,6 +13,8 @@ TODO:
 
 -> ./main.c should give correct error
 
+execve error found: setenv pepe=$MAIL ; setenv pepe $MAIL ; clear
+
 
 moi"lol\nmoi"
 
