@@ -9,7 +9,7 @@ TODO:
 
 ->	echo
 
-->	quotes
+->	quotes: translate quotes which comes first
 
 -> ./main.c should give correct error
 

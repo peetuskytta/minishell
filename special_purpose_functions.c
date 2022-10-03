@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 23:34:36 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/03 08:42:28 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	allocation_check(void *to_check)
 		exit(EXIT_FAILURE);
 }
 
+/*
+**	Updates the current directory and writes prompt to the stdout
+*/
 void	write_prompt_and_folder(t_shell *data)
 {
 	cwd_size_check(data, 255);
@@ -68,7 +71,6 @@ void	cwd_size_check(t_shell *data, int size)
 		{
 			ft_memdel((void *)&(cwd));
 			size += size;
-			ft_putnbr_endl(size);
 			cwd = ft_strnew(size);
 		}
 		else
@@ -76,6 +78,8 @@ void	cwd_size_check(t_shell *data, int size)
 	}
 	ft_memdel((void *)&(cwd));
 	size *= 10;
+	if (size >= 10000)
+		size /= 2;
 	data->pwd_size = size;
 	data->pwd = ft_strnew(size);
 	getcwd(data->pwd, size);
