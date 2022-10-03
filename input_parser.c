@@ -67,9 +67,14 @@ static char	check_opening_quote(char *str, int i)
 {
 	char	chr;
 
-	chr = '\0';
-	while (str[i] != '\'' || str[i] != '\"')
-		i++;
+	//chr = '\0';
+	while (str[i] != '\0')
+	{
+		ft_putchar(str[i]);
+		if (str[i] != S_QUOTE || str[i] != D_QUOTE)
+			i++;
+	}
+	ft_putchar(NEWLINE);
 	//str -= i;
 	chr = str[i];
 	return (chr);
@@ -77,11 +82,12 @@ static char	check_opening_quote(char *str, int i)
 
 static void	translate_quotes(t_shell *data, int i)
 {
-	char	tmp[1024];
+	char	tmp[4096];
 
-	ft_memset(tmp, '\0', 1024);
-	ft_putendl(data->token[0]);
-	exit(1);
+	ft_memset(tmp, '\0', 4096);
+//	ft_putendl(data->token[0]);
+//	exit(1);
+//	YOURE NOT FREEING THE POINTER from tokenize complex input.
 	while (data->token[i] != NULL)
 	{
 		if (check_opening_quote(data->token[i], 0) == D_QUOTE)
@@ -91,7 +97,7 @@ static void	translate_quotes(t_shell *data, int i)
 			ft_memdel((void *)&(data->token[i]));
 			data->token[i] = ft_strdup(tmp);
 			ft_putendl(tmp);
-			ft_memset(tmp, '\0', 1024);
+			ft_memset(tmp, '\0', 4096);
 			i++;
 		}
 		else if (check_opening_quote(data->token[i], 0) == S_QUOTE)
@@ -101,7 +107,7 @@ static void	translate_quotes(t_shell *data, int i)
 			ft_memdel((void *)&(data->token[i]));
 			data->token[i] = ft_strdup(tmp);
 			ft_putendl(tmp);
-			ft_memset(tmp, '\0', 1024);
+			ft_memset(tmp, '\0', 4096);
 			i++;
 		}
 		else
