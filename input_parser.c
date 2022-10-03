@@ -114,6 +114,10 @@ static void	translate_quotes(t_shell *data, int i)
 			i++;
 		// memdel token and reassign with tmp
 	}
+	/*i = 0;
+	while (data->token[i] != NULL)
+		data->token_count++;*/
+	ft_putnbr_endl(data->token_count);
 }
 
 void	parse_input(t_shell *data, char *input)
