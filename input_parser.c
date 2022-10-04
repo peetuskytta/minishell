@@ -23,7 +23,7 @@ int	simple_input_check(char *input)
 	else
 		return (TRUE);
 }
-
+/*
 static char	*copy_squotes(char *token, int k, int i)
 {
 	char	new[1024];
@@ -118,17 +118,15 @@ static void	translate_quotes(t_shell *data, int i)
 	while (data->token[i++] != NULL)
 		data->token_count++;
 	ft_putnbr_endl(data->token_count);
-}
+}*/
 
 void	parse_input(t_shell *data, char *input)
 {
 	if (data->quotes == TRUE)
 	{
-		tokenize_complex_input(data, input, 0, 0);
-		translate_quotes(data, 0);
-		ft_putendl(data->token[0]);
-		ft_putendl(data->token[1]);
-		exit(1);
+		tokenize_complex_input(data, input, 0);
+		//translate_quotes(data, 0);
+		//exit(1);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/03 13:01:53 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/04 09:37:26 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,9 @@ static void	check_quote_amount(char *new, char *old)
 
 char	*handle_quotes(t_shell *data, char *old)
 {
-	char	*buf;
+	char	buf[4096];
 
-	buf = ft_strnew(ft_strlen(old) + 2048);
-	ft_memset(buf, '\0', sizeof(buf));
+	ft_memset(buf, '\0', 4096);
 	check_quote_amount(buf, old);
 	if (ft_strchr(buf, BACKSLASH))
 	{
@@ -91,6 +90,6 @@ char	*handle_quotes(t_shell *data, char *old)
 		return ((char *)ft_memset(buf, '\0', ft_strlen(buf)));
 	}
 	data->quotes = TRUE;
-	return (buf);
+	return (ft_strtrim(buf));
 }
 

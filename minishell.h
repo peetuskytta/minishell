@@ -125,7 +125,9 @@ void	create_child_process(t_shell *data, char **env);
 int		echo_driver(t_shell *data, int i);
 void	cwd_size_check(t_shell *data, int size);
 void	write_prompt_and_folder(t_shell *data);
-void	tokenize_complex_input(t_shell *data, char *buf, int i, int quote);
+//void	tokenize_complex_input(t_shell *data, char *buf, int i, int quote);
+void	tokenize_complex_input(t_shell *data, char *input, int i);
+
 
 void	error_print(char *sh, char *name, char *msg);
 void	handle_history(t_shell *data, int option);
