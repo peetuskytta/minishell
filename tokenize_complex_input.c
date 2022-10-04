@@ -6,13 +6,13 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/04 11:55:54 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/04 16:24:02 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*copy_dq(char *string)
+/*static char	*copy_dq(char *string)
 {
 	char	temp[4096];
 	int		start;
@@ -72,7 +72,7 @@ static void	work_sq(char *temp, char *input, int *index)
 	index[1] = ft_strlen(temp);
 }
 
-/*static char	*work_ws(char *temp, char *string, int *index, int *i)
+static char	*work_ws(char *temp, char *string, int *index, int *i)
 {
 	char	*token;
 	char	*cpy;
@@ -95,14 +95,32 @@ static void	work_sq(char *temp, char *input, int *index)
 /* index[0] = temp[pos] and index[1] = input[pos]*/
 void	tokenize_complex_input(t_shell *data, char *input, int i)
 {
-	char	temp[4096];
 	int		index[3];
 
 	ft_memset(index, 0, sizeof(index));
 	index[2] = (int)ft_word_count(input, ' ') + 1;
-	ft_memset(temp, '\0', 4096);
 	data->token = (char **)ft_memalloc(sizeof(char *) * index[2] + 1);
-	while(TRUE)
+
+	while (input[index[0]] != '\0')
+	{
+		if (ft_is_ws_withoutnl(input[index[0]]))
+		{
+			data->token[i++] = ft_strsub(input, index[1] + index[0], index[0]);
+			while (ft_is_ws_withoutnl(input[index[0]]))
+				index[0]++;
+		}
+		if (ft_is_ws_withoutnl(input[index[0]]))
+		index[0]++;
+
+
+
+	}
+	ft_putendl(data->token[0]);
+//	ft_putendl(data->token[1]);
+	exit(1);
+}
+
+/*	while(TRUE)
 	{
 		while (input[index[0]] != '\0')
 		{
@@ -163,9 +181,7 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 	}
 	//exit(1);
 }
-
-
-
+*/
 
 
 
