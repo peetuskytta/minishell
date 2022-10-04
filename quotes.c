@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/04 17:18:00 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/04 20:39:31 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,24 +89,6 @@ char	*handle_quotes(t_shell *data, char *old)
 		ft_putendl_fd("minishell: '\\\' as input is not supported.", 2);
 		return ((char *)ft_memset(buf, '\0', ft_strlen(buf)));
 	}
-	data->quotes = TRUE;
-	int i = 0;
-	ft_putendl(buf);
-	while (buf[i] != '\0')
-	{
-		if (!ft_is_ws_withoutnl(buf[i]))
-			data->quotes = FALSE;
-		if ((buf[i] == S_QUOTE || buf[i] == D_QUOTE) && !ft_is_ws_withoutnl(buf[i + 1]))
-			data->quotes = TRUE;
-		else if (ft_is_ws_withoutnl(buf[i]) && data->quotes == TRUE)
-		{
-			data->quotes = FALSE;
-			buf[i] = '!';
-		}
-		i++;
-	}
-	ft_putendl(buf);
-	exit(1);
 	data->quotes = TRUE;
 	return (ft_strtrim(buf));
 }
