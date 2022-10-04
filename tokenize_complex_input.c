@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/04 09:01:27 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/04 09:26:43 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,25 @@ static int	find_open_quote(char *str, int pos)
 
 void	tokenize_complex_input(t_shell *data, char *buf, int i, int quote)
 {
+	char	*tmp;
 	char	chr;
 	int		k;
 	int		p;
 
 	k = 0;
 	p = 0;
-	ft_putendl(buf);
-//	if (ft_strrchr(buf, NEWLINE))
-//		ft_putendl("newline");
+	//ft_putendl(buf);
+	tmp = ft_strtrim(buf);
+	//ft_putendl(tmp);
 	chr = find_open_quote(buf, p);
 	data->token = (char **)ft_memalloc(sizeof(char *) * ((int)ft_word_count(buf, ' ') + 1));
-	while (buf[k] != '\0')
+	while (tmp[k] != '\0')
 	{
 		while (quote != 2)
 		{
 			if (chr == '\'' || chr == '\"')
 			{
-				if (buf[k++] == chr)
+				if (tmp[k++] == chr)
 					quote++;
 			}
 			else
@@ -52,17 +53,17 @@ void	tokenize_complex_input(t_shell *data, char *buf, int i, int quote)
 		}
 		if (quote == 2)
 		{
-			while (!ft_is_ws_withoutnl(buf[k]))
+			while (!ft_is_ws_withoutnl(tmp[k]))
 			{
-				if (buf[k] == '\0')
+				if (tmp[k] == '\0')
 					break;
 				k++;
 			}
-			data->token[i] = ft_strsub(buf, p, k);
+			data->token[i] = ft_strsub(tmp, p, k);
 			i++;
 			p += ++k;
 			quote = 0;
-			chr = find_open_quote(buf, p);
+			chr = find_open_quote(tmp, p);
 		}
 	}
 //	ft_putchar(NEWLINE);
@@ -74,4 +75,5 @@ void	tokenize_complex_input(t_shell *data, char *buf, int i, int quote)
 		data->token_count++;
 	}*/
 	//exit(1);
+	ft_memdel((void *)&(tmp));
 }

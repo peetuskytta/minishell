@@ -127,6 +127,7 @@ void	parse_input(t_shell *data, char *input)
 		tokenize_complex_input(data, input, 0, 0);
 		translate_quotes(data, 0);
 		ft_putendl(data->token[0]);
+		ft_putendl(data->token[1]);
 		exit(1);
 	}
 	else
