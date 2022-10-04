@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/04 22:31:55 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/05 00:00:10 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*copy_dq(char *string)
 	i++;
 	if (string[i] != '\0')
 	{
-		while (!ft_is_ws_withoutnl(string[i]) && string[i + 1] != '\0')
+		while (!ft_is_ws_withoutnl(string[i]) && string[i] != '\0')
 			temp[ii++] = string[i++];
 	}
 	temp[ii] = '\0';
@@ -65,35 +65,22 @@ static void	work_dq(char *temp, char *input, int *index)
 	ft_strcat(temp, copy_dq(input + index[0]));
 	index[1] = ft_strlen(temp);
 	index[0] += index[1] + 2;
+	if (index[0] > (int)ft_strlen(input))
+		index[0] = ft_strlen(input);
+	ft_putnbr_endl(index[0]);
+	ft_putnbr_endl(ft_strlen(input));
 }
 
 static void	work_sq(char *temp, char *input, int *index)
 {
 	ft_strcat(temp, copy_sq(input));
-	index[0] = ft_strchr(input, S_QUOTE) - input;
-	index[0] += ft_strlen(temp) + 2;
-	index[1] = ft_strlen(temp) + 1;
+	index[1] = ft_strlen(temp);
+	index[0] += index[1] + 2;
+	if (index[0] > (int)ft_strlen(input))
+		index[0] = ft_strlen(input);
+	ft_putnbr_endl(index[0]);
+	ft_putnbr_endl(ft_strlen(input));
 }
-
-/*static char	*work_ws(char *temp, char *string, int *index, int *i)
-{
-	char	*token;
-	char	*cpy;
-	int		pos;
-
-	pos = index[0];
-	cpy = string;
-	token = ft_strdup(temp);
-	ft_memset(temp, '\0', 4096);
-	while (ft_is_wspace(cpy[pos]))
-	{
-		index[0]++;
-		pos++;
-	}
-	index[1] = 0;
-	*i += 1;
-	return (token);
-}*/
 
 /* index[0] = temp[pos] and index[1] = input[pos]*/
 void	tokenize_complex_input(t_shell *data, char *input, int i)
@@ -105,56 +92,58 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 	ft_memset(index, 0, sizeof(index));
 	index[2] = (int)ft_word_count(input, ' ') + 1;
 	data->token = (char **)ft_memalloc(sizeof(char *) * index[2] + 1);
-	while(TRUE)
+	while (input[index[0]] != '\0')
 	{
-		while (input[index[0]] != '\0')
+		if (input[index[0]] == D_QUOTE)
 		{
-			if (input[index[0]] == D_QUOTE)
-			{
-				work_dq(temp, input, index);
-				ft_putstr("double_Q temp: ");
-				ft_putendl(temp);
-				if (ft_is_ws_withoutnl(input[index[0] - 1]) || input[index[0] - 1] == '\0')
-				{
-					data->token[i++] = ft_strdup(temp);
-					ft_putstr("LEN: token: ");
-					ft_putnbr(ft_strlen(data->token[i - 1]));
-					ft_putstr("  LEN: temp: ");
-					ft_putnbr_endl(ft_strlen(temp));
-					ft_memset(temp, '\0', 4096);
-					index[1] = 0;
-					//exit(1);
-				}
-				ft_putstr("token[i]: ");
-				ft_putnbr_endl(i);
-				ft_putstr("index 0: ");
-				ft_putnbr(index[0]);
-				ft_putstr(" at index: ");
-				ft_putchar(input[index[0]]);
-				ft_putstr("\nindex 1: ");
-				ft_putnbr_endl(index[1]);
-				ft_putendl("");
-
-				//exit(1);
-			}
-			if (input[index[0]] == S_QUOTE)
-			{
-				work_sq(temp, input, index);
-				ft_putstr("singl_Q temp: ");
-				ft_putendl(temp);
-				if (ft_is_ws_withoutnl(input[index[0]]))
-					data->token[i++] = ft_strdup(temp);
-			}
-			//if (ft_is_ws_withoutnl(input[index[0]]))
-				//index[0]++;
-			if (input[index[0]] == '\0')
+			work_dq(temp, input, index);
+			ft_putstr("double_Q temp: ");
+			ft_putendl(temp);
+			ft_putnbr_endl(index[0]);
+			if (ft_is_ws_withoutnl(input[index[0] - 1]) || input[index[0]] == '\0')
 			{
 				data->token[i++] = ft_strdup(temp);
-				break ;
+				ft_putstr("LEN: token: ");
+				ft_putnbr(ft_strlen(data->token[i - 1]));
+				ft_putstr("  LEN: temp: ");
+				ft_putnbr_endl(ft_strlen(temp));
+				ft_memset(temp, '\0', 4096);
+				index[1] = 0;
+				//exit(1);
 			}
-			temp[index[1]++] = input[index[0]++];
-			//index[0]++;
+			//if (input[index[0]] == '\0')
+			//	break ;
+			ft_putstr("token[i]: ");
+			ft_putnbr_endl(i);
+			ft_putstr("index 0: ");
+			ft_putnbr(index[0]);
+			ft_putstr(" at index: ");
+			//ft_putchar(input[index[0]]);
+			ft_putstr("\nindex 1: ");
+			ft_putnbr_endl(index[1]);
+			ft_putendl("");
+			//exit(1);
 		}
+		if (input[index[0]] == S_QUOTE)
+		{
+			work_sq(temp, input, index);
+			ft_putstr("singl_Q temp: ");
+			ft_putendl(temp);
+			if (ft_is_ws_withoutnl(input[index[0]]))
+				data->token[i++] = ft_strdup(temp);
+		}
+		//if (ft_is_ws_withoutnl(input[index[0]]))
+			//index[0]++;
+		/*if (input[index[0]] == '\0')
+		{
+			ft_putendl("here 2");
+			data->token[i++] = ft_strdup(temp);
+			break ;
+		}*/
+		if (input[index[0]] != '\0')
+			temp[index[1]++] = input[index[0]++];
+		//else
+		//	break ;
 	}
 	//ft_putnbr_endl(i);
 	data->token[i] = NULL;
