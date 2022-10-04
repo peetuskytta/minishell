@@ -14,5 +14,7 @@
 
 int	ft_is_ws_withoutnl(char c)
 {
-	return ((c == 9 || c == 11 || c == 12) || c == 13 || (c == ' '));
+	if ((c == 9 || c == 11 || c == 12) || c == 13 || (c == ' '))
+		return (1);
+	return (0);
 }
