@@ -52,7 +52,7 @@
 # define TILDE '~'
 
 /*Integer defines*/
-# define BUFFER 4096
+# define BUFFER 1024
 # define FALSE 0
 # define TRUE 1
 
@@ -65,27 +65,27 @@
 # define NO_FILE_OR_DIR ": No such file or directory"
 
 /*Error message defines for CD*/
-# define CD_SH "minishell: cd: "
+# define CD_HOME_UNSET " HOME not set"
 # define CD_NO_ACCESS " permission denied"
 # define CD_NOT_DIR ": Not a directory"
-# define CD_HOME_UNSET " HOME not set"
+# define CD_SH "minishell: cd: "
+# define IS_A_DIR ": Is a directory"
 
 /*Error message defines for setenv and unsetenv*/
 # define EMPTY_STR "setenv name: cannot be an empty string"
 # define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
-# define SETENV_USAGE "usage: 'setenv [name] [value]' or 'setenv [name=value]'"
-# define UNSETENV_USAGE "usage: unsetenv [name]"
 # define SET_TOO_MANY_ARG "setenv: too many arguments\n"
-# define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"
+# define SETENV_USAGE "usage: 'setenv [name] [value]' or 'setenv [name=value]'"
 # define NOT_IDENTIFIER ": not a valid identifier"
+# define UNSETENV_USAGE "usage: unsetenv [name]"
+# define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"
 
 /*Error messages for fork, waitpid, and execve*/
 # define CMD_NOT_FOUND ": command not found"
 # define EXEC_NO_ACCESS ": permission denied"
+# define EXECVE_ERROR "minishell: error with execve"
 # define FORK_FAIL "minishell: fork fail"
 # define WAITPID_FAIL "minishell: waitpid fail"
-# define EXECVE_ERROR "minishell: error with execve"
-# define IS_A_DIR ": is a directory"
 
 /*Data structure(s) used*/
 typedef struct s_shell

@@ -6,7 +6,7 @@
 #    By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/22 13:05:41 by pskytta           #+#    #+#              #
-#    Updated: 2022/10/03 12:09:37 by pskytta          ###   ########.fr        #
+#    Updated: 2022/10/04 08:32:55 by pskytta          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC := ft_atoi.c \
 	ft_bzero.c \
 	ft_free_array.c \
 	ft_is_wspace.c \
+	ft_is_ws_withoutnl.c \
 	ft_isalnum.c \
 	ft_isalpha.c \
 	ft_isascii.c \

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/03 13:06:14 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/04 08:43:46 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	create_child_process(t_shell *data, char **env)
 	pid_t	pid_child;
 	pid_t	pid_wait;
 
-	//ft_putendl(data->cmd);
 	pid_child = fork();
 	if (pid_child == 0)
 	{
@@ -34,7 +33,7 @@ void	create_child_process(t_shell *data, char **env)
 		ft_putendl_fd(FORK_FAIL, 2);
 	else
 	{
-		pid_wait = waitpid(pid_child, &data->pid_status, 0); //WUNTRACED);
+		pid_wait = waitpid(pid_child, &data->pid_status, 0);
 		if (pid_wait == -1)
 			ft_putendl_fd(WAITPID_FAIL, 2);
 	}
@@ -69,19 +68,15 @@ static int	check_existence(t_shell *data)
 {
 	struct stat	info;
 
-	cwd_size_check(data, 255);
-	if (data->token[0][0] != '/')
-		ft_strcat(data->pwd, "/");
-	ft_strcat(data->pwd, data->token[0]);
-	if (lstat((const char *)data->pwd, &info) == 0)
+	if (lstat((const char *)data->token[0], &info) == 0)
 	{
-		if (ft_is_directory(data->pwd) == TRUE)
+		if (ft_is_directory(data->token[0]) == TRUE)
 			return (3);
-		data->cmd = ft_strdup(data->pwd);
+		data->cmd = ft_strdup(data->token[0]);
 		return (TRUE);
 	}
-	else if (lstat((const char *)data->pwd, &info) == -1)
-		return (2);
+	else if (data->token[0][0] == '.' && data->token[0][1] == '/')
+		return (5);
 	else
 		return (FALSE);
 }

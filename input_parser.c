@@ -70,11 +70,11 @@ static char	check_opening_quote(char *str, int i)
 	//chr = '\0';
 	while (str[i] != '\0')
 	{
-		ft_putchar(str[i]);
+		//ft_putchar(str[i]);
 		if (str[i] != S_QUOTE || str[i] != D_QUOTE)
 			i++;
 	}
-	ft_putchar(NEWLINE);
+	//ft_putchar(NEWLINE);
 	//str -= i;
 	chr = str[i];
 	return (chr);
@@ -96,7 +96,7 @@ static void	translate_quotes(t_shell *data, int i)
 			ft_strcat(tmp, copy_dquotes(data->token[i], 0, 0));
 			ft_memdel((void *)&(data->token[i]));
 			data->token[i] = ft_strdup(tmp);
-			ft_putendl(tmp);
+			//ft_putendl(tmp);
 			ft_memset(tmp, '\0', 4096);
 			i++;
 		}
@@ -106,7 +106,7 @@ static void	translate_quotes(t_shell *data, int i)
 			ft_strcat(tmp, copy_squotes(data->token[i], 0, 0));
 			ft_memdel((void *)&(data->token[i]));
 			data->token[i] = ft_strdup(tmp);
-			ft_putendl(tmp);
+			//ft_putendl(tmp);
 			ft_memset(tmp, '\0', 4096);
 			i++;
 		}
@@ -114,9 +114,9 @@ static void	translate_quotes(t_shell *data, int i)
 			i++;
 		// memdel token and reassign with tmp
 	}
-	/*i = 0;
-	while (data->token[i] != NULL)
-		data->token_count++;*/
+	i = 0;
+	while (data->token[i++] != NULL)
+		data->token_count++;
 	ft_putnbr_endl(data->token_count);
 }
 
@@ -126,6 +126,8 @@ void	parse_input(t_shell *data, char *input)
 	{
 		tokenize_complex_input(data, input, 0, 0);
 		translate_quotes(data, 0);
+		ft_putendl(data->token[0]);
+		exit(1);
 	}
 	else
 	{
