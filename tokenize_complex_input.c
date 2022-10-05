@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/05 00:00:10 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/05 08:04:46 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static void	work_dq(char *temp, char *input, int *index)
 	index[0] += index[1] + 2;
 	if (index[0] > (int)ft_strlen(input))
 		index[0] = ft_strlen(input);
-	ft_putnbr_endl(index[0]);
-	ft_putnbr_endl(ft_strlen(input));
+	//ft_putnbr_endl(index[0]);
+	//ft_putnbr_endl(ft_strlen(input));
 }
 
 static void	work_sq(char *temp, char *input, int *index)
@@ -78,8 +78,8 @@ static void	work_sq(char *temp, char *input, int *index)
 	index[0] += index[1] + 2;
 	if (index[0] > (int)ft_strlen(input))
 		index[0] = ft_strlen(input);
-	ft_putnbr_endl(index[0]);
-	ft_putnbr_endl(ft_strlen(input));
+	//ft_putnbr_endl(index[0]);
+	//ft_putnbr_endl(ft_strlen(input));
 }
 
 /* index[0] = temp[pos] and index[1] = input[pos]*/
@@ -99,7 +99,6 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 			work_dq(temp, input, index);
 			ft_putstr("double_Q temp: ");
 			ft_putendl(temp);
-			ft_putnbr_endl(index[0]);
 			if (ft_is_ws_withoutnl(input[index[0] - 1]) || input[index[0]] == '\0')
 			{
 				data->token[i++] = ft_strdup(temp);
@@ -136,19 +135,21 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 			//index[0]++;
 		/*if (input[index[0]] == '\0')
 		{
-			ft_putendl("here 2");
 			data->token[i++] = ft_strdup(temp);
 			break ;
 		}*/
 		if (input[index[0]] != '\0')
+		{
+			ft_putendl(temp);
+			if (ft_is_ws_withoutnl(input[index[0]]))
+				temp[index[1]++] = input[index[0]++];
 			temp[index[1]++] = input[index[0]++];
-		//else
-		//	break ;
+			if (input[index[0]] != '\0')
+				data->token[i++] = ft_strdup(temp);
+		}
 	}
-	//ft_putnbr_endl(i);
 	data->token[i] = NULL;
 	i = 0;
-	ft_putchar(NEWLINE);
 	while (data->token[i] != NULL)
 	{
 		ft_putnbr(i);
@@ -157,7 +158,7 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 		data->token_count++;
 		i++;
 	}
-	//exit(1);
+	exit(1);
 }
 
 
