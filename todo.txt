@@ -25,3 +25,4 @@ ls"  s"  -"l"rt main.c   lol
 
 ls"  s"  -"l"rt main.c
 
+"l"s"" -l
