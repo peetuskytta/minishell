@@ -18,3 +18,10 @@ execve error found: setenv pepe=$MAIL ; setenv pepe $MAIL ; clear
 
 moi"lol\nmoi"
 
+
+ls"  s"  -"l"rt
+
+ls"  s"  -"l"rt main.c   lol
+
+ls"  s"  -"l"rt main.c
+

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/05 08:04:46 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/05 08:34:17 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,19 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 		}*/
 		if (input[index[0]] != '\0')
 		{
-			ft_putendl(temp);
-			if (ft_is_ws_withoutnl(input[index[0]]))
-				temp[index[1]++] = input[index[0]++];
+			//ft_putendl(temp);
+			while (ft_is_ws_withoutnl(input[index[0]]))
+				index[0]++;
 			temp[index[1]++] = input[index[0]++];
-			if (input[index[0]] != '\0')
+			if (input[index[0]] == '\0' || ft_is_ws_withoutnl(input[index[0]]))
+			{
 				data->token[i++] = ft_strdup(temp);
+				ft_memset(temp, '\0', 4096);
+				index[1] = 0;
+			}
+			//while (ft_is_ws_withoutnl(input[index[0]]))
+			//	index[0]++;
+
 		}
 	}
 	data->token[i] = NULL;
@@ -158,7 +165,7 @@ void	tokenize_complex_input(t_shell *data, char *input, int i)
 		data->token_count++;
 		i++;
 	}
-	exit(1);
+	//exit(1);
 }
 
 
