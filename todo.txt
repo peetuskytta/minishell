@@ -30,3 +30,5 @@ ls"  s"  -"l"rt main.c
 "l"s""  -l""
 
 "l"s""  -l  "ls"
+
+lslsls"0000"""      oii
