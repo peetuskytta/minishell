@@ -6,136 +6,86 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/05 16:56:56 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/05 23:59:39 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdio.h>
 
-static char	*copy_dq(char *string, int index_0)
+static int	check_if_quote(char c)
 {
-	char	temp[4096];
-	int		ii;
-
-	ii = 0;
-	ft_memset(temp, '\0', 4096);
-	temp[ii++] = string[index_0++];
-	while (string[index_0] != D_QUOTE)
-		temp[ii++] = string[index_0++];
-	while (!ft_is_ws_withoutnl(string[index_0]) && string[index_0] != '\0')
-		temp[ii++] = string[index_0++];
-	temp[ii] = '\0';
-	//exit(1);
-	return (ft_strcpy(temp, temp));
+	return (c == S_QUOTE || c == D_QUOTE);
 }
 
-static char	*work_dq(char *temp, char *input, int *index)
+static char	*find_token(char *input, int *i, int d_quote, int s_quote)
 {
-	ft_strcat(temp, copy_dq(input, index[0]));
-	ft_putendl(temp);
-	index[0] = ft_strlen(temp);
+	char	*token;
+	int		closed;
+	int		pos;
+
+	pos = 0;
+	closed = 0;
+	ft_putnbr_endl(ft_strlen(input));
+	token = ft_strnew(ft_strlen(input));
 	//exit(1);
-	return (ft_strdup(temp));
-}
-
-/*static work_non_quotes(char *temp, char *input, int *index)
-{
-
-
-}*/
-
-/* index[0] = temp[pos] and index[1] = input[pos]*/
-void	tokenize_complex_input(t_shell *data, char *input, int i)
-{
-	char	temp[4096];
-	int		index[3];
-
-	ft_memset(temp, '\0', 4096);
-	ft_memset(index, 0, sizeof(index));
-	index[2] = (int)ft_word_count(input, ' ') + 1;
-	data->token = (char **)ft_memalloc(sizeof(char *) * index[2] + 1);
-	while (input[index[0]] != '\0')
+	while (input[i])
 	{
-		if (input[index[0]] == D_QUOTE)
+		if (check_if_quote(input[i]) == TRUE)
 		{
-			data->token[i] = work_dq(temp, input, index);
-			ft_putstr("double_Q token: ");
-			ft_putendl(data->token[i]);
-			i++;
-			ft_memset(temp, '\0', 4096);
-			exit(1);
-			//if (ft_is_ws_withoutnl(input[index[0]]) || input[index[0]] == '\0')
-			//{
-				//data->token[i++] = ft_strdup(temp);
-				//ft_putstr("LEN: token: ");
-				//ft_putnbr(ft_strlen(data->token[i - 1]));
-				//ft_putstr("  LEN: temp: ");
-				//ft_putnbr_endl(ft_strlen(temp));
-				//ft_memset(temp, '\0', 4096);
-				index[1] = 0;
-				//exit(1);
-			//}
-			//ft_memset(temp, '\0', 4096);
-			//if (input[index[0]] == '\0')
-			//	break ;
-			/*ft_putstr("token[i]: ");
-			ft_putnbr_endl(i);
-			ft_putstr("index 0: ");
-			ft_putnbr(index[0]);
-			ft_putstr(" at index: ");
-			//ft_putchar(input[index[0]]);
-			ft_putstr("\nindex 1: ");
-			ft_putnbr_endl(index[1]);
-			ft_putendl("");
-			*/
-		}
-		while (ft_is_ws_withoutnl(input[index[0]]))
-			index[0]++;
-		//ft_putchar(input[index[0]]);
-		//ft_putendl("");
-		//exit(1);
-		if (input[index[0]] != '\0')
-		{
-			temp[index[1]++] = input[index[0]++];
-			if (input[index[0] + 1] == '\0' || ft_is_ws_withoutnl(input[index[0]])) // || ft_is_ws_withoutnl(input[index[0] + 1]))
+			while (input[i] == D_QUOTE && s_quote == FALSE)
 			{
-				temp[index[1]] = input[index[0]];
-				//temp[index[1]] = '\0';
-				ft_putendl(temp);
-				ft_putstr("token[i]: ");
-				ft_putnbr_endl(i);
-				ft_putstr("index 0: ");
-				ft_putnbr_endl(index[0]);
-				data->token[i++] = ft_strdup(temp);
-				ft_memset(temp, '\0', 4096);
-				index[1] = 0;
+				i++;
+				d_quote += 1;
 			}
-			temp[index[1]++] = input[index[0]++];
-			//while (ft_is_ws_withoutnl(input[index[0]]))
-			//	index[0]++;
-
+			while (input[i]) == S_QUOTE && d_quote == FALSE)
+			{
+				i++;
+				s_quote += 1;
+			}
+			if (d_quote >= 2 || s_quote >= 2)
+				closed = TRUE;
+		}
+		if ((ft_is_ws_withoutnl(input[i]) && closed) || (ft_is_ws_withoutnl(input[i]) && s_quote + d_quote == FALSE))
+		{
+			input++;
+			break ;
+		}
+		if (input[i] && closed == FALSE) || (!ft_is_ws_withoutnl(input[i] && closed))
+		{
+			token[pos++] = input[i++];
 		}
 	}
-	//exit(1);
-	data->token[i] = NULL;
-	i = 0;
-	ft_putchar(NEWLINE);
-	while (data->token[i] != NULL)
-	{
-		ft_putchar('{');
-		ft_putnbr(i);
-		ft_putchar('}');
-		ft_putchar(WHITESPACE);
-		ft_putchar('[');
-		ft_putstr(data->token[i]);
-		ft_putchar(']');
-		ft_putchar(NEWLINE);
-		data->token_count++;
-		i++;
-	}
-	ft_putchar(NEWLINE);
-	//exit(1);
+
+	ft_putendl(token);
+	ft_putnbr_endl(ft_strlen(token));
+	ft_putnbr_endl(i);
+	return (token);
 }
+
+
+void	tokenize_complex_input(t_shell *data, char *input, int index)
+{
+	int	alloc_count;
+	int	i;
+
+	i = 0;
+	alloc_count = (int)ft_word_count(input, ' ') + 1;
+	data->token = (char **)ft_memalloc(sizeof(char *) * alloc_count + 1);
+	alloc_count = 0;
+	while (input[i])
+	{
+		data->token[alloc_count] = find_token(input, &index, 0, 0);
+		// checks if we are in the end
+		printf("token[%d]-->{%s}\n", alloc_count, data->token[alloc_count]);
+		exit(1);
+		if (data->token[alloc_count] == NULL)
+			break ;
+		i = index;
+		alloc_count++;
+	}
+}
+
 
 
 
