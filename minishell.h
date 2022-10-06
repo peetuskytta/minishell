@@ -45,7 +45,7 @@
 # define BACKSLASH '\\'
 # define D_QUOTE '\"'
 # define S_QUOTE '\''
-# define EQUALSIGN "="
+# define EQUAL_SIGN "="
 # define D_QUOTE_ARROW "dquote> "
 # define S_QUOTE_ARROW "quote> "
 # define ARROW "> "

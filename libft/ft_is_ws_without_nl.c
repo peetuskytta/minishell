@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int	ft_is_ws_withoutnl(char c)
+int	ft_is_ws_without_nl(char c)
 {
 	return (c == 9 || c == 11 || c == 12) || c == 13 || (c == ' ');
 }

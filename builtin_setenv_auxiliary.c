@@ -45,7 +45,7 @@ char	*join_n_and_v(char *name, char *value)
 
 	ft_memset(temp, '\0', 4096);
 	ft_strcat(temp, name);
-	ft_strcat(temp, EQUALSIGN);
+	ft_strcat(temp, EQUAL_SIGN);
 	name = temp;
 	return (ft_strjoin(name, value));
 }

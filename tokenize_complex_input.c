@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 11:50:49 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 11:58:28 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*find_token(char *input, int *count, int i)
 
 	ft_memset(&in, 0, sizeof(in));
 	token = ft_strnew(ft_strlen(input));
-	while (ft_is_ws_withoutnl(input[i]) && (*count)++)
+	while (ft_is_ws_without_nl(input[i]) && (*count)++)
 		increment_counters(&in, count, &i, 5);
 	while (input[i])
 	{
@@ -64,13 +64,13 @@ static char	*find_token(char *input, int *count, int i)
 			if (in.d_quo >= 2 || in.s_quo >= 2)
 				increment_counters(&in, count, &i, 6);
 		}
-		if ((ft_is_ws_withoutnl(input[i]) && in.at_end)
-			|| (ft_is_ws_withoutnl(input[i]) && in.s_quo + in.d_quo == FALSE))
+		if ((ft_is_ws_without_nl(input[i]) && in.at_end)
+			|| (ft_is_ws_without_nl(input[i]) && in.s_quo + in.d_quo == FALSE))
 		{
 			increment_counters(&in, count, &i, 4);
 			break ;
 		}
-		if ((input[i] && in.at_end == FALSE) || (!ft_is_ws_withoutnl(input[i]
+		if ((input[i] && in.at_end == FALSE) || (!ft_is_ws_without_nl(input[i]
 			&& in.at_end == TRUE)))
 		{
 			token[in.pos++] = input[i++];

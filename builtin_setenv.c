@@ -66,7 +66,7 @@ void	add_env_variable(t_shell *data, char *name, char *val, int size)
 		exit(EXIT_FAILURE);
 	ft_memset(new_env[size], '\0', len + 1);
 	ft_strcat(new_env[size], name);
-	ft_strcat(new_env[size], EQUALSIGN);
+	ft_strcat(new_env[size], EQUAL_SIGN);
 	ft_strcat(new_env[size], val);
 	data->environ = new_env;
 	data->env_count++;
