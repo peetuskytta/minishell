@@ -25,7 +25,7 @@ static char	*read_input_stdin(t_shell *data, char *buf)
 	{
 		data->quotes = TRUE;
 		new = handle_quotes(data, buf);
-		//ft_memdel((void *)&(buf));
+		ft_memdel((void *)&(buf));
 		return (new);
 	}
 	else
