@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 17:40:17 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 18:14:21 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int	is_in_path(t_shell *data, int i)
 
 	if (search_var_name("PATH", data) < 0)
 		return (FALSE);
-	split_path_variable(data, 0);
 	ft_memset(temp, '\0', 4096);
 	if (!(ft_strchr(data->token[0], '/')))
 	{
@@ -58,6 +57,7 @@ static int	is_in_path(t_shell *data, int i)
 	}
 	if (ft_strchr(data->token[0], '/'))
 	{
+		split_path_variable(data, 0);
 		while (data->split_path[i] != NULL)
 		{
 			if (ft_strequ(data->split_path[i], data->token[0]) == 1)
@@ -67,6 +67,7 @@ static int	is_in_path(t_shell *data, int i)
 			}
 			i++;
 		}
+		ft_free_arr_of_arrays(data->split_path);
 	}
 	return (FALSE);
 }
@@ -118,8 +119,8 @@ int	initial_exec_checks(t_shell *data)
 	if (ft_strequ(data->token[0], CD) == 1)
 		return (current_dir_actions(data));
 	check = verify_if_executable(data);
-	if (data->split_path != NULL)
-		ft_free_arr_of_arrays(data->split_path);
+	//if (data->split_path != NULL)
+	//	ft_free_arr_of_arrays(data->split_path);
 	ft_memdel((void *)&(data->pwd));
 	if (exec_error_check(data, check) != 1)
 		return (FALSE);

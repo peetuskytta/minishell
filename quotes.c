@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 17:25:16 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 19:11:49 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	read_until_quote(char c, char *new, int bytes_read)
 		if (bytes_read > 0)
 		{
 			ft_strcat(new, extra);
+			if (new[ft_strlen(new)] == '\n')
+				ft_putendl("one");
 			num_quotes = ft_chrstr(new, c);
 			if (ft_is_oddnbr(num_quotes) == FALSE)
 			{
@@ -83,14 +85,14 @@ char	*handle_quotes(t_shell *data, char *old)
 	char	buf[4096];
 
 	ft_memset(buf, '\0', 4096);
-	if (ft_strchr(old, BACKSLASH))
+	check_quote_amount(buf, old);
+/*	if (ft_strchr(buf, BACKSLASH))
 	{
 		ft_putendl_fd("minishell: '\\\' in the input is not supported.", STDERR_FILENO);
 		//ft_memdel((void *)&(old));
-		data->quotes = FALSE;
 		return (NULL);
-	}
-	check_quote_amount(buf, old);
+	}*/
+	data->quotes = TRUE;
 	return (ft_strtrim(buf));
 }
 

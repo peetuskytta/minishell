@@ -14,9 +14,9 @@
 
 int	simple_input_check(char *input)
 {
-	if (ft_strchr(input, BACKSLASH))
-		return (FALSE);
-	else if (ft_strchr(input, S_QUOTE))
+	/*if (ft_strchr(input, BACKSLASH))
+		return (FALSE);*/
+	if (ft_strchr(input, S_QUOTE))
 		return (FALSE);
 	else if (ft_strchr(input, D_QUOTE))
 		return (FALSE);
