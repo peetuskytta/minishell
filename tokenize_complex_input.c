@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 08:12:51 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 08:53:40 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,12 @@ static void	increment_ints(t_ints *to_init, int *count, int *i, int action)
 		*count += 1;
 	else if (action == 5)
 		*i += 1;
+	else if (action == 6)
+		to_init->at_end = TRUE;
+
 }
+
+
 
 static char	*find_token(char *input, int *count, int i)
 {
@@ -58,7 +63,7 @@ static char	*find_token(char *input, int *count, int i)
 			while (input[i] == S_QUOTE && in.d_quo == FALSE)
 				increment_ints(&in, count, &i, 1);
 			if (in.d_quo >= 2 || in.s_quo >= 2)
-				in.at_end = TRUE;
+				increment_ints(&in, count, &i, 6);
 		}
 		if ((ft_is_ws_withoutnl(input[i]) && in.at_end) || (ft_is_ws_withoutnl(input[i]) && in.s_quo + in.d_quo == FALSE))
 		{
@@ -90,14 +95,14 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 	{
 		data->token[alloc_count] = find_token(input, &index, i);
 		printf("token[%d]-->{%s}\n", alloc_count, data->token[alloc_count]);
-		//exit(1);
 		if (data->token[alloc_count] == NULL)
 			break ;
 		i = index;
-		ft_putnbr_endl(i);
 		alloc_count++;
+		data->token_count++;
 	}
-	exit(1);
+	printf("token count: %d\n", data->token_count);
+	//exit(1);
 }
 
 
