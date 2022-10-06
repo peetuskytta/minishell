@@ -32,3 +32,7 @@ ls"  s"  -"l"rt main.c
 "l"s""  -l  "ls"
 
 lslsls"0000"""      oii
+
+
+
+PDW and OLDPWD change when token change

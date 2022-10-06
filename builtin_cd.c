@@ -101,7 +101,7 @@ int	current_dir_actions(t_shell *data)
 	int	checks;
 
 	check_expansion(data, 0);
-	cwd_size_check(data, 255);
+	fetch_current_working_directory(data);
 	if (data->token_count < 2)
 	{
 		checks = initial_checks(data);

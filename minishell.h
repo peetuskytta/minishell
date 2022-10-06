@@ -96,7 +96,6 @@ typedef struct s_shell
 	char	**token;
 	char	*cmd;
 	char	*pwd;
-	int		pwd_size;
 	int		quotes;
 	int		bytes;
 	int		h_index;
@@ -132,7 +131,7 @@ int		handle_env(t_shell *data, int error);
 int		exec_error_check(t_shell *data, int check);
 void	create_child_process(t_shell *data, char **env);
 int		echo_driver(t_shell *data, int i);
-void	cwd_size_check(t_shell *data, int size);
+void	fetch_current_working_directory(t_shell *data);
 void	write_prompt_and_folder(t_shell *data);
 //void	tokenize_complex_input(t_shell *data, char *buf, int i, int quote);
 void	tokenize_complex_input(t_shell *data, char *input, int i);
