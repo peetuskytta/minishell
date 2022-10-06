@@ -28,6 +28,7 @@ int	change_to_home_env(t_shell *data, int len, int home_i)
 		return (TRUE);
 	}
 	ft_memdel((void *)&(buf));
+	fetch_working_directory(data);
 	modify_env(data, "PWD", data->pwd, 0);
 	return (TRUE);
 }
@@ -55,7 +56,7 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 		ft_memdel((void *)&(temp));
 	}
 	else
-		ft_putendl_fd("minishell: cd: OLDPWD not set", 2);
+		ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR_FILENO);
 	return (3);
 }
 
@@ -73,7 +74,7 @@ int	handle_home(t_shell *data)
 		return (TRUE);
 	}
 	if (search_var_name("PWD", data) < 0)
-		add_env_variable(data, "PWD", data->pwd, count);
+		add_env_variable(data, "PWD", "", count);
 	return (change_to_home_env(data, 0, home_index));
 }
 
@@ -94,7 +95,7 @@ int	change_to_token(t_shell *data, const char *path)
 			return (TRUE);
 		}
 		if (search_var_name("PWD", data) < 0)
-			add_env_variable(data, "PWD", data->pwd, data->env_count);
+			add_env_variable(data, "PWD", getcwd(NULL, 0), data->env_count);
 		modify_env(data, "PWD", data->pwd, 0);
 		return (TRUE);
 	}

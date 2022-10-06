@@ -68,7 +68,6 @@ static int	check_access(t_shell *data)
 
 	i = 0;
 	ret = 0;
-	//check_expansion(data, 0);
 	if (ft_strchr(data->token[1], '/'))
 	{
 		split = ft_strsplit(data->token[1] + i, '/');
@@ -101,7 +100,8 @@ int	current_dir_actions(t_shell *data)
 	int	checks;
 
 	check_expansion(data, 0);
-	cwd_size_check(data, 255);
+	fetch_working_directory(data);
+
 	if (data->token_count < 2)
 	{
 		checks = initial_checks(data);

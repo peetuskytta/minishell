@@ -60,10 +60,6 @@ void	store_environ_variables(t_shell *data, char **env)
 	int		var_i;
 
 	allocate_envp(data, env);
-	split_path_variable(data, 0);
-	var_i = search_var_name("OLDPWD", data);
-	if (var_i > 0)
-		modify_env(data, "OLDPWD", "", 0);
 	var_i = search_var_name("SHLVL", data);
 	if (var_i < 0)
 		add_env_variable(data, "SHLVL", "1", data->env_count);

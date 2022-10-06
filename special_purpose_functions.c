@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/03 08:42:28 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:05:45 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void	allocation_check(void *to_check)
 */
 void	write_prompt_and_folder(t_shell *data)
 {
-	cwd_size_check(data, 255);
-	ft_putstr_fd(GREEN, 1);
-	ft_putstr_fd(PROMPT, 1);
-	ft_putstr_fd(DEFAULT, 1);
-	ft_putchar_fd(':', 1);
-	ft_putstr_fd(BLUE, 1);
-	ft_putstr_fd(data->pwd, 1);
-	ft_putstr_fd(DEFAULT, 1);
-	ft_putstr_fd("$ ", 1);
+	fetch_working_directory(data);
+	ft_putstr_fd(GREEN, STDOUT_FILENO);
+	ft_putstr_fd(PROMPT, STDOUT_FILENO);
+	ft_putstr_fd(DEFAULT, STDOUT_FILENO);
+	ft_putchar_fd(':', STDOUT_FILENO);
+	ft_putstr_fd(BLUE, STDOUT_FILENO);
+	ft_putstr_fd(data->pwd, STDOUT_FILENO);
+	ft_putstr_fd(DEFAULT, STDOUT_FILENO);
+	ft_putstr_fd("$ ", STDOUT_FILENO);
 	ft_memdel((void *)&(data->pwd));
 }
 
@@ -60,27 +60,12 @@ void	write_prompt_and_folder(t_shell *data)
 **	failed attempt of getcwd() function. In the end 10 times more space
 **	is allocated to make sure there's enough space for concatenation.
 */
-void	cwd_size_check(t_shell *data, int size)
+void	fetch_working_directory(t_shell *data)
 {
 	char	*cwd;
 
-	cwd = ft_strnew(size);
-	while (TRUE)
-	{
-		if (getcwd(cwd, size) == NULL)
-		{
-			ft_memdel((void *)&(cwd));
-			size += size;
-			cwd = ft_strnew(size);
-		}
-		else
-			break ;
-	}
+	ft_memdel((void *)&(data->pwd));
+	cwd = getcwd(NULL, 0);
+	data->pwd = ft_strdup(cwd);
 	ft_memdel((void *)&(cwd));
-	size *= 10;
-	if (size >= 10000)
-		size /= 2;
-	data->pwd_size = size;
-	data->pwd = ft_strnew(size);
-	getcwd(data->pwd, size);
 }

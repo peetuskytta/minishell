@@ -23,110 +23,13 @@ int	simple_input_check(char *input)
 	else
 		return (TRUE);
 }
-/*
-static char	*copy_squotes(char *token, int k, int i)
-{
-	char	new[1024];
-
-	//ft_putendl(token);
-	ft_memset(new, '\0', 1024);
-	while (token[k] != '\0')
-	{
-		if (token[k] == S_QUOTE)
-			k++;
-		if (token[k] == '\0')
-			break;
-		else
-			new[i++] = token[k++];
-	}
-	new[i] = '\0';
-	//ft_putendl(new);
-	return (ft_strcpy(new, new));
-}
-
-static char	*copy_dquotes(char *token, int k, int i)
-{
-	char	new[1024];
-
-	ft_memset(new, '\0', 1024);
-	while (token[k] != '\0')
-	{
-		if (token[k] == D_QUOTE)
-			k++;
-		if (token[k] == '\0')
-			break;
-		else
-			new[i++] = token[k++];
-	}
-	new[i] = '\0';
-	//ft_putendl(new);
-	return (ft_strcpy(new, new));
-}
-
-static char	check_opening_quote(char *str, int i)
-{
-	char	chr;
-
-	//chr = '\0';
-	while (str[i] != '\0')
-	{
-		//ft_putchar(str[i]);
-		if (str[i] != S_QUOTE || str[i] != D_QUOTE)
-			i++;
-	}
-	//ft_putchar(NEWLINE);
-	//str -= i;
-	chr = str[i];
-	return (chr);
-}
-
-static void	translate_quotes(t_shell *data, int i)
-{
-	char	tmp[4096];
-
-	ft_memset(tmp, '\0', 4096);
-//	ft_putendl(data->token[0]);
-//	exit(1);
-//	YOURE NOT FREEING THE POINTER from tokenize complex input.
-	while (data->token[i] != NULL)
-	{
-		if (check_opening_quote(data->token[i], 0) == D_QUOTE)
-		{
-			ft_putstr("Double quote:  ");
-			ft_strcat(tmp, copy_dquotes(data->token[i], 0, 0));
-			ft_memdel((void *)&(data->token[i]));
-			data->token[i] = ft_strdup(tmp);
-			//ft_putendl(tmp);
-			ft_memset(tmp, '\0', 4096);
-			i++;
-		}
-		else if (check_opening_quote(data->token[i], 0) == S_QUOTE)
-		{
-			ft_putstr("Single quote:  ");
-			ft_strcat(tmp, copy_squotes(data->token[i], 0, 0));
-			ft_memdel((void *)&(data->token[i]));
-			data->token[i] = ft_strdup(tmp);
-			//ft_putendl(tmp);
-			ft_memset(tmp, '\0', 4096);
-			i++;
-		}
-		else
-			i++;
-		// memdel token and reassign with tmp
-	}
-	i = 0;
-	while (data->token[i++] != NULL)
-		data->token_count++;
-	ft_putnbr_endl(data->token_count);
-}*/
 
 void	parse_input(t_shell *data, char *input)
 {
 	if (data->quotes == TRUE)
 	{
 		tokenize_complex_input(data, input, 0);
-		//translate_quotes(data, 0);
-		//exit(1);
+		//ft_memdel((void *)&(input));
 	}
 	else
 	{

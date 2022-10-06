@@ -84,7 +84,7 @@ void	output_history(int i, int fd)
 		close(fd);
 	}
 	else
-		ft_putendl_fd("minishell: No history.", 2);
+		ft_putendl_fd("minishell: No history.", STDERR_FILENO);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/04 08:43:46 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 16:09:55 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,31 @@ void	create_child_process(t_shell *data, char **env)
 	if (pid_child == 0)
 	{
 		if (execve(data->cmd, data->token, env) == -1)
-			ft_putendl_fd(EXECVE_ERROR, 2);
+			ft_putendl_fd(EXECVE_ERROR, STDERR_FILENO);
 		ft_memdel((void *)&(data->cmd));
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid_child < 0)
-		ft_putendl_fd(FORK_FAIL, 2);
+		ft_putendl_fd(FORK_FAIL, STDERR_FILENO);
 	else
 	{
 		pid_wait = waitpid(pid_child, &data->pid_status, 0);
 		if (pid_wait == -1)
-			ft_putendl_fd(WAITPID_FAIL, 2);
+			ft_putendl_fd(WAITPID_FAIL, STDERR_FILENO);
 	}
 }
 
+/*
+**	If PATH environment variable exists it is split and the result is used to
+**	test if the token is in one of the folders indicated by the PATH.
+*/
 static int	is_in_path(t_shell *data, int i)
 {
 	char	temp[4096];
 
+	if (search_var_name("PATH", data) < 0)
+		return (FALSE);
+	split_path_variable(data, 0);
 	ft_memset(temp, '\0', 4096);
 	if (!(ft_strchr(data->token[0], '/')))
 	{
@@ -64,6 +71,9 @@ static int	is_in_path(t_shell *data, int i)
 	return (FALSE);
 }
 
+/*
+**	Checks if the given token[0] is a valid file and not a directory.
+*/
 static int	check_existence(t_shell *data)
 {
 	struct stat	info;
@@ -81,7 +91,9 @@ static int	check_existence(t_shell *data)
 		return (FALSE);
 }
 
-// MISSING: permission check
+/*
+**	This function directs the verification of a potential binary file before execution.
+*/
 static int	verify_if_executable(t_shell *data)
 {
 	if (data->token[0][0] == '.' || data->token[0][0] == '/')
@@ -95,6 +107,10 @@ static int	verify_if_executable(t_shell *data)
 	return (TRUE);
 }
 
+/*
+**	Function handles the token[0] verification process before it is passed
+**	to the create_child_process function.
+*/
 int	initial_exec_checks(t_shell *data)
 {
 	int	check;
@@ -102,6 +118,7 @@ int	initial_exec_checks(t_shell *data)
 	if (ft_strequ(data->token[0], CD) == 1)
 		return (current_dir_actions(data));
 	check = verify_if_executable(data);
+	ft_free_arr_of_arrays(data->split_path);
 	ft_memdel((void *)&(data->pwd));
 	if (exec_error_check(data, check) != 1)
 		return (FALSE);

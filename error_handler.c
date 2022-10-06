@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:46:07 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 21:53:08 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 15:46:13 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	error_print(char *sh, char *name, char *msg)
 {
-	ft_putstr_fd(sh, 2);
-	ft_putstr_fd(name, 2);
-	ft_putendl_fd(msg, 2);
+	ft_putstr_fd(sh, STDERR_FILENO);
+	ft_putstr_fd(name, STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
 }
 
 int	exec_error_message(int id, char *name)
@@ -32,7 +32,7 @@ int	exec_error_message(int id, char *name)
 	if (id == 4)
 	{
 		error_print(MINISH, name, ARG_REQUIRED);
-		ft_putstr_fd(name, 2);
+		ft_putstr_fd(name, STDERR_FILENO);
 		error_print(ARG_USAGE_1, name, ARG_USAGE_2);
 	}
 	return (FALSE);

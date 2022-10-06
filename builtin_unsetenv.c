@@ -31,12 +31,12 @@ int	unset_error_check(t_shell *data)
 			return (TRUE);
 		if (data->token_count > 1)
 		{
-			ft_putendl_fd(UNSET_TOO_MANY_ARG, 2);
+			ft_putendl_fd(UNSET_TOO_MANY_ARG, STDERR_FILENO);
 			return (FALSE);
 		}
 		else
 		{
-			ft_putendl_fd(UNSETENV_USAGE, 2);
+			ft_putendl_fd(UNSETENV_USAGE, STDERR_FILENO);
 			return (FALSE);
 		}
 	}
@@ -63,7 +63,7 @@ int	unset_env_variable(t_shell *data)
 	}
 	else
 	{
-		ft_putendl_fd(UNSETENV_USAGE, 2);
+		ft_putendl_fd(UNSETENV_USAGE, STDERR_FILENO);
 		return (FALSE);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:02:52 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 17:21:03 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 14:33:25 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int echo_driver(t_shell *data, int i)
 	while (data->token[i] != NULL)
 	{
 		ft_putstr(data->token[i++]);
+		ft_putchar(WHITESPACE);
 	}
 	if (data->no_nl == FALSE)
 		ft_putchar(NEWLINE);
+	data->no_nl = FALSE;
 	return (TRUE);
 }

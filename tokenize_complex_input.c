@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 11:58:28 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 17:17:34 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	increment_counters(t_ints *to_init, int *count, int *i, int action)
 		to_init->at_end = TRUE;
 
 }
-
 
 static char	*find_token(char *input, int *count, int i)
 {
@@ -102,5 +101,5 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 		alloc_count++;
 		data->token_count++;
 	}
-	printf("token count: %d\n", data->token_count);
+	//printf("token count: %d\n", data->token_count);
 }
