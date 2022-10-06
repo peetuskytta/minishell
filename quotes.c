@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 19:11:49 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 19:23:53 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	write_open_quote(char c)
 {
 	if (c == S_QUOTE)
-		ft_putstr_fd(S_QUOTE_ARROW, STDOUT_FILENO);
+		ft_putstr_fd(S_QUOTE_ARROW, 1);
 	if (c == D_QUOTE)
-		ft_putstr_fd(D_QUOTE_ARROW, STDOUT_FILENO);
+		ft_putstr_fd(D_QUOTE_ARROW, 1);
 }
 
 static void	read_until_quote(char c, char *new, int bytes_read)
@@ -34,8 +34,6 @@ static void	read_until_quote(char c, char *new, int bytes_read)
 		if (bytes_read > 0)
 		{
 			ft_strcat(new, extra);
-			if (new[ft_strlen(new)] == '\n')
-				ft_putendl("one");
 			num_quotes = ft_chrstr(new, c);
 			if (ft_is_oddnbr(num_quotes) == FALSE)
 			{
@@ -88,11 +86,10 @@ char	*handle_quotes(t_shell *data, char *old)
 	check_quote_amount(buf, old);
 /*	if (ft_strchr(buf, BACKSLASH))
 	{
-		ft_putendl_fd("minishell: '\\\' in the input is not supported.", STDERR_FILENO);
-		//ft_memdel((void *)&(old));
-		return (NULL);
-	}*/
-	data->quotes = TRUE;
+		ft_putendl_fd("minishell: '\\\' as input is not supported.", 2);
+		return (ft_strdup(""));
+	}
+*/	data->quotes = TRUE;
 	return (ft_strtrim(buf));
 }
 

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 14:23:51 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 15:46:43 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/09/28 15:57:05 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	setenv_error_check(t_shell *data)
 				return (TRUE);
 		}
 		else if (data->token_count > 2)
-			ft_putendl_fd(SET_TOO_MANY_ARG, STDERR_FILENO);
+			ft_putendl_fd(SET_TOO_MANY_ARG, 2);
 		return (FALSE);
 	}
 	else

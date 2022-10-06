@@ -20,7 +20,7 @@ static char	*read_input_stdin(t_shell *data, char *buf)
 	ft_memset(buf, 0, BUFFER);
 	bytes_read = read(0, buf, BUFFER);
 	if (bytes_read > BUFFER)
-		ft_putendl_fd(CMD_TOO_LONG, STDERR_FILENO);
+		ft_putendl_fd(CMD_TOO_LONG, 2);
 	if (simple_input_check(buf) == FALSE)
 	{
 		data->quotes = TRUE;
@@ -37,7 +37,7 @@ static char	*read_input_stdin(t_shell *data, char *buf)
 
 static void	clear_and_free_buffer(char *string)
 {
-	//ft_memset(string, 0, ft_strlen(string));
+	ft_memset(string, 0, ft_strlen(string));
 	ft_memdel((void *)&(string));
 }
 
@@ -62,7 +62,7 @@ static int	is_empty(char *buf)
 
 	i = 0;
 	ws = 0;
-	if (ft_strequ(buf, NO_STRING) == TRUE || buf == NULL)
+	if (ft_strequ(buf, NO_STRING) == TRUE)
 		return (TRUE);
 	while (buf[i] != '\0')
 	{

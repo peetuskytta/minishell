@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:02:52 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 14:33:25 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 19:27:33 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,22 @@ int echo_driver(t_shell *data, int i)
 {
 	if (data->token_count > 1)
 	{
-		if (ft_strequ(data->token[1], "-n") == TRUE)
+		if (ft_strequ(data->token[1], "-n") == TRUE && data->token_count > 2)
 		{
 			data->no_nl = TRUE;
 			i++;
+		}
+		else
+		{
+			ft_putchar(NEWLINE);
+			return (TRUE);
 		}
 	}
 	while (data->token[i] != NULL)
 	{
 		ft_putstr(data->token[i++]);
-		ft_putchar(WHITESPACE);
 	}
 	if (data->no_nl == FALSE)
 		ft_putchar(NEWLINE);
-	data->no_nl = FALSE;
 	return (TRUE);
 }

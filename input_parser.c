@@ -14,11 +14,9 @@
 
 int	simple_input_check(char *input)
 {
-	/*if (ft_strchr(input, BACKSLASH))
-		return (FALSE);*/
 	if (ft_strchr(input, S_QUOTE))
 		return (FALSE);
-	else if (ft_strchr(input, D_QUOTE))
+	if (ft_strchr(input, D_QUOTE))
 		return (FALSE);
 	else
 		return (TRUE);
@@ -29,7 +27,8 @@ void	parse_input(t_shell *data, char *input)
 	if (data->quotes == TRUE)
 	{
 		tokenize_complex_input(data, input, 0);
-		//ft_memdel((void *)&(input));
+		//translate_quotes(data, 0);
+		//exit(1);
 	}
 	else
 	{

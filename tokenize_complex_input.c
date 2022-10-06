@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 19:12:53 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 19:28:14 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	increment_counters(t_ints *to_init, int *count, int *i, int action)
 
 }
 
+
 static char	*find_token(char *input, int *count, int i)
 {
 	char	*token;
@@ -50,7 +51,7 @@ static char	*find_token(char *input, int *count, int i)
 
 	ft_memset(&in, 0, sizeof(in));
 	token = ft_strnew(ft_strlen(input));
-	while (ft_is_wspace(input[i]) && (*count)++)
+	while (ft_is_ws_without_nl(input[i]) && (*count)++)
 		increment_counters(&in, count, &i, 5);
 	while (input[i])
 	{
@@ -78,7 +79,6 @@ static char	*find_token(char *input, int *count, int i)
 	}
 	if (input[ft_strlen(token) + 1] == '\0')
 		return (NULL);
-	//ft_putendl(token);
 	return (token);
 }
 
