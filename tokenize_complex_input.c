@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 00:31:39 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/06 08:12:51 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,56 +18,61 @@ static int	check_if_quote(char c)
 	return (c == S_QUOTE || c == D_QUOTE);
 }
 
-static char	*find_token(char *input, int *totes, int i, int closed)
+static void	increment_ints(t_ints *to_init, int *count, int *i, int action)
+{
+	if (action == 1)
+	{
+		to_init->s_quo += 1;
+		*count += 1;
+		*i += 1;
+	}
+	else if (action == 2)
+	{
+		to_init->d_quo += 1;
+		*count += 1;
+		*i += 1;
+	}
+	else if (action == 3)
+		to_init->pos += 1;
+	else if (action == 4)
+		*count += 1;
+	else if (action == 5)
+		*i += 1;
+}
+
+static char	*find_token(char *input, int *count, int i)
 {
 	char	*token;
-	int		d_quote;
-	int		s_quote;
-	int		pos;
+	t_ints	in;
 
-	s_quote = 0;
-	d_quote = 0;
-	pos = 0;
-	//ft_putnbr_endl(ft_strlen(input));
+	ft_memset(&in, 0, sizeof(in));
 	token = ft_strnew(ft_strlen(input));
-	//exit(1);
-	while (ft_is_ws_withoutnl(input[i]) && (*totes)++)
-		i++;
+	while (ft_is_ws_withoutnl(input[i]) && (*count)++)
+		increment_ints(&in, count, &i, 5);
 	while (input[i])
 	{
 		if (check_if_quote(input[i]) == TRUE)
 		{
-			while (input[i] == D_QUOTE && s_quote == FALSE)
-			{
-				i++;
-				d_quote += 1;
-				*totes += 1;
-			}
-			while (input[i] == S_QUOTE && d_quote == FALSE)
-			{
-				i++;
-				s_quote += 1;
-				*totes += 1;
-			}
-			if (d_quote >= 2 || s_quote >= 2)
-				closed = TRUE;
+			while (input[i] == D_QUOTE && in.s_quo == FALSE)
+				increment_ints(&in, count, &i, 2);
+			while (input[i] == S_QUOTE && in.d_quo == FALSE)
+				increment_ints(&in, count, &i, 1);
+			if (in.d_quo >= 2 || in.s_quo >= 2)
+				in.at_end = TRUE;
 		}
-		if ((ft_is_ws_withoutnl(input[i]) && closed) || (ft_is_ws_withoutnl(input[i]) && s_quote + d_quote == FALSE))
+		if ((ft_is_ws_withoutnl(input[i]) && in.at_end) || (ft_is_ws_withoutnl(input[i]) && in.s_quo + in.d_quo == FALSE))
 		{
-			*totes += 1;
-			//printf("token-->{%s}\n", token);
+			increment_ints(&in, count, &i, 4);
 			break ;
 		}
-		if ((input[i] && closed == FALSE) || (!ft_is_ws_withoutnl(input[i] && closed == TRUE)))
+		if ((input[i] && in.at_end == FALSE) || (!ft_is_ws_withoutnl(input[i] && in.at_end == TRUE)))
 		{
-			token[pos++] = input[i++];
-			*totes += 1;
+			token[in.pos++] = input[i++];
+			increment_ints(&in, count, &i, 4);
 		}
 	}
 	if (input[ft_strlen(token) + 1] == '\0')
 		return (NULL);
-	//ft_putendl(token);
-	//ft_putnbr_endl(*totes);
 	return (token);
 }
 
@@ -83,7 +88,7 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 	alloc_count = 0;
 	while (input[i])
 	{
-		data->token[alloc_count] = find_token(input, &index, i, 0);
+		data->token[alloc_count] = find_token(input, &index, i);
 		printf("token[%d]-->{%s}\n", alloc_count, data->token[alloc_count]);
 		//exit(1);
 		if (data->token[alloc_count] == NULL)

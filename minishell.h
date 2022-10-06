@@ -107,6 +107,15 @@ typedef struct s_shell
 	int		no_nl;
 }	t_shell;
 
+typedef struct s_ints
+{
+	int	at_end;
+	int	d_quo;
+	int	s_quo;
+	int	pos;
+	int	index;
+}	t_ints;
+
 void	store_environ_variables(t_shell *data, char **env);
 void	parse_input(t_shell *data, char *input);
 void	free_double_ptr(char **token);
