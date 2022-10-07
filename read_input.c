@@ -25,6 +25,7 @@ static char	*read_input_stdin(t_shell *data, char *buf)
 	{
 		data->quotes = TRUE;
 		new = handle_quotes(data, buf);
+		if (new)
 		ft_memdel((void *)&(buf));
 		return (new);
 	}
@@ -62,7 +63,7 @@ static int	is_empty(char *buf)
 
 	i = 0;
 	ws = 0;
-	if (ft_strequ(buf, NO_STRING) == TRUE)
+	if (ft_strequ(buf, NO_STRING) == TRUE || buf == NULL)
 		return (TRUE);
 	while (buf[i] != '\0')
 	{
@@ -98,7 +99,7 @@ int	command_prompt_loop(t_shell *data)
 				create_or_append_history(buf);
 			clear_and_free_buffer(buf);
 			if (data->token != NULL)
-				ft_free_arr_of_arrays(data->token);
+				free_array(data->token);
 			ft_memdel((void *)&(data->cmd));
 		}
 		data->token_count = -1;

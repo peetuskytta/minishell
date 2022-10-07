@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 19:22:53 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/07 09:18:03 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	is_in_path(t_shell *data, int i)
 			}
 			i++;
 		}
-		ft_free_arr_of_arrays(data->split_path);
+		free_array(data->split_path);
 	}
 	return (FALSE);
 }

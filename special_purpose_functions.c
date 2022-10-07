@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 20:16:59 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/07 09:14:53 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,27 @@ void	allocation_check(void *to_check)
 		exit(EXIT_FAILURE);
 }
 
+void	free_array(char **string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i] != NULL)
+	{
+		if (string[i])
+			ft_memset(string[i], 0, ft_strlen(string[i]));
+		ft_memdel((void *)&(string[i]));
+		i++;
+	}
+	ft_memdel((void *)&(string));
+}
+
 /*
 **	Updates the current directory and writes prompt to the stdout
 */
 void	write_prompt_and_folder(t_shell *data)
 {
+	ft_memdel((void *)&(data->pwd));
 	fetch_current_working_directory(data);
 	ft_putstr_fd(GREEN, 1);
 	ft_putstr_fd(PROMPT, 1);

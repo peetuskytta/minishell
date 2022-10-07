@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/06 19:28:14 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/07 09:44:56 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 	while (input[i])
 	{
 		data->token[alloc_count] = find_token(input, &index, i);
+		if (ft_strlen(data->token[alloc_count]) == 0)
+			data->token[alloc_count][0] = ' ';
 		//printf("token[%d]-->{%s}\n", alloc_count, data->token[alloc_count]);
 		if (data->token[alloc_count] == NULL)
 			break ;

@@ -35,4 +35,3 @@ lslsls"0000"""      oii
 
 
 
-PDW and OLDPWD change when token change

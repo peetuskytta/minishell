@@ -96,7 +96,7 @@ int	check_if_builtin(t_shell *data)
 	if (ft_strequ(data->token[0], CD))
 		return (current_dir_actions(data));
 	else if (ft_strequ(data->token[0], ECHO))
-		return (echo_driver(data, 1));
+		return (echo_driver(data, 0));
 	else if (ft_strequ(data->token[0], SETENV))
 		return (change_environ(data, 1));
 	else if (ft_strequ(data->token[0], UNSETENV))

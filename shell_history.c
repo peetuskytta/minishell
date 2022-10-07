@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 16:48:14 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/07 09:17:19 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	last_in_history(t_shell *data, int fd)
 			ft_memdel((void *)&(buf));
 		}
 		if (data->token)
-			ft_free_arr_of_arrays(data->token);
+			free_array(data->token);
 		if (ft_strrchr(buf, WHITESPACE))
 			data->token = ft_strsplit(buf, WHITESPACE);
 		else

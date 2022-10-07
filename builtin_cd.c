@@ -73,7 +73,7 @@ static int	check_access(t_shell *data)
 	{
 		split = ft_strsplit(data->token[1] + i, '/');
 		ret = path_permission_loop(split, data->token[1]);
-		ft_free_arr_of_arrays(split);
+		free_array(split);
 		if (ret == 3)
 			return (3);
 	}

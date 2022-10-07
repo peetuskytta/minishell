@@ -6,7 +6,7 @@
 #    By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/22 13:05:41 by pskytta           #+#    #+#              #
-#    Updated: 2022/10/06 11:57:51 by pskytta          ###   ########.fr        #
+#    Updated: 2022/10/07 09:16:38 by pskytta          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,6 @@ SRC := ft_atoi.c \
 	ft_word_count.c \
 	ft_error_handler.c \
 	ft_putnbr_endl.c \
-	ft_free_arr_of_arrays.c \
 	ft_chrstr.c \
 	get_next_line.c \
 

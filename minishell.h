@@ -91,8 +91,8 @@
 typedef struct s_shell
 {
 	char	**environ;
-	char	**env_i;
 	char	**split_path;
+	char	**env_i;
 	char	**token;
 	char	*cmd;
 	char	*pwd;
@@ -117,7 +117,7 @@ typedef struct s_ints
 
 void	store_environ_variables(t_shell *data, char **env);
 void	parse_input(t_shell *data, char *input);
-void	free_double_ptr(char **token);
+void	free_array(char **string);
 void	free_and_memset(t_shell *data);
 void	handle_command(t_shell *data);
 void	reset_env_value(t_shell *data, int i);
