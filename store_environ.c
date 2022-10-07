@@ -39,6 +39,8 @@ void	split_path_variable(t_shell *data, int i)
 {
 	char	*var;
 
+	if (data->split_path != NULL)
+		free_array(data->split_path);
 	if (data->env_count == 0)
 		return ;
 	while (data->env_count > i)

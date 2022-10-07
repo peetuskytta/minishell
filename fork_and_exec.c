@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 09:18:03 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/07 12:59:27 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,26 @@ static int	is_in_path(t_shell *data, int i)
 {
 	char	temp[4096];
 
-	if (search_var_name("PATH", data) < 0)
-		return (FALSE);
+	i = 12;
 	ft_memset(temp, '\0', 4096);
-	if (!(ft_strchr(data->token[0], '/')))
+	if (!ft_strchr(data->token[0], '/'))
 	{
 		if (loop_path_variable(data, temp, 0) == TRUE)
 			return (TRUE);
 	}
 	if (ft_strchr(data->token[0], '/'))
 	{
-		split_path_variable(data, 0);
-		while (data->split_path[i] != NULL)
-		{
-			if (ft_strequ(data->split_path[i], data->token[0]) == 1)
-			{
+		//split_path_variable(data, 0);
+		//while (data->split_path[i] != NULL)
+		//	if (ft_strequ(data->split_path[i], data->token[0]) == 1)
+		//	{
 				data->cmd = ft_strdup(data->token[0]);
 				return (TRUE);
-			}
-			i++;
+		//	}
+		//	i++;
+		{
 		}
-		free_array(data->split_path);
+		//free_array(data->split_path);
 	}
 	return (FALSE);
 }
@@ -76,6 +75,8 @@ static int	check_existence(t_shell *data)
 	{
 		if (ft_is_directory(data->token[0]) == TRUE)
 			return (3);
+		ft_putstr("lstat worked: ");
+		ft_putendl(data->token[0]);
 		data->cmd = ft_strdup(data->token[0]);
 		return (TRUE);
 	}
@@ -94,6 +95,8 @@ static int	verify_if_executable(t_shell *data)
 			return (4);
 		return (check_existence(data));
 	}
+	if (search_var_name("PATH", data) < 0)
+		return (FALSE);
 	else if (is_in_path(data, 0) == FALSE)
 		return (FALSE);
 	return (TRUE);
