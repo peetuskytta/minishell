@@ -87,7 +87,7 @@ int	change_to_token(t_shell *data, const char *path)
 		if (search_var_name("OLDPWD", data) < 0)
 			add_env_variable(data, "OLDPWD", getcwd(NULL, 0), nbr);
 		else
-			modify_env(data, "OLDPWD", data->pwd, 0);;
+			modify_env(data, "OLDPWD", data->pwd, 0);
 		if (chdir(path) != 0)
 		{
 			error_print(CD_SH, (char *)path, NO_FILE_OR_DIR);
