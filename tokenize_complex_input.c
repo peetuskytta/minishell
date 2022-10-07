@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 09:44:56 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:04:02 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*find_token(char *input, int *count, int i)
 	t_ints	in;
 
 	ft_memset(&in, 0, sizeof(in));
-	token = ft_strnew(ft_strlen(input));
+	token = ft_strnew(BUFFER * 2);
 	while (ft_is_ws_without_nl(input[i]) && (*count)++)
 		increment_counters(&in, count, &i, 5);
 	while (input[i])
@@ -77,7 +77,7 @@ static char	*find_token(char *input, int *count, int i)
 			increment_counters(&in, count, &i, 4);
 		}
 	}
-	if (input[ft_strlen(token) + 1] == '\0')
+	if (input[ft_strlen(token)] == '\0')
 		return (NULL);
 	return (token);
 }
@@ -97,12 +97,10 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 		data->token[alloc_count] = find_token(input, &index, i);
 		if (ft_strlen(data->token[alloc_count]) == 0)
 			data->token[alloc_count][0] = ' ';
-		//printf("token[%d]-->{%s}\n", alloc_count, data->token[alloc_count]);
 		if (data->token[alloc_count] == NULL)
 			break ;
 		i = index;
 		alloc_count++;
 		data->token_count++;
 	}
-	//printf("token count: %d\n", data->token_count);
 }

@@ -93,18 +93,24 @@ void	output_history(int i, int fd)
 */
 int	check_if_builtin(t_shell *data)
 {
-	if (ft_strequ(data->token[0], CD))
+	if (ft_strequ(data->token[0], CD)
+		|| ft_strequ(data->token[0], "CD"))
 		return (current_dir_actions(data));
-	else if (ft_strequ(data->token[0], ECHO))
+	else if (ft_strequ(data->token[0], ECHO)
+		|| ft_strequ(data->token[0], "ECHO"))
 		return (echo_driver(data, 0));
-	else if (ft_strequ(data->token[0], SETENV))
+	else if (ft_strequ(data->token[0], SETENV)
+		|| ft_strequ(data->token[0], "SETENV"))
 		return (change_environ(data, 1));
-	else if (ft_strequ(data->token[0], UNSETENV))
+	else if (ft_strequ(data->token[0], UNSETENV)
+		|| ft_strequ(data->token[0], "UNSETENV"))
 		return (change_environ(data, 2));
-	else if (ft_strequ(data->token[0], ENV))
+	else if (ft_strequ(data->token[0], ENV)
+		|| ft_strequ(data->token[0], "ENV"))
 		return (handle_env(data, 0));
 	else if (ft_strequ(data->token[0], HISTORY)
-		|| ft_strequ(data->token[0], "!!"))
+		|| ft_strequ(data->token[0], "!!")
+		|| ft_strequ(data->token[0], "HISTORY"))
 		return (history_driver(data));
 	return (FALSE);
 }

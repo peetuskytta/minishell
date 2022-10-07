@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 12:59:27 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:06:51 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ void	create_child_process(t_shell *data, char **env)
 	}
 }
 
-static int	is_in_path(t_shell *data, int i)
+static int	is_in_path(t_shell *data)
 {
 	char	temp[4096];
 
-	i = 12;
 	ft_memset(temp, '\0', 4096);
 	if (!ft_strchr(data->token[0], '/'))
 	{
@@ -56,8 +55,8 @@ static int	is_in_path(t_shell *data, int i)
 		//while (data->split_path[i] != NULL)
 		//	if (ft_strequ(data->split_path[i], data->token[0]) == 1)
 		//	{
-				data->cmd = ft_strdup(data->token[0]);
-				return (TRUE);
+		data->cmd = ft_strdup(data->token[0]);
+		return (TRUE);
 		//	}
 		//	i++;
 		{
@@ -75,8 +74,6 @@ static int	check_existence(t_shell *data)
 	{
 		if (ft_is_directory(data->token[0]) == TRUE)
 			return (3);
-		ft_putstr("lstat worked: ");
-		ft_putendl(data->token[0]);
 		data->cmd = ft_strdup(data->token[0]);
 		return (TRUE);
 	}
@@ -86,7 +83,6 @@ static int	check_existence(t_shell *data)
 		return (FALSE);
 }
 
-// MISSING: permission check
 static int	verify_if_executable(t_shell *data)
 {
 	if (data->token[0][0] == '.' || data->token[0][0] == '/')
@@ -97,7 +93,7 @@ static int	verify_if_executable(t_shell *data)
 	}
 	if (search_var_name("PATH", data) < 0)
 		return (FALSE);
-	else if (is_in_path(data, 0) == FALSE)
+	else if (is_in_path(data) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }
@@ -114,6 +110,8 @@ int	initial_exec_checks(t_shell *data)
 		return (FALSE);
 	else
 	{
+		ft_putstr("check value:  ");
+		ft_putnbr_endl(check);
 		modify_env(data, "_", data->token[0], 0);
 		if (ft_strlen(data->token[0]) > 0)
 			create_child_process(data, data->environ);
