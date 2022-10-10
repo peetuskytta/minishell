@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 21:37:14 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 21:44:47 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*read_until_quote(char c, char *old, int bytes_read)
 	int		num_quotes;
 
 	num_quotes = 0;
-	extra = (char *)ft_memalloc(BUFFER * 10);
+	extra = (char *)ft_memalloc(BUFFER);
 	while (TRUE)
 	{
 		write_open_quote(c);
