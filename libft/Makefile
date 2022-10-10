@@ -6,11 +6,11 @@
 #    By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/22 13:05:41 by pskytta           #+#    #+#              #
-#    Updated: 2022/10/07 15:21:28 by pskytta          ###   ########.fr        #
+#    Updated: 2022/10/10 12:48:41 by pskytta          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FLAG := -Wall -Wextra -Werror #-fsanitize=address
+FLAG := -Wall -Wextra -Werror -g #-fsanitize=address
 NAME := libft.a
 
 SRC := ft_atoi.c \

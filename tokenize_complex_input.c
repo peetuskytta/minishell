@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 07:43:51 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:02:03 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*find_token(char *input, int *count, int i)
 	t_ints	in;
 
 	ft_memset(&in, 0, sizeof(in));
-	token = ft_strnew(BUFFER * 2);
+	token = ft_strnew(ft_strlen(input));
 	while (ft_is_ws_without_nl(input[i]) && (*count)++)
 		increment_counters(&in, count, &i, 5);
 	while (input[i])
@@ -70,7 +70,7 @@ static char	*find_token(char *input, int *count, int i)
 			increment_counters(&in, count, &i, 4);
 			break ;
 		}
-		if ((input[i] && in.at_end == FALSE) || (!ft_is_ws_without_nl(input[i]
+		if ((input[i] != '\0' && in.at_end == FALSE) || (!ft_is_ws_without_nl(input[i]
 			&& in.at_end == TRUE)))
 		{
 			token[in.pos++] = input[i++];

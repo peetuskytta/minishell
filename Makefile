@@ -1,7 +1,7 @@
 #Compiler and compiler flags
 CC := gcc
 DEBUG_F := -g #-fsanitize=address
-FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror -g #-fsanitize=address
 
 #Target Binary Program
 NAME := minishell

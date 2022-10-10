@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 09:14:53 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 12:05:17 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ char	**allocate_last_in_history(char *buf)
 {
 	char	**new;
 
-	new = (char **)malloc(sizeof(char *) * (1 + 1));
-	allocation_check(new);
+	new = (char **)ft_memalloc(sizeof(char *) * (1 + 1));
 	new[0] = ft_strdup(buf);
 	new[1] = NULL;
 	return (new);
@@ -31,10 +30,24 @@ void	add_only_name(t_shell *data, int var_i)
 		add_env_variable(data, data->token[1], "", data->env_count);
 }
 
-void	allocation_check(void *to_check)
+void	ft_strjoin_clean(char const *s1, char const *s2)
 {
-	if (to_check == NULL)
-		exit(EXIT_FAILURE);
+	int		i;
+	char	*str;
+	int		length;
+
+	i = 0;
+	length = ft_strlen((char *)s2) * 2;
+	str = (char *)ft_memalloc(sizeof(char) * (length + 1));
+	while (*s1)
+		str[i++] = *s1++;
+	while (*s2)
+		str[i++] = *s2++;
+	str[i] = '\0';
+	ft_memset((char *)s1, '\0', ft_strlen(s1));
+	//ft_memdel((void *)&(s1));
+	//ft_memdel((void *)&(s2));
+	s1 = ft_strdup(str);
 }
 
 void	free_array(char **string)
