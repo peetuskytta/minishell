@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 17:06:51 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 08:03:23 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ int	initial_exec_checks(t_shell *data)
 		return (FALSE);
 	else
 	{
-		ft_putstr("check value:  ");
-		ft_putnbr_endl(check);
+		//ft_putstr("check value:  ");
+		//ft_putnbr_endl(check);
 		modify_env(data, "_", data->token[0], 0);
 		if (ft_strlen(data->token[0]) > 0)
 			create_child_process(data, data->environ);
