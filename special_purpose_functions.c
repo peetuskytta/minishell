@@ -6,23 +6,15 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 15:02:01 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:29:06 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-/*char	**allocate_last_in_history(char *buf)
-{
-	char	**new;
-
-	new = (char **)ft_memalloc(sizeof(char *) * (1 + 1));
-	new[0] = ft_strdup(buf);
-	new[1] = NULL;
-	return (new);
-}*/
-
+/*
+**	adds the data->token[1] to the environment but doesnt set the value of it.
+*/
 void	add_only_name(t_shell *data, int var_i)
 {
 	if (var_i >= 0)

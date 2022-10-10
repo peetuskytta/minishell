@@ -168,7 +168,6 @@ int		cd_error_message(char *name, int id);
 
 char	*join_n_and_v(char *name, char *value);
 char	*handle_open_quotes(t_shell *data, char *old, int *quotes);
-char	**allocate_last_in_history(char *buf);
 char	*return_env_value(t_shell *data, char *name);
 
 #endif

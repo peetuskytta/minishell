@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 15:11:20 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:23:49 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ static int	check_if_quote(char c)
 	return (c == S_QUOTE || c == D_QUOTE);
 }
 
+/*
+**	This function is used to increment index and other counters in find_token
+**	function. Uses int action to define which integers are to be modified.
+*/
 static void	increment_counters(t_ints *to_init, int *count, int *i, int action)
 {
 	if (action == 1)
@@ -79,6 +83,10 @@ char	*find_token(char *input, int *count, int i)
 	return (token);
 }
 
+/*
+**	Allocates memory for input containing quotes token at a time.
+**	Keeps track of token count.
+*/
 void	tokenize_complex_input(t_shell *data, char *input, int index)
 {
 	int	alloc_count;

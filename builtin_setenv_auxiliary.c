@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/*
+**	Searches the NAME in the environment variables and returns the index of it.
+**	used to check if variable exists in the environment.
+*/
 int	search_var_name(char *name, t_shell *data)
 {
 	char	*temp;
@@ -37,7 +41,7 @@ int	search_var_name(char *name, t_shell *data)
 }
 
 /*
-**	ft_strjoin exits if malloc fails
+**	Returns the name and value joined.
 */
 char	*join_n_and_v(char *name, char *value)
 {
@@ -50,6 +54,10 @@ char	*join_n_and_v(char *name, char *value)
 	return (ft_strjoin(name, value));
 }
 
+/*
+**	Resets the value of the environment variable _ (underscore) to be the last
+**	argument of the command given as input.
+*/
 void	reset_last_cmd_env(t_shell *data, int var_i)
 {
 	int	index;

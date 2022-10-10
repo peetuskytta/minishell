@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+/*
+**	Checks for input's simplicity. If quotes are found it returns FALSE.
+*/
 int	simple_input_check(char *input)
 {
 	if (ft_strchr(input, S_QUOTE))
@@ -22,12 +25,15 @@ int	simple_input_check(char *input)
 		return (TRUE);
 }
 
+/*
+**	Parse input function tokenizes the input and continues to drive
+**	action further to bultin checks, executable checks or resetting
+**	the last command value.
+*/
 void	parse_input(t_shell *data, char *input)
 {
 	if (data->quotes == TRUE)
-	{
 		tokenize_complex_input(data, input, 0);
-	}
 	else
 	{
 		tokenize_simple_input(data, input, 0);
