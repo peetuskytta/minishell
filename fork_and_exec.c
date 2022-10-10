@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 13:46:17 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 21:18:50 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	initial_exec_checks(t_shell *data)
 
 	if (ft_strequ(data->token[0], CD) == 1)
 		return (current_dir_actions(data));
-	check = verify_if_executable(data);
 	ft_memdel((void *)&(data->pwd));
+	check = verify_if_executable(data);
 	if (exec_error_check(data, check) != 1)
 		return (FALSE);
 	else

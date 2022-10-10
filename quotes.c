@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 13:29:27 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 21:37:14 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,20 @@ static void	write_open_quote(char c)
 
 static char	*read_until_quote(char c, char *old, int bytes_read)
 {
+	char	*new;
 	char	*extra;
 	int		num_quotes;
 
 	num_quotes = 0;
-	extra = (char *)ft_memalloc(BUFFER);
+	extra = (char *)ft_memalloc(BUFFER * 10);
 	while (TRUE)
 	{
 		write_open_quote(c);
 		bytes_read = read(0, extra, BUFFER);
 		if (bytes_read > 0)
 		{
-			ft_strcat(old, extra);
-			num_quotes = ft_chrstr(old, c);
+			new = ft_strjoin(old, extra);
+			num_quotes = ft_chrstr(new, c);
 			if (ft_is_oddnbr(num_quotes) == FALSE)
 				break ;
 			ft_memset(extra, '\0', BUFFER);
@@ -43,8 +44,8 @@ static char	*read_until_quote(char c, char *old, int bytes_read)
 			break ;
 	}
 	ft_memdel((void *)&(extra));
-	old[ft_strlen(old) - 1] = '\0';
-	return (old);
+	new[ft_strlen(new) - 1] = '\0';
+	return (new);
 }
 
 static char	identify_open_quote(char *old, char c, int *quote)
@@ -82,5 +83,6 @@ char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 	c = identify_open_quote(old, c, quotes);
 	data->quotes = TRUE;
 	new = read_until_quote(c, old, 0);
-	return (ft_strdup(new));
+	return (new);
+	//return (ft_strdup(new));
 }

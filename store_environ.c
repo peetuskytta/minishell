@@ -66,6 +66,12 @@ void	store_environ_variables(t_shell *data, char **env)
 	var_i = search_var_name("OLDPWD", data);
 	if (var_i > 0)
 		modify_env(data, "OLDPWD", "", 0);
+	var_i = search_var_name("PATH", data);
+	if (var_i < 0)
+		add_env_variable(data, "PATH", "", data->env_count);
+	var_i = search_var_name("_", data);
+	if (var_i < 0)
+		add_env_variable(data, "_", "", data->env_count);
 	var_i = search_var_name("SHLVL", data);
 	if (var_i < 0)
 		add_env_variable(data, "SHLVL", "1", data->env_count);
