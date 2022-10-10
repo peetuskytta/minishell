@@ -46,7 +46,6 @@ static int	env_i_flag_error_check(char *executable, int err)
 	else
 		err = TRUE;
 	return (err);
-
 }
 
 int	handle_env(t_shell *data, int error)
@@ -61,7 +60,7 @@ int	handle_env(t_shell *data, int error)
 		{
 			error_print("env: ", data->token[2], NO_FILE_OR_DIR);
 			ft_memdel((void *)&(data->env_i));
-			return(TRUE);
+			return (TRUE);
 		}
 		if (error == FALSE)
 		{

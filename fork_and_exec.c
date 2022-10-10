@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 08:03:23 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:46:17 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,8 @@ static int	is_in_path(t_shell *data)
 	}
 	if (ft_strchr(data->token[0], '/'))
 	{
-		//split_path_variable(data, 0);
-		//while (data->split_path[i] != NULL)
-		//	if (ft_strequ(data->split_path[i], data->token[0]) == 1)
-		//	{
 		data->cmd = ft_strdup(data->token[0]);
 		return (TRUE);
-		//	}
-		//	i++;
-		{
-		}
-		//free_array(data->split_path);
 	}
 	return (FALSE);
 }
@@ -110,8 +101,6 @@ int	initial_exec_checks(t_shell *data)
 		return (FALSE);
 	else
 	{
-		//ft_putstr("check value:  ");
-		//ft_putnbr_endl(check);
 		modify_env(data, "_", data->token[0], 0);
 		if (ft_strlen(data->token[0]) > 0)
 			create_child_process(data, data->environ);

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:02:52 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 10:31:03 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:47:54 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	checks for "-n" flag in order to print newline or not.
 **	!!expand tokens differently in echo!!
 */
-int echo_driver(t_shell *data, int i)
+int	echo_driver(t_shell *data, int i)
 {
 	while (data->token[i] != NULL)
 	{

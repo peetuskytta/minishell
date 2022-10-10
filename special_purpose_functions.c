@@ -6,13 +6,14 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 12:05:17 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:02:01 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**allocate_last_in_history(char *buf)
+
+/*char	**allocate_last_in_history(char *buf)
 {
 	char	**new;
 
@@ -20,7 +21,7 @@ char	**allocate_last_in_history(char *buf)
 	new[0] = ft_strdup(buf);
 	new[1] = NULL;
 	return (new);
-}
+}*/
 
 void	add_only_name(t_shell *data, int var_i)
 {
@@ -30,26 +31,9 @@ void	add_only_name(t_shell *data, int var_i)
 		add_env_variable(data, data->token[1], "", data->env_count);
 }
 
-void	ft_strjoin_clean(char const *s1, char const *s2)
-{
-	int		i;
-	char	*str;
-	int		length;
-
-	i = 0;
-	length = ft_strlen((char *)s2) * 2;
-	str = (char *)ft_memalloc(sizeof(char) * (length + 1));
-	while (*s1)
-		str[i++] = *s1++;
-	while (*s2)
-		str[i++] = *s2++;
-	str[i] = '\0';
-	ft_memset((char *)s1, '\0', ft_strlen(s1));
-	//ft_memdel((void *)&(s1));
-	//ft_memdel((void *)&(s2));
-	s1 = ft_strdup(str);
-}
-
+/*
+**	Frees array of strings and sets pointer to null.
+*/
 void	free_array(char **string)
 {
 	int	i;
@@ -76,7 +60,7 @@ void	write_prompt_and_folder(t_shell *data)
 	ft_putstr_fd(PROMPT, 1);
 	ft_putstr_fd(DEFAULT, 1);
 	ft_putchar_fd(':', 1);
-	ft_putstr_fd(BLUE, 1);
+	ft_putstr_fd(YELLOW, 1);
 	ft_putstr_fd(data->pwd, 1);
 	ft_putstr_fd(DEFAULT, 1);
 	ft_putstr_fd("$ ", 1);

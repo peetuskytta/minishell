@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:46:07 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 12:34:03 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 14:18:56 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	exec_error_message(int id, char *name)
 	return (FALSE);
 }
 
-int exec_error_check(t_shell *data, int check)
+int	exec_error_check(t_shell *data, int check)
 {
 	if (check == FALSE)
 		return (exec_error_message(2, data->token[0]));
@@ -52,4 +52,22 @@ int exec_error_check(t_shell *data, int check)
 		return (exec_error_message(5, data->token[0]));
 	else
 		return (TRUE);
+}
+
+int	cd_error_message(char *name, int id)
+{
+	if (id == 1)
+	{
+		if (!name)
+			error_print(CD_SH, name, NO_FILE_OR_DIR);
+		else
+			error_print(CD_SH, name, NO_FILE_OR_DIR);
+	}
+	else if (id == 2)
+		error_print(CD_SH, name, NO_FILE_OR_DIR);
+	else if (id == 3)
+		return (3);
+	else if (id == 4)
+		error_print(CD_SH, name, CD_NO_ACCESS);
+	return (3);
 }

@@ -6,12 +6,11 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 12:45:19 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 13:29:27 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
 
 static void	write_open_quote(char c)
 {
@@ -34,8 +33,6 @@ static char	*read_until_quote(char c, char *old, int bytes_read)
 		bytes_read = read(0, extra, BUFFER);
 		if (bytes_read > 0)
 		{
-			//printf("len-> %zu\told-> %s\n", ft_strlen(old), old);
-			//pr/intf("len-> %zu\told-> %s\n", ft_strlen(extra), extra);
 			ft_strcat(old, extra);
 			num_quotes = ft_chrstr(old, c);
 			if (ft_is_oddnbr(num_quotes) == FALSE)
@@ -46,6 +43,7 @@ static char	*read_until_quote(char c, char *old, int bytes_read)
 			break ;
 	}
 	ft_memdel((void *)&(extra));
+	old[ft_strlen(old) - 1] = '\0';
 	return (old);
 }
 
@@ -66,6 +64,15 @@ static char	identify_open_quote(char *old, char c, int *quote)
 	return (c);
 }
 
+int	odd_nbr_of_quotes(char *buf, int *quotes)
+{
+	quotes[0] = ft_chrstr(buf, S_QUOTE);
+	quotes[1] = ft_chrstr(buf, D_QUOTE);
+	if (ft_is_oddnbr(quotes[0]) || ft_is_oddnbr(quotes[1]))
+		return (TRUE);
+	return (FALSE);
+}
+
 char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 {
 	char	*new;
@@ -74,10 +81,6 @@ char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 	c = '\0';
 	c = identify_open_quote(old, c, quotes);
 	data->quotes = TRUE;
-	//if (c == S_QUOTE || c == D_QUOTE)
 	new = read_until_quote(c, old, 0);
-	//else
-	//	return (ft_strdup(old));
 	return (ft_strdup(new));
 }
-

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 09:17:19 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:02:26 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,14 @@ static void	last_in_history(t_shell *data, int fd)
 		}
 		if (data->token)
 			free_array(data->token);
-		if (ft_strrchr(buf, WHITESPACE))
-			data->token = ft_strsplit(buf, WHITESPACE);
+		if (ft_strrchr(buf, D_QUOTE) || ft_strrchr(buf, S_QUOTE))
+			tokenize_complex_input(data, buf, 0);
 		else
-			data->token = allocate_last_in_history(buf);
-		ft_putendl_fd(buf, 1);
+			data->token = ft_strsplit(buf, WHITESPACE);
+		ft_putendl_fd(buf, STDOUT_FILENO);
 		ft_memdel((void *)&(buf));
 		close(fd);
 	}
-
 }
 
 static void	count_history(t_shell *data, int fd)
@@ -86,9 +85,6 @@ static void	count_history(t_shell *data, int fd)
 
 void	handle_history(t_shell *data, int option)
 {
-	char	tmp[1024];
-
-	ft_memset(tmp, 0, 1024);
 	count_history(data, open(SH_HISTORY, O_RDONLY));
 	if (option == 1)
 		output_history(1, open(SH_HISTORY, O_RDONLY));

@@ -16,10 +16,11 @@ int	change_to_home_env(t_shell *data, int len, int home_i)
 {
 	char	*buf;
 
+	fetch_current_working_directory(data);
 	if (search_var_name("OLDPWD", data) < 0)
-		add_env_variable(data, "OLDPWD", getcwd(NULL, 0), data->env_count);
+		add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
 	else
-		modify_env(data, "OLDPWD", getcwd(NULL, 0), 0);
+		modify_env(data, "OLDPWD", data->pwd, 0);
 	len = ft_strlen(data->environ[home_i]);
 	buf = ft_strsub(data->environ[home_i], 5, len - 5);
 	if (chdir(buf) != 0)
@@ -28,7 +29,8 @@ int	change_to_home_env(t_shell *data, int len, int home_i)
 		return (TRUE);
 	}
 	ft_memdel((void *)&(buf));
-	modify_env(data, "PWD", getcwd(NULL, 0), 0);
+	fetch_current_working_directory(data);
+	modify_env(data, "PWD", data->pwd, 0);
 	return (TRUE);
 }
 
@@ -85,7 +87,7 @@ int	change_to_token(t_shell *data, const char *path)
 	if (path)
 	{
 		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", getcwd(NULL, 0), nbr);
+			add_env_variable(data, "OLDPWD", data->pwd, nbr);
 		else
 			modify_env(data, "OLDPWD", data->pwd, 0);
 		if (chdir(path) != 0)
@@ -93,9 +95,10 @@ int	change_to_token(t_shell *data, const char *path)
 			error_print(CD_SH, (char *)path, NO_FILE_OR_DIR);
 			return (TRUE);
 		}
+		fetch_current_working_directory(data);
 		if (search_var_name("PWD", data) < 0)
-			add_env_variable(data, "PWD", getcwd(NULL, 0), data->env_count);
-		modify_env(data, "PWD", getcwd(NULL, 0), 0);
+			add_env_variable(data, "PWD", data->pwd, data->env_count);
+		modify_env(data, "PWD", data->pwd, 0);
 		return (TRUE);
 	}
 	return (TRUE);

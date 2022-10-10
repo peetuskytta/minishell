@@ -12,15 +12,6 @@
 
 #include "minishell.h"
 
-static int	quote_odd_check(char *buf, int *quotes)
-{
-	quotes[0] = ft_chrstr(buf, S_QUOTE);
-	quotes[1] = ft_chrstr(buf, D_QUOTE);
-	if (ft_is_oddnbr(quotes[0]) || ft_is_oddnbr(quotes[1]))
-		return (TRUE);
-	return (FALSE);
-}
-
 static char	*read_input_stdin(t_shell *data, char *buf)
 {
 	char		*new;
@@ -34,7 +25,7 @@ static char	*read_input_stdin(t_shell *data, char *buf)
 	if (simple_input_check(buf) == FALSE)
 	{
 		data->quotes = TRUE;
-		if (quote_odd_check(buf, quotes) == FALSE)
+		if (odd_nbr_of_quotes(buf, quotes) == FALSE)
 		{
 			buf[bytes_read - 1] = '\0';
 			return (buf);

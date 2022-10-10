@@ -30,7 +30,7 @@
 # define HISTORY "history"
 
 /*Other useful defines*/
-# define BLUE "\033[0;34m"
+# define YELLOW "\033[0;33m"
 # define GREEN "\033[0;32m"
 # define DEFAULT "\033[0m"
 
@@ -133,9 +133,7 @@ void	create_child_process(t_shell *data, char **env);
 int		echo_driver(t_shell *data, int i);
 void	fetch_current_working_directory(t_shell *data);
 void	write_prompt_and_folder(t_shell *data);
-//void	tokenize_complex_input(t_shell *data, char *buf, int i, int quote);
 void	tokenize_complex_input(t_shell *data, char *input, int i);
-
 
 void	error_print(char *sh, char *name, char *msg);
 void	handle_history(t_shell *data, int option);
@@ -147,8 +145,8 @@ void	add_name_value(t_shell *data, int len, int i, int var_i);
 void	clean_input_string(t_shell *data, char *input, int i);
 
 void	ft_strjoin_clean(char const *s1, char const *s2);
+int		odd_nbr_of_quotes(char *buf, int *quotes);
 
-int		loop_path_variable(t_shell *data, char *temp, int i);
 int		simple_input_check(char *input);
 int		command_prompt_loop(t_shell *data);
 int		exec_error_message(int id, char *name);
@@ -165,6 +163,8 @@ int		search_var_name(char *name, t_shell *data);
 int		unset_env_variable(t_shell *data);
 int		current_dir_actions(t_shell *data);
 int		initial_exec_checks(t_shell *data);
+int		loop_path_variable(t_shell *data, char *temp, int i);
+int		cd_error_message(char *name, int id);
 
 char	*join_n_and_v(char *name, char *value);
 char	*handle_open_quotes(t_shell *data, char *old, int *quotes);

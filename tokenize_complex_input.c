@@ -6,12 +6,11 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 11:02:03 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:11:20 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h> // REMEMBER TO DELETE
 
 static int	check_if_quote(char c)
 {
@@ -40,11 +39,9 @@ static void	increment_counters(t_ints *to_init, int *count, int *i, int action)
 		*i += 1;
 	else if (action == 6)
 		to_init->at_end = TRUE;
-
 }
 
-
-static char	*find_token(char *input, int *count, int i)
+char	*find_token(char *input, int *count, int i)
 {
 	char	*token;
 	t_ints	in;
@@ -70,8 +67,8 @@ static char	*find_token(char *input, int *count, int i)
 			increment_counters(&in, count, &i, 4);
 			break ;
 		}
-		if ((input[i] != '\0' && in.at_end == FALSE) || (!ft_is_ws_without_nl(input[i]
-			&& in.at_end == TRUE)))
+		if ((input[i] != '\0' && in.at_end == FALSE)
+			|| (!ft_is_ws_without_nl(input[i] && in.at_end == TRUE)))
 		{
 			token[in.pos++] = input[i++];
 			increment_counters(&in, count, &i, 4);
@@ -82,13 +79,13 @@ static char	*find_token(char *input, int *count, int i)
 	return (token);
 }
 
-
 void	tokenize_complex_input(t_shell *data, char *input, int index)
 {
 	int	alloc_count;
 	int	i;
 
 	i = 0;
+	data->token_count = -1;
 	alloc_count = (int)ft_word_count(input, ' ') + 1;
 	data->token = (char **)ft_memalloc(sizeof(char *) * alloc_count + 1);
 	alloc_count = 0;

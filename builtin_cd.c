@@ -12,31 +12,11 @@
 
 #include "minishell.h"
 
-static int	cd_error_message(char *name, int id)
-{
-	if (id == 1)
-	{
-		if (!name)
-			error_print(CD_SH, name, NO_FILE_OR_DIR);
-		else
-			error_print(CD_SH, name, NO_FILE_OR_DIR);
-	}
-	else if (id == 2)
-		error_print(CD_SH, name, NO_FILE_OR_DIR);
-	else if (id == 3)
-		return (3);
-	else if (id == 4)
-		error_print(CD_SH, name, CD_NO_ACCESS);
-	return (3);
-}
-
-static int	path_permission_loop(char **split, const char *path)
+static int	path_permission_loop(char **split, const char *path, int i)
 {
 	struct stat	stats;
 	char		temp[4096];
-	int			i;
 
-	i = 0;
 	ft_memset(temp, '\0', 4096);
 	while (TRUE)
 	{
@@ -68,11 +48,10 @@ static int	check_access(t_shell *data)
 
 	i = 0;
 	ret = 0;
-	//check_expansion(data, 0);
 	if (ft_strchr(data->token[1], '/'))
 	{
 		split = ft_strsplit(data->token[1] + i, '/');
-		ret = path_permission_loop(split, data->token[1]);
+		ret = path_permission_loop(split, data->token[1], 0);
 		free_array(split);
 		if (ret == 3)
 			return (3);
@@ -81,8 +60,8 @@ static int	check_access(t_shell *data)
 }
 
 /*
-/Users/speedupeloton/Hive/projects/minishell
-/Users/speedupeloton/Hive/projects/JOKU/OK/NOT_OK/DEF_NO_GO
+**	First checks to define the continuation of the cd command. If it ends up in the
+**	last line it will check the existence of the Path given.
 */
 static int	initial_checks(t_shell *data)
 {
@@ -100,8 +79,8 @@ int	current_dir_actions(t_shell *data)
 {
 	int	checks;
 
-	check_expansion(data, 0);
 	fetch_current_working_directory(data);
+	check_expansion(data, 0);
 	if (data->token_count < 2)
 	{
 		checks = initial_checks(data);
