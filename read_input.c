@@ -12,17 +12,14 @@
 
 #include "minishell.h"
 
-static char	*read_input_stdin(t_shell *data, char *buf)
+static char	*read_input_stdin(t_shell *data, char *buf, int bytes_read)
 {
 	char		*new;
-	int			bytes_read;
 	int			quotes[2];
 
 	ft_memset(buf, 0, BUFFER);
 	bytes_read = read(0, buf, BUFFER);
-	if (bytes_read > BUFFER)
-		ft_putendl_fd(CMD_TOO_LONG, 2);
-	if (simple_input_check(buf) == FALSE)
+	if (bytes_read <= BUFFER - 1 && simple_input_check(buf) == FALSE)
 	{
 		data->quotes = TRUE;
 		if (odd_nbr_of_quotes(buf, quotes) == FALSE)
@@ -34,11 +31,8 @@ static char	*read_input_stdin(t_shell *data, char *buf)
 		ft_memdel((void *)&(buf));
 		return (new);
 	}
-	else
-	{
-		buf[bytes_read - 1] = '\0';
-		return (buf);
-	}
+	buf[bytes_read - 1] = '\0';
+	return (buf);
 }
 
 static void	clear_and_free_buffer(char *string)
@@ -92,7 +86,7 @@ int	command_prompt_loop(t_shell *data)
 	{
 		write_prompt_and_folder(data);
 		buf = (char *)ft_memalloc(BUFFER);
-		buf = read_input_stdin(data, buf);
+		buf = read_input_stdin(data, buf, 0);
 		if (exit_or_not(buf) == FALSE)
 			return (FALSE);
 		if (is_empty(buf) == TRUE)

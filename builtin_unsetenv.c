@@ -30,18 +30,13 @@ int	unset_error_check(t_shell *data)
 		if (data->token_count == 1)
 			return (TRUE);
 		if (data->token_count > 1)
-		{
 			ft_putendl_fd(UNSET_TOO_MANY_ARG, 2);
-			return (FALSE);
-		}
+		if (ft_strlen(data->token[1]) > BUFFER)
+			ft_putendl_fd(UNSETENV_TOO_LONG, 2);
 		else
-		{
 			ft_putendl_fd(UNSETENV_USAGE, 2);
-			return (FALSE);
-		}
 	}
-	else
-		return (FALSE);
+	return (FALSE);
 }
 
 int	unset_env_variable(t_shell *data)

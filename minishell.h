@@ -79,6 +79,7 @@
 # define NOT_IDENTIFIER ": not a valid identifier"
 # define UNSETENV_USAGE "usage: unsetenv [name]"
 # define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"
+# define UNSETENV_TOO_LONG "unsetenv: argument too long"
 
 /*Error messages for fork, waitpid, and execve*/
 # define CMD_NOT_FOUND ": command not found"
