@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 21:44:47 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/11 14:01:38 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,27 @@ static void	write_open_quote(char c)
 		ft_putstr_fd(D_QUOTE_ARROW, 1);
 }
 
-static char	*read_until_quote(char c, char *old, int bytes_read)
+static char	*read_until_quote(char c, char *old, int bytes_read, int num_quotes)
 {
 	char	*new;
 	char	*extra;
-	int		num_quotes;
 
-	num_quotes = 0;
-	extra = (char *)ft_memalloc(BUFFER);
+	new = ft_strdup(old);
 	while (TRUE)
 	{
 		write_open_quote(c);
+		extra = (char *)ft_memalloc(BUFFER);
 		bytes_read = read(0, extra, BUFFER);
-		if (bytes_read > 0)
+		if (bytes_read <= BUFFER - 1)
 		{
-			new = ft_strjoin(old, extra);
+			new = strjoin_free(new, extra);
 			num_quotes = ft_chrstr(new, c);
 			if (ft_is_oddnbr(num_quotes) == FALSE)
 				break ;
-			ft_memset(extra, '\0', BUFFER);
 		}
 		else
 			break ;
 	}
-	ft_memdel((void *)&(extra));
-	new[ft_strlen(new) - 1] = '\0';
 	return (new);
 }
 
@@ -82,7 +78,6 @@ char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 	c = '\0';
 	c = identify_open_quote(old, c, quotes);
 	data->quotes = TRUE;
-	new = read_until_quote(c, old, 0);
+	new = read_until_quote(c, old, 0, 0);
 	return (new);
-	//return (ft_strdup(new));
 }

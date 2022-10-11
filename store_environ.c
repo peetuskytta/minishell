@@ -25,8 +25,6 @@ static void	allocate_envp(t_shell *data, char **env)
 	i = 0;
 	env_variable_counter(data, env);
 	data->environ = (char **)malloc(sizeof(char *) * (data->env_count + 1));
-	if (data->environ == NULL)
-		exit(EXIT_FAILURE);
 	while (env[i] != NULL)
 	{
 		data->environ[i] = ft_strdup(env[i]);
@@ -51,8 +49,6 @@ void	split_path_variable(t_shell *data, int i)
 	}
 	var = ft_strsub(data->environ[i], 5, ft_strlen(data->environ[i]) - 5);
 	data->split_path = ft_strsplit(var, ':');
-	if (data->split_path == NULL)
-		exit(EXIT_FAILURE);
 	ft_memset(var, 0, ft_strlen(var));
 	ft_memdel((void *)&(var));
 }

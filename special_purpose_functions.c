@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 15:29:06 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/11 13:52:13 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,20 @@ void	fetch_current_working_directory(t_shell *data)
 	cwd = getcwd(NULL, 0);
 	data->pwd = ft_strdup(cwd);
 	ft_memdel((void *)&(cwd));
+}
+
+/*
+**	Joins two strings together and returning a new pointer to joined strings
+**	
+*/
+char	*strjoin_free(char *s1, char *s2)
+{
+	char	*tmp;
+
+	tmp = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
+	ft_strcat(tmp, s1);
+	ft_strcat(tmp, s2);
+	ft_memdel((void *)&(s1));
+	ft_memdel((void *)&(s2));
+	return (tmp);
 }

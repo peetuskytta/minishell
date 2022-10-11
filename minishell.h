@@ -100,6 +100,7 @@ typedef struct s_shell
 	int		quotes;
 	int		bytes;
 	int		h_index;
+	int		input_len;
 	int		token_count;
 	int		env_count;
 	int		last_cmd;
@@ -170,5 +171,6 @@ int		cd_error_message(char *name, int id);
 char	*join_n_and_v(char *name, char *value);
 char	*handle_open_quotes(t_shell *data, char *old, int *quotes);
 char	*return_env_value(t_shell *data, char *name);
+char	*strjoin_free(char *s1, char *s2);
 
 #endif

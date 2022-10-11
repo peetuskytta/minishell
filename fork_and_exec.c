@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 21:18:50 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/11 10:36:02 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static int	is_in_path(t_shell *data)
 {
 	char	temp[4096];
 
+	if (data->input_len > 4095)
+		return (FALSE);
 	ft_memset(temp, '\0', 4096);
 	if (!ft_strchr(data->token[0], '/'))
 	{

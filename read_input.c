@@ -87,6 +87,7 @@ int	command_prompt_loop(t_shell *data)
 		write_prompt_and_folder(data);
 		buf = (char *)ft_memalloc(BUFFER);
 		buf = read_input_stdin(data, buf, 0);
+		data->input_len = ft_strlen(buf);
 		if (exit_or_not(buf) == FALSE)
 			return (FALSE);
 		if (is_empty(buf) == TRUE)
