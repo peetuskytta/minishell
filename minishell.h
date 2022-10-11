@@ -97,6 +97,7 @@ typedef struct s_shell
 	char	**token;
 	char	*cmd;
 	char	*pwd;
+	char	temp[4096];
 	int		quotes;
 	int		bytes;
 	int		h_index;
@@ -167,6 +168,8 @@ int		current_dir_actions(t_shell *data);
 int		initial_exec_checks(t_shell *data);
 int		loop_path_variable(t_shell *data, char *temp, int i);
 int		cd_error_message(char *name, int id);
+
+int		output_environment(t_shell *data, int i);
 
 char	*join_n_and_v(char *name, char *value);
 char	*handle_open_quotes(t_shell *data, char *old, int *quotes);

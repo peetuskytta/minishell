@@ -37,3 +37,8 @@ lslsls"0000"""      oii
 
 gw pogjoorfmoqverpojg[jqmopegj ]oojgG' rpgj 'seojegjopjeW GWj\g wg;/alsdglj epk 'seg/ wgwe  [ wegererg 'seg ]wE
 
+
+env -i goo=spar ls
+
+
+env -i PATH=lol TERM=llol ls

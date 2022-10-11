@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/11 13:52:13 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/11 14:38:17 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,15 @@ void	free_array(char **string)
 }
 
 /*
-**	Updates the current directory and writes prompt to the stdout
+**	Returns the number of either SINGLE or DOUBLE quotes.
 */
-void	write_prompt_and_folder(t_shell *data)
+int	odd_nbr_of_quotes(char *buf, int *quotes)
 {
-	ft_memdel((void *)&(data->pwd));
-	fetch_current_working_directory(data);
-	ft_putstr_fd(GREEN, 1);
-	ft_putstr_fd(PROMPT, 1);
-	ft_putstr_fd(DEFAULT, 1);
-	ft_putchar_fd(':', 1);
-	ft_putstr_fd(YELLOW, 1);
-	ft_putstr_fd(data->pwd, 1);
-	ft_putstr_fd(DEFAULT, 1);
-	ft_putstr_fd("$ ", 1);
-	ft_memdel((void *)&(data->pwd));
+	quotes[0] = ft_chrstr(buf, S_QUOTE);
+	quotes[1] = ft_chrstr(buf, D_QUOTE);
+	if (ft_is_oddnbr(quotes[0]) || ft_is_oddnbr(quotes[1]))
+		return (TRUE);
+	return (FALSE);
 }
 
 /*
@@ -76,8 +70,8 @@ void	fetch_current_working_directory(t_shell *data)
 }
 
 /*
-**	Joins two strings together and returning a new pointer to joined strings
-**	
+**	Joins two strings together and returning a new pointer to the new joined
+**	strings and frees s1 and s2.
 */
 char	*strjoin_free(char *s1, char *s2)
 {

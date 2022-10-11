@@ -6,12 +6,15 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/11 14:01:38 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/11 14:39:07 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+**	writes "dquote>" for open double quote and "quote>" for open single quote
+*/
 static void	write_open_quote(char c)
 {
 	if (c == S_QUOTE)
@@ -20,6 +23,10 @@ static void	write_open_quote(char c)
 		ft_putstr_fd(D_QUOTE_ARROW, 1);
 }
 
+/*
+**	Reads new input to *extra and joines the new & extra. Checks if quotes
+**	are closed or not and repeats the above if necessary.
+*/
 static char	*read_until_quote(char c, char *old, int bytes_read, int num_quotes)
 {
 	char	*new;
@@ -44,6 +51,9 @@ static char	*read_until_quote(char c, char *old, int bytes_read, int num_quotes)
 	return (new);
 }
 
+/*
+**	Returns the char value of the quote that is open.
+*/
 static char	identify_open_quote(char *old, char c, int *quote)
 {
 	if (ft_is_oddnbr(quote[0]) && ft_is_oddnbr(quote[1]))
@@ -61,15 +71,10 @@ static char	identify_open_quote(char *old, char c, int *quote)
 	return (c);
 }
 
-int	odd_nbr_of_quotes(char *buf, int *quotes)
-{
-	quotes[0] = ft_chrstr(buf, S_QUOTE);
-	quotes[1] = ft_chrstr(buf, D_QUOTE);
-	if (ft_is_oddnbr(quotes[0]) || ft_is_oddnbr(quotes[1]))
-		return (TRUE);
-	return (FALSE);
-}
-
+/*
+**	Quote handling "driver function" which identifies the open quote
+**	and moves to read until new quote is found.
+*/
 char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 {
 	char	*new;
