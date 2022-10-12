@@ -28,8 +28,8 @@ static void	allocate_envp(t_shell *data, char **env)
 	int	count;
 
 	i = 0;
-	count = data->env_count;
 	env_variable_counter(data, env);
+	count = data->env_count;
 	data->environ = (char **)ft_memalloc(sizeof(char *) * (count + 1));
 	while (env[i] != NULL)
 	{
