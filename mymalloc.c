@@ -12,7 +12,7 @@ __attribute__ ((section ("__DATA,__interpose"))) = { (const void*)(unsigned long
 void* pMalloc(size_t size)
 {
 	static int counter = 0;
-	if (counter < 2000)
+	if (counter < 1500)
 	{
 		counter++;
 		return (malloc(size));

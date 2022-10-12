@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 11:05:37 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 10:13:45 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 15:57:39 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	*ft_memalloc(size_t size)
 	ret = (void *)malloc(size);
 	if (ret == NULL)
 	{
-		ft_putstr_fd("\nminishell: ", STDERR_FILENO);
-		ft_putendl_fd("Cannot allocate memory.", STDERR_FILENO);
-		exit(EXIT_FAILURE);
+		ft_putstr_fd("\e[1;37mERROR: minishell: ", STDERR_FILENO);
+		ft_putendl_fd("Cannot allocate memory.\033[0m", STDERR_FILENO);
+		exit(111);
 	}
 	ft_memset(ret, '\0', size);
 	return (ret);

@@ -1,7 +1,7 @@
 #Compiler and compiler flags
 CC := gcc
 DEBUG_F := -g #-fsanitize=address
-FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror -g #-fsanitize=address
 
 #Target Binary Program
 NAME := minishell
@@ -39,12 +39,12 @@ HEADER := minishell.h
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	@echo "Compiling the $(NAME)"
-	@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $@
+#	@echo "Compiled the $(NAME)"
 
 $(OBJ): $(SOURCES) $(HEADER)
 #	@echo "Creating $(NAME) object files"
-	$(CC) $(FLAGS) -c $(SOURCES)
+	@$(CC) $(FLAGS) -c $(SOURCES)
 
 $(LIBFT):
 	@make -s -C libft/
