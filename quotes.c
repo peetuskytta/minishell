@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/11 14:39:07 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 11:45:50 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,13 @@ char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 	c = identify_open_quote(old, c, quotes);
 	data->quotes = TRUE;
 	new = read_until_quote(c, old, 0, 0);
+	data->input_len = ft_strlen(new);
+	if (data->input_len >= 4096)
+	{
+		error_print(MINISH, "Ella/Simo... seriosly: ", CMD_TOO_LONG);
+		ft_memset(new, '\0', data->input_len);
+		data->input_len = -1;
+		return (new);
+	}
 	return (new);
 }

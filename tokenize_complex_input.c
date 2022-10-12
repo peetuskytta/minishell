@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/11 10:16:10 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 11:08:52 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*find_token(char *input, int *count, int i)
 	t_ints	in;
 
 	ft_memset(&in, 0, sizeof(in));
-	token = ft_strnew(ft_strlen(input));
+	token = ft_strnew(4096);
 	while (ft_is_ws_without_nl(input[i]) && (*count)++)
 		increment_counters(&in, count, &i, 5);
 	while (input[i])
@@ -100,12 +100,13 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 	while (input[i])
 	{
 		data->token[alloc_count] = find_token(input, &index, i);
-		if (ft_strlen(data->token[alloc_count]) == 0)
-			data->token[alloc_count][0] = ' ';
+		if (ft_strlen(data->token[alloc_count]) == 0 && data->token[alloc_count] != NULL)
+			data->token[alloc_count][0] = '\0';
 		if (data->token[alloc_count] == NULL)
 			break ;
 		i = index;
 		alloc_count++;
 		data->token_count++;
 	}
+	check_expansion(data, 0);
 }

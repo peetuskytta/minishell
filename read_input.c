@@ -32,6 +32,8 @@ static char	*read_input_stdin(t_shell *data, char *buf, int bytes_read)
 			return (buf);
 		}
 		new = handle_open_quotes(data, buf, quotes);
+		if (data->input_len == -1)
+			data->quotes = FALSE;
 		ft_memdel((void *)&(buf));
 		return (new);
 	}
@@ -101,10 +103,9 @@ int	command_prompt_loop(t_shell *data)
 		write_prompt_and_folder(data);
 		buf = (char *)ft_memalloc(BUFFER);
 		buf = read_input_stdin(data, buf, 0);
-		data->input_len = ft_strlen(buf);
 		if (exit_or_not(buf) == FALSE)
 			return (FALSE);
-		if (is_empty(buf) == TRUE)
+		if (is_empty(buf) == TRUE || data->input_len == -1)
 			clear_and_free_buffer(buf);
 		else
 		{
@@ -116,6 +117,7 @@ int	command_prompt_loop(t_shell *data)
 				free_array(data->token);
 			ft_memdel((void *)&(data->cmd));
 		}
+		data->input_len = 0;
 		data->token_count = -1;
 	}
 }
