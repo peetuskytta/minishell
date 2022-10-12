@@ -18,13 +18,19 @@ static void	env_variable_counter(t_shell *data, char **inherited_variables)
 		data->env_count++;
 }
 
+/*
+**	Allocates memory for environment and copies them from the **envp (brought
+**	from main).
+*/
 static void	allocate_envp(t_shell *data, char **env)
 {
 	int	i;
+	int	count;
 
 	i = 0;
+	count = data->env_count;
 	env_variable_counter(data, env);
-	data->environ = (char **)malloc(sizeof(char *) * (data->env_count + 1));
+	data->environ = (char **)ft_memalloc(sizeof(char *) * (count + 1));
 	while (env[i] != NULL)
 	{
 		data->environ[i] = ft_strdup(env[i]);
@@ -33,6 +39,9 @@ static void	allocate_envp(t_shell *data, char **env)
 	data->environ[data->env_count] = NULL;
 }
 
+/*
+**	Function that splits the PATH variable into individual tokens.
+*/
 void	split_path_variable(t_shell *data, int i)
 {
 	char	*var;
@@ -53,6 +62,10 @@ void	split_path_variable(t_shell *data, int i)
 	ft_memdel((void *)&(var));
 }
 
+/*
+**	Starts the process of allocating memory for the environment variables
+**	This function also sets a value to some variables.
+*/
 void	store_environ_variables(t_shell *data, char **env)
 {
 	int		var_i;

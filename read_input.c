@@ -12,6 +12,10 @@
 
 #include "minishell.h"
 
+/*
+**	Reads the stdin for input and moves to handle quotes if there is odd
+**	number of either of the quotes.
+*/
 static char	*read_input_stdin(t_shell *data, char *buf, int bytes_read)
 {
 	char		*new;
@@ -41,6 +45,10 @@ static void	clear_and_free_buffer(char *string)
 	ft_memdel((void *)&(string));
 }
 
+/*
+** Checks if the command given is "exit" and if TRUE returns FALSE.
+**	exit happens in main.c
+*/
 static int	exit_or_not(char *buf)
 {
 	if (ft_strequ(buf, EXIT) == TRUE)
@@ -48,13 +56,16 @@ static int	exit_or_not(char *buf)
 		create_or_append_history(buf);
 		ft_memset(buf, 0, ft_strlen(buf));
 		ft_memdel((void *)&(buf));
-		ft_putendl(EXIT);
+		ft_putendl_fd(EXIT, STDOUT_FILENO);
 		return (FALSE);
 	}
 	else
 		return (TRUE);
 }
 
+/*
+**	Handles empty or NULL string input and jumps the whitespaces.
+*/
 static int	is_empty(char *buf)
 {
 	int	i;
@@ -78,6 +89,9 @@ static int	is_empty(char *buf)
 	return (FALSE);
 }
 
+/*
+**	This loop only stops when "exit" is written to the STDIN.
+*/
 int	command_prompt_loop(t_shell *data)
 {
 	char	*buf;

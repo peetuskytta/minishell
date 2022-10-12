@@ -28,7 +28,7 @@ SOURCES := main.c \
 	special_purpose_functions.c \
 	quotes.c \
 	builtin_env.c \
-	output_env.c \
+	builtin_env_output.c \
 
 OBJ := $(SOURCES:.c=.o)
 

@@ -6,15 +6,15 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/11 17:34:46 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 10:10:35 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-**	PATH is split already. Command line argument has been split into
-**	different tokens.
+**	This function forks the process and executes a binary. Waits for it to be
+**	ready and returns control to the parent process (minishell).
 */
 void	create_child_process(t_shell *data, char **env)
 {
@@ -39,6 +39,11 @@ void	create_child_process(t_shell *data, char **env)
 	}
 }
 
+/*
+**	Checks if the given argument has '/' or not and proceeds
+**	to check if it is an executable or copies the same to data->cmd
+**	in case '/' is found.
+*/
 static int	is_in_path(t_shell *data)
 {
 	char	temp[4096];
@@ -59,6 +64,11 @@ static int	is_in_path(t_shell *data)
 	return (FALSE);
 }
 
+/*
+**	Verification for existence with lstat() and proceeds to
+**	test if it is a directory. In case TRUE return 3 triggering
+**	error message later.
+*/
 static int	check_existence(t_shell *data)
 {
 	struct stat	info;
@@ -76,6 +86,10 @@ static int	check_existence(t_shell *data)
 		return (FALSE);
 }
 
+/*
+**	First checks if the argument is an executable found in the current
+**	folder. Otherwise move on to check if it's in PATH variable.
+*/
 static int	verify_if_executable(t_shell *data)
 {
 	if (data->token[0][0] == '.' || data->token[0][0] == '/')
@@ -91,6 +105,10 @@ static int	verify_if_executable(t_shell *data)
 	return (TRUE);
 }
 
+/*
+**	Executable verification process starts here and moves
+**	to create a child process if all the checks are OK.
+*/
 int	initial_exec_checks(t_shell *data)
 {
 	int	check;

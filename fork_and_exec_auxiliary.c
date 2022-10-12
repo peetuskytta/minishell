@@ -6,12 +6,17 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 11:21:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/11 20:05:19 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 09:59:45 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+**	This function will test if a given argument is an executable found in the
+**	environment variable PATH. When access() returns 0 for F_OK we have
+**	a valid executable and it is stored in the data->cmd variable.
+*/
 int	loop_path_variable(t_shell *data, char *temp, int i)
 {
 	int	var_i;

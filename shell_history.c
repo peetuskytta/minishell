@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 15:02:26 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 10:23:40 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	create_or_append_history(char *buf)
 }
 
 /*
-**	Finds the last command executed from the history
+**	Finds the last command executed from the history.
 */
 static void	last_in_history(t_shell *data, int fd)
 {
@@ -65,6 +65,9 @@ static void	last_in_history(t_shell *data, int fd)
 	}
 }
 
+/*
+**	Get's the size of the history by counting the lines in the file.
+*/
 static void	count_history(t_shell *data, int fd)
 {
 	char	*buf;
@@ -83,6 +86,9 @@ static void	count_history(t_shell *data, int fd)
 		close(fd);
 }
 
+/*
+**	Drives the actions when history command is used.
+*/
 void	handle_history(t_shell *data, int option)
 {
 	count_history(data, open(SH_HISTORY, O_RDONLY));

@@ -30,8 +30,9 @@
 # define HISTORY "history"
 
 /*Other useful defines*/
-# define YELLOW "\033[0;33m"
-# define GREEN "\033[0;32m"
+# define BRED "\e[1;31m"
+# define BBLU "\e[1;34m"
+# define BWHT "\e[1;37m"
 # define DEFAULT "\033[0m"
 
 /*Other useful defines*/

@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+/*
+**	When input string doesn't have single and/or double quotes this function
+**	is called to split the input string into different tokens based on
+**	whitespaces.
+*/
 void	tokenize_simple_input(t_shell *data, char *input, int i)
 {
 	while (input[i] != '\0')

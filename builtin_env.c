@@ -36,6 +36,10 @@ static int	count_env_number(char **str)
 	return (count);
 }
 
+/*
+**	Sends the almost correct information to the create child process.
+**	Frees the allocated memory.
+*/
 static void	send_to_execute(t_shell *new, t_shell *data)
 {
 	new->cmd = ft_strdup(new->temp);
@@ -46,6 +50,10 @@ static void	send_to_execute(t_shell *new, t_shell *data)
 	free_array(new->env_i);
 }
 
+/*
+**	Makes a copy of the t_shell data struct and sets the information
+**	in new to be the ones needed for processing the command.
+*/
 static void	work_env_i(t_shell *data, int i, int k, int count)
 {
 	t_shell	new;
@@ -70,6 +78,12 @@ static void	work_env_i(t_shell *data, int i, int k, int count)
 	send_to_execute(&new, data);
 }
 
+/*
+**	Handles in a simple way env builtin command. If only "env" is as an
+**	argument then the program outputs the environment. When that's not
+**	the case then it proceeds to process the information and acts
+**	accordingly.
+*/
 int	handle_env(t_shell *data, int error)
 {
 	if (data->token_count == 0)
