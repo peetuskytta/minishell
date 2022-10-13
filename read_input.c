@@ -23,7 +23,7 @@ static char	*read_input_stdin(t_shell *data, char *buf, int bytes_read)
 
 	ft_memset(buf, 0, BUFFER);
 	bytes_read = read(0, buf, BUFFER);
-	if (bytes_read <= BUFFER + 1 && simple_input_check(buf) == FALSE)
+	if (bytes_read < BUFFER && simple_input_check(buf) == FALSE)
 	{
 		data->quotes = TRUE;
 		if (odd_nbr_of_quotes(buf, quotes) == FALSE)

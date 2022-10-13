@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/12 10:23:40 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 17:43:22 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,36 +36,6 @@ void	create_or_append_history(char *buf)
 }
 
 /*
-**	Finds the last command executed from the history.
-*/
-static void	last_in_history(t_shell *data, int fd)
-{
-	char	*buf;
-	int		i;
-
-	i = 0;
-	if (fd > 0)
-	{
-		while (get_next_line(fd, &buf) != 0)
-		{
-			if (i == data->h_index - 1)
-				break ;
-			i++;
-			ft_memdel((void *)&(buf));
-		}
-		if (data->token)
-			free_array(data->token);
-		if (ft_strrchr(buf, D_QUOTE) || ft_strrchr(buf, S_QUOTE))
-			tokenize_complex_input(data, buf, 0);
-		else
-			data->token = ft_strsplit(buf, WHITESPACE);
-		ft_putendl_fd(buf, STDOUT_FILENO);
-		ft_memdel((void *)&(buf));
-		close(fd);
-	}
-}
-
-/*
 **	Get's the size of the history by counting the lines in the file.
 */
 static void	count_history(t_shell *data, int fd)
@@ -87,13 +57,12 @@ static void	count_history(t_shell *data, int fd)
 }
 
 /*
-**	Drives the actions when history command is used.
+**	Drives the actions when history command is used. Options is in
+**	here for future expansion.
 */
 void	handle_history(t_shell *data, int option)
 {
 	count_history(data, open(SH_HISTORY, O_RDONLY));
 	if (option == 1)
 		output_history(1, open(SH_HISTORY, O_RDONLY));
-	else if (option == 2)
-		last_in_history(data, open(SH_HISTORY, O_RDONLY));
 }

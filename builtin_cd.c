@@ -61,7 +61,7 @@ static int	check_access(t_shell *data)
 
 /*
 **	First checks to define the continuation of the cd command. If it ends up
-**	in the last line it will check the existence of the Path given.
+**	in the last line it will check the existence of the token.
 */
 static int	initial_checks(t_shell *data)
 {

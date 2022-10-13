@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/12 16:15:53 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 15:23:06 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static void	increment_counters(t_ints *to_init, int *count, int *i, int action)
 	else if (action == 4)
 		*count += 1;
 	else if (action == 5)
+	{
+		*count += 1;
 		*i += 1;
+	}
 	else if (action == 6)
 		to_init->at_end = TRUE;
 }
@@ -58,13 +61,13 @@ static void	quote_check(t_ints *in, char *input, int *count, int *i)
 	}
 }
 
-char	*find_token(char *input, int *count, int i)
+char	*find_token(char *input, char *token, int *count, int i)
 {
-	char	*token;
 	t_ints	in;
 
 	ft_memset(&in, 0, sizeof(in));
-	token = ft_strnew(4096);
+	while (ft_is_ws_without_nl(input[i]))
+		increment_counters(&in, count, &i, 5);
 	while (input[i])
 	{
 		quote_check(&in, input, count, &i);
@@ -92,8 +95,9 @@ char	*find_token(char *input, int *count, int i)
 */
 void	tokenize_complex_input(t_shell *data, char *input, int index)
 {
-	int	alloc_count;
-	int	i;
+	char	*token;
+	int		alloc_count;
+	int		i;
 
 	i = 0;
 	data->token_count = -1;
@@ -102,9 +106,8 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 	alloc_count = 0;
 	while (input[i])
 	{
-		while (ft_is_ws_without_nl(input[i]) && index++)
-			i++;
-		data->token[alloc_count] = find_token(input, &index, i);
+		token = ft_strnew(ft_strlen(input));
+		data->token[alloc_count] = find_token(input, token, &index, i);
 		if (ft_strlen(data->token[alloc_count]) == 0 \
 			&& data->token[alloc_count] != NULL)
 			data->token[alloc_count][0] = '\0';

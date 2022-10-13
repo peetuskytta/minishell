@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/12 13:03:33 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 13:29:22 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*read_until_quote(char c, char *old, int bytes_read, int num_quotes)
 		write_open_quote(c);
 		extra = (char *)ft_memalloc(BUFFER);
 		bytes_read = read(0, extra, BUFFER);
-		if (bytes_read <= BUFFER + 1)
+		if (bytes_read < BUFFER)
 		{
 			new = strjoin_free(new, extra);
 			num_quotes = ft_chrstr(new, c);
@@ -58,7 +58,7 @@ static char	identify_open_quote(char *old, char c, int *quote)
 {
 	if (ft_is_oddnbr(quote[0]) && ft_is_oddnbr(quote[1]))
 	{
-		if (ft_strchr(old, S_QUOTE))
+		if (ft_strrchr(old, S_QUOTE))
 			c = D_QUOTE;
 		else
 			c = S_QUOTE;
@@ -87,7 +87,9 @@ char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 	data->input_len = ft_strlen(new);
 	if (data->input_len >= 4096)
 	{
-		error_print(MINISH, "Ella/Simo... seriosly: ", CMD_TOO_LONG);
+		ft_putstr_fd("\e[1;37m", STDERR_FILENO);
+		error_print(MINISH, "... seriosly? ", CMD_TOO_LONG);
+		ft_putstr_fd(" \033[0m", STDERR_FILENO);
 		ft_memset(new, '\0', data->input_len);
 		data->input_len = -1;
 		return (new);
