@@ -1,5 +1,5 @@
 #DEBUG_FLAGS := -g -fsanitize=address
-FLAGS := -Wall -Wextra -Werror
+FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
 NAME := libft.a
 
 #Color scheme

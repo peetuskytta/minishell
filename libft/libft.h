@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 13:03:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/13 13:40:38 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 08:55:55 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/stat.h>
-# include <fcntl.h>
 
 # define EXIT_FAILURE 1
 # define EXIT_SUCCESS 0

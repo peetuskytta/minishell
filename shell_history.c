@@ -6,17 +6,12 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 11:06:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/13 17:43:22 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 19:27:42 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-**	Creates the .minish_history file if it doesn't exist and appends the
-**	command to the end of the file. File is created in the working
-**	directory instead of the $HOME.
-*/
 void	create_or_append_history(char *buf)
 {
 	int		fd;
@@ -57,8 +52,7 @@ static void	count_history(t_shell *data, int fd)
 }
 
 /*
-**	Drives the actions when history command is used. Options is in
-**	here for future expansion.
+**	Drives the actions when history command is used.
 */
 void	handle_history(t_shell *data, int option)
 {

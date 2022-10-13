@@ -79,6 +79,7 @@ int	check_if_builtin(t_shell *data)
 		|| ft_strequ(data->token[0], "ENV"))
 		return (handle_env(data, 0));
 	else if (ft_strequ(data->token[0], HISTORY)
+		|| ft_strequ(data->token[0], "!!")
 		|| ft_strequ(data->token[0], "HISTORY"))
 		return (history_driver(data));
 	return (FALSE);

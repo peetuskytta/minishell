@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/13 16:18:01 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 10:21:54 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_array(char **string)
 		ft_memdel((void *)&(string[i]));
 		i++;
 	}
-	ft_memdel((void *)(string));
+	ft_memdel((void *)&(string));
 }
 
 /*

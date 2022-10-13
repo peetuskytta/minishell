@@ -1,7 +1,7 @@
 #Compiler and compiler flags
 CC := gcc
 #DEBUG_FLAGS := -g -fsanitize=address
-FLAGS := -Wall -Wextra -Werror
+FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
 
 #Color scheme
 WHITE_BACKGROUND = \033[47m
