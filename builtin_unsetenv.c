@@ -29,12 +29,12 @@ int	unset_error_check(t_shell *data)
 	{
 		if (data->token_count == 1)
 			return (TRUE);
-		if (data->token_count > 1)
-			ft_putendl_fd(UNSET_TOO_MANY_ARG, 2);
-		if (ft_strlen(data->token[1]) > BUFFER)
-			ft_putendl_fd(UNSETENV_TOO_LONG, 2);
-		else
-			ft_putendl_fd(UNSETENV_USAGE, 2);
+		if (data->token_count == 0)
+			ft_putendl_fd(UNSETENV_USAGE, STDERR_FILENO);
+		else if (data->token_count > 1)
+			ft_putendl_fd(UNSET_TOO_MANY_ARG, STDERR_FILENO);
+		else if (ft_strlen(data->token[1]) > BUFFER)
+			ft_putendl_fd(UNSETENV_TOO_LONG, STDERR_FILENO);
 	}
 	return (FALSE);
 }
