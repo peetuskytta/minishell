@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 19:10:31 by pskytta           #+#    #+#             */
-/*   Updated: 2022/04/12 13:29:05 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 09:17:52 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_itoa(int n)
 	long	number;
 
 	number = n;
-	str = ft_memalloc(ft_nblen(number) + 1);
+	str = (char *)ft_memalloc(ft_nblen(number) + 1);
 	i = 0;
 	if (number < 0)
 	{

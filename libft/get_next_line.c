@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 15:25:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 22:52:26 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/12 16:22:44 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	get_next_line(const int fd, char **line)
 	if (string[fd])
 		if (ft_strchr(string[fd], '\n'))
 			return (line_return(ret, &string[fd], line));
-	buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
+	buff = (char *)ft_memalloc(sizeof(char) * (BUFF_SIZE + 1));
 	if (buff == NULL)
 		return (-1);
 	ret = buff_handler(fd, &string[fd], &buff);

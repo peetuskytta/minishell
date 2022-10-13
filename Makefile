@@ -1,7 +1,20 @@
 #Compiler and compiler flags
 CC := gcc
-DEBUG_F := -g #-fsanitize=address
-FLAGS := -Wall -Wextra -Werror -g #-fsanitize=address
+#DEBUG_FLAGS := -g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror -g -fsanitize=address
+
+#Color scheme
+WHITE_BACKGROUND = \033[47m
+VIOLET_BACKGROUND = \033[0;45m
+YELLOW_BACKGROUND = \033[0;43m
+WHITE = \033[37m
+YELLOW = \033[33m
+BLACK = \033[30m
+VIOLET = \033[35m
+RESET = \033[0m
+RED = \033[31m
+CYAN = \033[36m
+BOLD = \033[1m
 
 #Target Binary Program
 NAME := minishell
@@ -33,37 +46,31 @@ SOURCES := main.c \
 OBJ := $(SOURCES:.c=.o)
 
 LIBFT_M := make -s -C libft
-LIBFT := libft/libft.a
+LIBFT_A := libft/libft.a
 HEADER := minishell.h
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $@
-#	@echo "Compiled the $(NAME)"
+$(NAME): $(OBJ) $(LIBFT_A)
+	@echo "$(BOLD)$(WHITE)$(NAME) Compilation done$(RESET)"
+	@$(CC) $(FLAGS) $(OBJ) $(LIBFT_A) -o $(NAME)
 
-$(OBJ): $(SOURCES) $(HEADER)
-#	@echo "Creating $(NAME) object files"
-	@$(CC) $(FLAGS) -c $(SOURCES)
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@ -I includes/
 
-$(LIBFT):
-	@make -s -C libft/
+$(LIBFT_A):
+	@make -C libft/
 
 clean:
-	@make -s -C libft clean
+	@make -C libft clean
 	@rm -f $(OBJ)
-#	@echo "$(NAME) object files deleted"
+	@echo "$(BOLD)$(RED)OBJ deleted$(RESET)"
 
 fclean: clean
-	@make -s -C libft fclean
+	@make -C libft fclean
 	@rm -f $(NAME)
-#	@echo "$(NAME) deleted"
+	@echo "$(BOLD)$(RED)$(NAME) deleted$(RESET)"
 
 re: fclean all
 
-debug:
-	@$(LIBFT_M)
-	@$(CC) $(FLAGS) $(DEBUG_F) -c $(SOURCES)
-	@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
-
-.PHONY: all clean fclean re debug
+.PHONY: all, clean, fclean, re

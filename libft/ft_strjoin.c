@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 17:42:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 11:18:08 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 09:05:57 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	if (!s1)
-		ft_error_handler(2, "ft_strjoin: empty string\n");
+		ft_error_handler(STDERR_FILENO, "ft_strjoin: empty string\n");
 	length = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	str = (char *)ft_memalloc(sizeof(char) * (length + 1));
 	while (*s1)

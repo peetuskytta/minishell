@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 13:03:21 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/07 09:16:15 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 08:55:55 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define EXIT_SUCCESS 0
 # define FD_SIZE 8192
 # define BUFF_SIZE 64
+# define MEMORY_ERROR 111
 
 char	**ft_strsplit(char const *s, char c);
 char	*ft_itoa(int n);

@@ -1,17 +1,19 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/11/22 13:05:41 by pskytta           #+#    #+#              #
-#    Updated: 2022/10/12 13:04:21 by pskytta          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-FLAG := -Wall -Wextra -Werror -g #-fsanitize=address
+#DEBUG_FLAGS := -g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror -g -fsanitize=address
 NAME := libft.a
+
+#Color scheme
+WHITE_BACKGROUND = \033[47m
+VIOLET_BACKGROUND = \033[0;45m
+YELLOW_BACKGROUND = \033[0;43m
+WHITE = \033[37m
+YELLOW = \033[33m
+BLACK = \033[30m
+VIOLET = \033[35m
+RESET = \033[0m
+RED = \033[31m
+CYAN = \033[36m
+BOLD = \033[1m
 
 SRC := ft_atoi.c \
 	ft_is_directory.c \
@@ -84,20 +86,18 @@ OBJ := $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@ar rc $(NAME) $(OBJ)
-	@echo "$(NAME) created"
-	@echo "$(NAME) indexed"
+	@ar rcs $(NAME) $(OBJ)
+	@echo "$(WHITE)$(NAME) created & indexed$(RESET)"
 
 %.o: %.c
-	@gcc $(FLAG) -c $< -o $@ -I includes/
+	gcc $(FLAGS) -c $< -o $@ -I includes/
 
 clean:
 	@rm -f $(OBJ)
-	@echo "OBJ deleted"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(NAME) deleted"
+	@echo "$(BOLD)$(RED)$(NAME) deleted$(RESET)"
 
 re: fclean all
 

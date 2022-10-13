@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 10:19:00 by pskytta           #+#    #+#             */
-/*   Updated: 2022/09/16 14:14:30 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/13 08:57:17 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_strtrim(char const *s)
 {
 	size_t	i;
-	int		start;
 	size_t	len;
+	int		start;
 
 	start = 0;
 	i = 0;
