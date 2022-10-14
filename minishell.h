@@ -75,11 +75,11 @@
 /*Error message defines for setenv and unsetenv*/
 # define EMPTY_STR "setenv name: cannot be an empty string"
 # define NAME_ERROR "setenv name: cannot be a NULL pointer or 0 length string"
-# define SET_TOO_MANY_ARG "setenv: too many arguments\n"
+# define SET_TOO_MANY_ARG "setenv: too many arguments"
 # define SETENV_USAGE "usage: 'setenv [name] [value]' or 'setenv [name=value]'"
 # define NOT_IDENTIFIER ": not a valid identifier"
 # define UNSETENV_USAGE "usage: unsetenv [name]"
-# define UNSET_TOO_MANY_ARG "unsetenv: too many arguments\n"
+# define UNSET_TOO_MANY_ARG "unsetenv: too many arguments"
 # define UNSETENV_TOO_LONG "unsetenv: argument too long"
 
 /*Error messages for fork, waitpid, and execve*/

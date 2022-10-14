@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/12 10:10:35 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/14 08:30:18 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	create_child_process(t_shell *data, char **env)
 	if (pid_child == 0)
 	{
 		if (execve(data->cmd, data->token, env) == -1)
+		{
 			ft_putendl_fd(EXECVE_ERROR, 2);
+			exit(EXIT_FAILURE);
+		}
 		ft_memdel((void *)&(data->cmd));
 		exit(EXIT_SUCCESS);
 	}
@@ -59,7 +62,7 @@ static int	is_in_path(t_shell *data)
 	if (ft_strchr(data->token[0], '/'))
 	{
 		data->cmd = ft_strdup(data->token[0]);
-		return (TRUE);
+		return (FALSE);
 	}
 	return (FALSE);
 }
