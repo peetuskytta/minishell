@@ -124,7 +124,7 @@ void	reset_last_cmd_env(t_shell *data, int var_i);
 void	check_expansion(t_shell *data, int i);
 void	modify_env(t_shell *data, char *name, char *value, int i);
 void	add_env_variable(t_shell *data, char *name, char *val);
-void	split_path_variable(t_shell *data, int i);
+void	split_path_variable(t_shell *data, int i, int len);
 void	create_child_process(t_shell *data, char **env);
 void	fetch_current_working_directory(t_shell *data);
 void	write_prompt_and_folder(t_shell *data);
