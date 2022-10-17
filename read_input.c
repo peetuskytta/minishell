@@ -21,9 +21,9 @@ static char	*read_input_stdin(t_shell *data, char *buf, int bytes_read)
 	char		*new;
 	int			quotes[2];
 
-	ft_memset(buf, 0, BUFFER);
+	ft_memset(buf, 0, BUFFER + 1);
 	bytes_read = read(0, buf, BUFFER);
-	if (bytes_read < BUFFER && simple_input_check(buf) == FALSE)
+	if (bytes_read < BUFFER + 1 && simple_input_check(buf) == FALSE)
 	{
 		data->quotes = TRUE;
 		if (odd_nbr_of_quotes(buf, quotes) == FALSE)
@@ -45,24 +45,6 @@ static void	clear_and_free_buffer(char *string)
 {
 	ft_memset(string, 0, ft_strlen(string));
 	ft_memdel((void *)&(string));
-}
-
-/*
-** Checks if the command given is "exit" and if TRUE returns FALSE.
-**	exit happens in main.c
-*/
-static int	exit_or_not(char *buf)
-{
-	if (ft_strequ(buf, EXIT) == TRUE)
-	{
-		create_or_append_history(buf);
-		ft_memset(buf, 0, ft_strlen(buf));
-		ft_memdel((void *)&(buf));
-		ft_putendl_fd(EXIT, STDOUT_FILENO);
-		return (FALSE);
-	}
-	else
-		return (TRUE);
 }
 
 /*
@@ -101,15 +83,14 @@ int	command_prompt_loop(t_shell *data)
 	while (TRUE)
 	{
 		write_prompt_and_folder(data);
-		buf = (char *)ft_memalloc(BUFFER);
+		buf = (char *)ft_memalloc(BUFFER + 1);
 		buf = read_input_stdin(data, buf, 0);
-		if (exit_or_not(buf) == FALSE)
-			return (FALSE);
 		if (is_empty(buf) == TRUE || data->input_len == -1)
 			clear_and_free_buffer(buf);
 		else
 		{
-			parse_input(data, buf);
+			if (parse_input(data, buf) == FALSE)
+				return (FALSE);
 			if (ft_strequ(buf, "rm .minish_history") == 0)
 				create_or_append_history(buf);
 			clear_and_free_buffer(buf);

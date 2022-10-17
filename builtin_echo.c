@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:02:52 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/11 11:36:22 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 16:17:54 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 /*
 **	Builtin function to print the tokens after "echo" command
-**	checks for "-n" flag in order to print newline or not.
-**	!!expand tokens differently in echo!!
 */
 int	echo_driver(t_shell *data, int i)
 {

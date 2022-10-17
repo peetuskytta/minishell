@@ -18,7 +18,7 @@ int	change_to_home_env(t_shell *data, int len, int home_i)
 
 	fetch_current_working_directory(data);
 	if (search_var_name("OLDPWD", data) < 0)
-		add_env_variable(data, "OLDPWD", data->pwd, data->env_count);
+		add_env_variable(data, "OLDPWD", data->pwd);
 	else
 		modify_env(data, "OLDPWD", data->pwd, 0);
 	len = ft_strlen(data->environ[home_i]);
@@ -50,7 +50,7 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 			return (3);
 		}
 		if (search_var_name("PWD", data) < 0)
-			add_env_variable(data, "PWD", temp, data->env_count);
+			add_env_variable(data, "PWD", temp);
 		else
 			modify_env(data, "PWD", temp, 0);
 		ft_putendl(temp);
@@ -75,19 +75,16 @@ int	handle_home(t_shell *data)
 		return (TRUE);
 	}
 	if (search_var_name("PWD", data) < 0)
-		add_env_variable(data, "PWD", data->pwd, count);
+		add_env_variable(data, "PWD", data->pwd);
 	return (change_to_home_env(data, 0, home_index));
 }
 
 int	change_to_token(t_shell *data, const char *path)
 {
-	int	nbr;
-
-	nbr = data->env_count;
 	if (path)
 	{
 		if (search_var_name("OLDPWD", data) < 0)
-			add_env_variable(data, "OLDPWD", data->pwd, nbr);
+			add_env_variable(data, "OLDPWD", data->pwd);
 		else
 			modify_env(data, "OLDPWD", data->pwd, 0);
 		if (chdir(path) != 0)
@@ -97,7 +94,7 @@ int	change_to_token(t_shell *data, const char *path)
 		}
 		fetch_current_working_directory(data);
 		if (search_var_name("PWD", data) < 0)
-			add_env_variable(data, "PWD", data->pwd, data->env_count);
+			add_env_variable(data, "PWD", data->pwd);
 		modify_env(data, "PWD", data->pwd, 0);
 		return (TRUE);
 	}

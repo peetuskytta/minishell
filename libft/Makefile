@@ -1,18 +1,11 @@
-#DEBUG_FLAGS := -g -fsanitize=address
-FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
+#FLAGS := -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror
 NAME := libft.a
 
 #Color scheme
-WHITE_BACKGROUND = \033[47m
-VIOLET_BACKGROUND = \033[0;45m
-YELLOW_BACKGROUND = \033[0;43m
 WHITE = \033[37m
-YELLOW = \033[33m
-BLACK = \033[30m
-VIOLET = \033[35m
 RESET = \033[0m
 RED = \033[31m
-CYAN = \033[36m
 BOLD = \033[1m
 
 SRC := ft_atoi.c \

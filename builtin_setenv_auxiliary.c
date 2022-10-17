@@ -45,9 +45,9 @@ int	search_var_name(char *name, t_shell *data)
 */
 char	*join_n_and_v(char *name, char *value)
 {
-	char	temp[4096];
+	char	temp[8192];
 
-	ft_memset(temp, '\0', 4096);
+	ft_memset(temp, '\0', 8192);
 	ft_strcat(temp, name);
 	ft_strcat(temp, EQUAL_SIGN);
 	name = temp;
@@ -66,7 +66,7 @@ void	reset_last_cmd_env(t_shell *data, int var_i)
 	var_i = search_var_name("_", data);
 	if (var_i == -1)
 	{
-		add_env_variable(data, "_", "", data->env_count);
+		add_env_variable(data, "_", "");
 		var_i = search_var_name("_", data);
 	}
 	if (var_i >= 0)

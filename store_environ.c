@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 23:35:20 by pskytta           #+#    #+#             */
-/*   Updated: 2022/07/15 23:35:20 by pskytta          ###   ########.fr       */
+/*   Created: 2022/10/14 14:07:54 by pskytta           #+#    #+#             */
+/*   Updated: 2022/10/14 14:07:54 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ void	store_environ_variables(t_shell *data, char **env)
 		modify_env(data, "OLDPWD", "", 0);
 	var_i = search_var_name("PATH", data);
 	if (var_i < 0)
-		add_env_variable(data, "PATH", "", data->env_count);
+		add_env_variable(data, "PATH", "");
 	var_i = search_var_name("_", data);
 	if (var_i < 0)
-		add_env_variable(data, "_", "", data->env_count);
+		add_env_variable(data, "_", "");
 	var_i = search_var_name("SHLVL", data);
 	if (var_i < 0)
-		add_env_variable(data, "SHLVL", "1", data->env_count);
+		add_env_variable(data, "SHLVL", "1");
 	else
 		++data->environ[var_i][6];
 }

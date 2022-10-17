@@ -13,15 +13,16 @@
 #include "minishell.h"
 
 /*
-**	This function modifies the existing environment variable's VALUE.
+**	This function modifies/changes the existing environment variable's VALUE.
+**	First the index search is done
 */
 void	modify_env(t_shell *data, char *name, char *value, int i)
 {
 	i = search_var_name(name, data);
 	if (i < 0)
-		add_env_variable(data, name, value, data->env_count);
+		add_env_variable(data, name, value);
 	i = search_var_name(name, data);
-	ft_memset(data->environ[i], 0, ft_strlen(data->environ[i]));
+	ft_memset(data->environ[i], '\0', ft_strlen(data->environ[i]));
 	ft_memdel((void *)&data->environ[i]);
 	data->environ[i] = join_n_and_v(name, value);
 }
@@ -31,20 +32,21 @@ void	modify_env(t_shell *data, char *name, char *value, int i)
 **	to the environment.
 **	NOTE: ft_strdup() and ft_memalloc() exit if malloc() fails.
 */
-static char	**plus_one_line(char **old_env, int rows)
+static char	**plus_one_line(t_shell *data, char **old_env)
 {
 	char	**new_env;
 	int		i;
 
 	i = 0;
-	new_env = (char **)ft_memalloc(sizeof(char *) * (rows + 1));
-	while (rows > i)
+	new_env = (char **)ft_memalloc(sizeof(char *) * (data->env_count + 2));
+	while (old_env[i] != NULL)
 	{
 		new_env[i] = ft_strdup(old_env[i]);
-		ft_memdel((void *)&(old_env[i++]));
+		ft_memdel((void *)&(old_env[i]));
+		i++;
 	}
-	ft_memdel((void *)&(old_env));
-	new_env[rows++] = NULL;
+	new_env[i] = NULL;
+	free_array(old_env);
 	return (new_env);
 }
 
@@ -52,21 +54,21 @@ static char	**plus_one_line(char **old_env, int rows)
 **	Adds new environment variable to the environment. Plus_one_line function
 **	returns new array of arrays to fit the existing and the new variable.
 */
-void	add_env_variable(t_shell *data, char *name, char *val, int size)
+void	add_env_variable(t_shell *data, char *name, char *val)
 {
-	char	**new_env;
 	int		len;
+	char	*new_var;
 
-	new_env = plus_one_line(data->environ, size);
-	size++;
+	data->environ = plus_one_line(data, data->environ);
 	len = ft_strlen(name) + ft_strlen(val) + 1;
-	new_env[--size] = ft_strnew(len);
-	ft_memset(new_env[size], '\0', len + 1);
-	ft_strcat(new_env[size], name);
-	ft_strcat(new_env[size], EQUAL_SIGN);
-	ft_strcat(new_env[size], val);
-	data->environ = new_env;
+	new_var = ft_strnew(len);
+	ft_memset(new_var, '\0', len + 1);
+	ft_strcat(new_var, name);
+	ft_strcat(new_var, EQUAL_SIGN);
+	ft_strcat(new_var, val);
+	data->environ[data->env_count] = ft_strdup(new_var);
 	data->env_count++;
+	ft_memdel((void *)&(new_var));
 }
 
 /*
@@ -78,16 +80,14 @@ void	add_env_variable(t_shell *data, char *name, char *val, int size)
 static int	set_env_variable(t_shell *data)
 {
 	int	var_index;
-	int	count;
 
-	count = data->env_count;
 	if (data->token_count == 2)
 	{
 		var_index = search_var_name(data->token[1], data);
 		if (var_index >= 0)
 			modify_env(data, data->token[1], data->token[2], 0);
 		else
-			add_env_variable(data, data->token[1], data->token[2], count);
+			add_env_variable(data, data->token[1], data->token[2]);
 		return (TRUE);
 	}
 	else
@@ -96,7 +96,7 @@ static int	set_env_variable(t_shell *data)
 
 /*
 **	This function directs the actions for 'setenv' and 'unsetenv' builtins.
-**	If id==1 it is 'setenv', if id==2 it is 'unsetenv'
+**	If id==1 it is 'setenv', if id==2 it is 'unsetenv'.
 */
 int	change_environ(t_shell *data, int id)
 {

@@ -15,9 +15,9 @@
 static int	path_permission_loop(char **split, const char *path, int i)
 {
 	struct stat	stats;
-	char		temp[4096];
+	char		temp[8192];
 
-	ft_memset(temp, '\0', 4096);
+	ft_memset(temp, '\0', 8192);
 	while (TRUE)
 	{
 		if (split[i] == NULL)

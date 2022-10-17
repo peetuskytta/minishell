@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 14:03:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/13 13:22:00 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 12:06:54 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,19 +102,21 @@ void	tokenize_complex_input(t_shell *data, char *input, int index)
 	i = 0;
 	data->token_count = -1;
 	alloc_count = (int)ft_word_count(input, ' ') + 1;
-	data->token = (char **)ft_memalloc(sizeof(char *) * alloc_count + 1);
+	data->token = (char **)ft_memalloc(sizeof(char *) * alloc_count);
 	alloc_count = 0;
 	while (input[i])
 	{
 		token = ft_strnew(ft_strlen(input));
 		data->token[alloc_count] = find_token(input, token, &index, i);
+		if (data->token[alloc_count] == NULL)
+			break ;
 		if (ft_strlen(data->token[alloc_count]) == 0 \
 			&& data->token[alloc_count] != NULL)
 			data->token[alloc_count][0] = '\0';
-		if (data->token[alloc_count] == NULL)
-			break ;
 		i = index;
 		alloc_count++;
 		data->token_count++;
 	}
+	if (data->token_count > 0)
+		data->token_count--;
 }

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:10 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/12 10:21:54 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 15:57:05 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	add_only_name(t_shell *data, int var_i)
 	if (var_i >= 0)
 		modify_env(data, data->token[1], "", 0);
 	else
-		add_env_variable(data, data->token[1], "", data->env_count);
+		add_env_variable(data, data->token[1], "");
 }
 
 /*
@@ -80,7 +80,7 @@ char	*strjoin_free(char *s1, char *s2)
 	tmp = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
 	ft_strcat(tmp, s1);
 	ft_strcat(tmp, s2);
-	ft_memdel((void *)&(s1));
-	ft_memdel((void *)&(s2));
+	ft_strdel(&s1);
+	ft_strdel(&s2);
 	return (tmp);
 }

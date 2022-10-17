@@ -28,7 +28,7 @@ static int	history_driver(t_shell *data)
 				close(fd);
 		}
 		else
-			handle_history(data, 1);
+			handle_history(1);
 		return (TRUE);
 	}
 	return (FALSE);

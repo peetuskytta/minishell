@@ -88,7 +88,7 @@ int	handle_env(t_shell *data, int error)
 {
 	if (data->token_count == 0)
 		output_environment(data, 0);
-	if (data->token_count >= 2)
+	else if (data->token_count >= 2)
 	{
 		if (error == FALSE && ft_strequ(data->token[1], "-i") == 1 \
 			&& data->token[2] != NULL)
@@ -100,7 +100,7 @@ int	handle_env(t_shell *data, int error)
 		}
 		else
 			error_print("env: ", data->token[2], NO_FILE_OR_DIR);
+		ft_memdel((void *)&(data->cmd));
 	}
-	ft_memdel((void *)&(data->cmd));
 	return (TRUE);
 }

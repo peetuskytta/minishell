@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/14 08:30:18 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 11:56:18 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	create_child_process(t_shell *data, char **env)
 		if (execve(data->cmd, data->token, env) == -1)
 		{
 			ft_putendl_fd(EXECVE_ERROR, 2);
+			ft_memdel((void *)&(data->cmd));
 			exit(EXIT_FAILURE);
 		}
 		ft_memdel((void *)&(data->cmd));
@@ -49,12 +50,12 @@ void	create_child_process(t_shell *data, char **env)
 */
 static int	is_in_path(t_shell *data)
 {
-	char	temp[4096];
+	char	temp[8192];
 
-	if (data->input_len > 4095)
+	if (data->input_len > 4096)
 		return (FALSE);
-	ft_memset(temp, '\0', 4096);
-	if (!ft_strchr(data->token[0], '/'))
+	ft_memset(temp, '\0', 8192);
+	if (!ft_strchr(data->token[0], '/') && data->split_path != NULL)
 	{
 		if (loop_path_variable(data, temp, 0) == TRUE)
 			return (TRUE);

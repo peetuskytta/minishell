@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:25:15 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/13 13:29:22 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:04:57 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static char	*read_until_quote(char c, char *old, int bytes_read, int num_quotes)
 	while (TRUE)
 	{
 		write_open_quote(c);
-		extra = (char *)ft_memalloc(BUFFER);
+		extra = (char *)ft_memalloc(BUFFER + 1);
 		bytes_read = read(0, extra, BUFFER);
-		if (bytes_read < BUFFER)
+		if (bytes_read < BUFFER + 1)
 		{
 			new = strjoin_free(new, extra);
 			num_quotes = ft_chrstr(new, c);
@@ -52,7 +52,7 @@ static char	*read_until_quote(char c, char *old, int bytes_read, int num_quotes)
 }
 
 /*
-**	Returns the char value of the quote that is open.
+**	Returns the character of the quote that is open.
 */
 static char	identify_open_quote(char *old, char c, int *quote)
 {
@@ -85,11 +85,11 @@ char	*handle_open_quotes(t_shell *data, char *old, int *quotes)
 	data->quotes = TRUE;
 	new = read_until_quote(c, old, 0, 0);
 	data->input_len = ft_strlen(new);
-	if (data->input_len >= 4096)
+	if (data->input_len > 4096)
 	{
-		ft_putstr_fd("\e[1;37m", STDERR_FILENO);
-		error_print(MINISH, "... seriosly? ", CMD_TOO_LONG);
-		ft_putstr_fd(" \033[0m", STDERR_FILENO);
+		ft_putstr_fd(BWHT, STDERR_FILENO);
+		error_print(MINISH, "... seriously? ", CMD_TOO_LONG);
+		ft_putstr_fd(DEFAULT, STDERR_FILENO);
 		ft_memset(new, '\0', data->input_len);
 		data->input_len = -1;
 		return (new);

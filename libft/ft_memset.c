@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/22 14:16:01 by pskytta           #+#    #+#             */
-/*   Updated: 2022/04/12 13:28:08 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 08:32:52 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void	*ft_memset(void *b, int c, size_t len)
 
 	p = b;
 	while (len--)
-	{
 		*p++ = (unsigned char)c;
-	}
 	return (b);
 }

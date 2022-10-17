@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:46:07 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/10 14:18:56 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/14 14:48:07 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,31 @@ int	cd_error_message(char *name, int id)
 	else if (id == 4)
 		error_print(CD_SH, name, CD_NO_ACCESS);
 	return (3);
+}
+
+int	setenv_error_check(t_shell *data)
+{
+	if (ft_strequ(data->token[0], SETENV) == TRUE)
+	{
+		if (data->token_count <= 1)
+			ft_putendl_fd(SETENV_USAGE, STDERR_FILENO);
+		if (data->token_count == 2)
+		{
+			if (ft_strchr(data->token[1], '=')
+				|| ft_isdigit(data->token[1][0])
+				|| !ft_isalpha(data->token[1][0]))
+			{
+				ft_putstr(MINISH);
+				error_print("setenv: ", data->token[1], NOT_IDENTIFIER);
+				return (FALSE);
+			}
+			else
+				return (TRUE);
+		}
+		else if (data->token_count > 2)
+			ft_putendl_fd(SET_TOO_MANY_ARG, 2);
+		return (FALSE);
+	}
+	else
+		return (FALSE);
 }

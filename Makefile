@@ -1,19 +1,12 @@
 #Compiler and compiler flags
 CC := gcc
-#DEBUG_FLAGS := -g -fsanitize=address
-FLAGS := -Wall -Wextra -Werror #-g -fsanitize=address
+#FLAGS := -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS := -Wall -Wextra -Werror
 
 #Color scheme
-WHITE_BACKGROUND = \033[47m
-VIOLET_BACKGROUND = \033[0;45m
-YELLOW_BACKGROUND = \033[0;43m
 WHITE = \033[37m
-YELLOW = \033[33m
-BLACK = \033[30m
-VIOLET = \033[35m
 RESET = \033[0m
 RED = \033[31m
-CYAN = \033[36m
 BOLD = \033[1m
 
 #Target Binary Program
@@ -26,7 +19,6 @@ SOURCES := main.c \
 	builtin_unsetenv.c \
 	builtin_echo.c \
 	builtin_setenv_auxiliary.c \
-	builtin_setenv_one_arg.c \
 	builtin_setenv.c \
 	builtin_cd.c \
 	builtin_cd_auxiliary.c \

@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 11:21:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/12 09:59:45 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/14 10:21:35 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	loop_path_variable(t_shell *data, char *temp, int i)
 	if (var_i > 0)
 		split_path_variable(data, 0);
 	if (data->split_path == NULL)
-		return (FALSE);
+		return (TRUE);
 	while (data->split_path[i] != NULL)
 	{
 		ft_strcpy(temp, data->split_path[i]);

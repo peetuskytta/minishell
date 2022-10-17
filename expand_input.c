@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/28 19:09:57 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/02 10:51:09 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 12:57:09 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ static void	expand_variable(int i, int var_i, t_shell *data)
 	ft_memdel((void *)&(temp));
 }
 
-// copy parts behind the tilde and join them back after expand ~/Hive/projects
-// consider ./minishell (not a dir in one folder up)
-// consider minishell (command not found)
+/*
+**	Expands the tilde '~' to match what is stored in environment HOME
+**	variable.
+*/
 static void	expand_home(int i, int var_i, t_shell *data)
 {
 	char	*temp;
-	char	after_tilde[1024];
+	char	after_tilde[8192];
 
 	var_i = search_var_name("HOME", data);
 	if (var_i == -1)
@@ -46,13 +47,13 @@ static void	expand_home(int i, int var_i, t_shell *data)
 		ft_memdel((void *)&data->token[i]);
 		data->token[i] = ft_strdup("");
 	}
-	else if ((data->token[i][1] != '/'))
+	else if ((data->token[i][1] != '/') && data->token[i][0] != TILDE)
 		return ;
 	else
 	{
-		temp = ft_strnew(1024);
-		ft_memset(temp, '\0', 1024);
-		ft_memset(after_tilde, '\0', 1024);
+		temp = ft_strnew(8192);
+		ft_memset(temp, '\0', 8192);
+		ft_memset(after_tilde, '\0', 8192);
 		if (data->token[i][0] == TILDE && data->token[i][1] == '/')
 			ft_strcpy(after_tilde, data->token[i] + 1);
 		ft_strcpy(temp, data->environ[var_i] + 5);
