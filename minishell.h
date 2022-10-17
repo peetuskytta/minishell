@@ -135,6 +135,7 @@ void	handle_history(int option);
 void	create_or_append_history(char *buf);
 void	output_history(int i, int fd);
 void	add_only_name(t_shell *data, int var_i);
+int		permission_check(char *path);
 int		parse_input(t_shell *data, char *input);
 int		handle_env(t_shell *data, int error);
 int		exec_error_check(t_shell *data, int check);

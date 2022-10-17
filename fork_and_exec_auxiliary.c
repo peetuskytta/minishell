@@ -6,11 +6,18 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 11:21:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/17 21:35:12 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 22:58:06 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	permission_check(char *path)
+{
+	if (access((const char *)path, X_OK) == -1)
+		return (2);
+	return (TRUE);
+}
 
 /*
 **	This function will test if a given argument is an executable found in the

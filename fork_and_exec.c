@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 10:19:18 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/17 11:56:18 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 22:47:09 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static int	check_existence(t_shell *data)
 	{
 		if (ft_is_directory(data->token[0]) == TRUE)
 			return (3);
+		if (access((const char *)data->token[0], X_OK) == -1)
+			return (2);
 		data->cmd = ft_strdup(data->token[0]);
 		return (TRUE);
 	}
@@ -106,7 +108,7 @@ static int	verify_if_executable(t_shell *data)
 		return (FALSE);
 	else if (is_in_path(data) == FALSE)
 		return (FALSE);
-	return (TRUE);
+	return (permission_check(data->cmd));
 }
 
 /*
