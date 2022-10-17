@@ -63,10 +63,8 @@ int	handle_cd_dash(t_shell *data, int var_i, int len)
 
 int	handle_home(t_shell *data)
 {
-	int	count;
 	int	home_index;
 
-	count = data->env_count;
 	reset_last_cmd_env(data, 0);
 	home_index = search_var_name("HOME", data);
 	if (home_index < 0)

@@ -60,6 +60,8 @@ void	split_path_variable(t_shell *data, int i, int len)
 		ft_strdel(&temp);
 		i++;
 	}
+	if (data->env_count == i)
+		return ;
 	ft_strdel(&temp);
 	var = ft_strsub(data->environ[i], 5, ft_strlen(data->environ[i]) - 5);
 	data->split_path = ft_strsplit(var, ':');
@@ -78,9 +80,6 @@ void	store_environ_variables(t_shell *data, char **env)
 	var_i = search_var_name("OLDPWD", data);
 	if (var_i > 0)
 		modify_env(data, "OLDPWD", "", 0);
-	var_i = search_var_name("PATH", data);
-	if (var_i < 0)
-		add_env_variable(data, "PATH", "");
 	var_i = search_var_name("_", data);
 	if (var_i < 0)
 		add_env_variable(data, "_", "");
