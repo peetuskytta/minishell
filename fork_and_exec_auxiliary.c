@@ -6,7 +6,7 @@
 /*   By: pskytta <pskytta@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 11:21:28 by pskytta           #+#    #+#             */
-/*   Updated: 2022/10/17 22:58:06 by pskytta          ###   ########.fr       */
+/*   Updated: 2022/10/17 23:01:56 by pskytta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	loop_path_variable(t_shell *data, char *temp, int i)
 		ft_strcat(temp, data->token[0]);
 		if (access(temp, F_OK) == 0)
 		{
+			if (permission_check(temp) == 2)
+				return (2);
 			data->cmd = ft_strdup(temp);
 			return (TRUE);
 		}
