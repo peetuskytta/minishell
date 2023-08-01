@@ -2,7 +2,7 @@
 
 Minishell is the second project from the Unix-branch at Hive Helsinki coding school.
 
-### STATUS = ongoing
+### STATUS = FINISHED
 
 ![Screenshot 2022-07-30 at 17 00 03](https://user-images.githubusercontent.com/77061872/181917866-8a5cdf4d-4bbb-4191-99f3-e703eb9490aa.png)
 
